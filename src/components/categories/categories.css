@@ -1,0 +1,68 @@
+/* ===== Categories Section ===== */
+.categories-section {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-color, #fff);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.categories-container {
+  display: flex;
+  gap: 9px; 
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 0;
+}
+
+.categories-container::-webkit-scrollbar {
+  display: none; 
+}
+
+.category-btn {
+  background-color: var(--btn-bg, #121212);
+  color: var(--btn-text, #fff);
+  border: none;
+  border-radius: 20px;
+  padding: 15px 35px;
+  font-size: 0.95rem;
+  font-family: "Ubuntu", sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-btn:hover {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #ff6a00, #ffa733);
+  color: white;
+  box-shadow: 0 0 8px rgba(255, 165, 51, 0.4);
+}
+
+.category-btn.active {
+  background: linear-gradient(135deg, #ff6a00, #ffa733);
+  color: white;
+  font-weight: 600;
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .categories-section {
+  background-color: #121212;
+  border-bottom: 1px solid #333;
+}
+
+[data-theme="dark"] .category-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+[data-theme="dark"] .category-btn:hover {
+  background: linear-gradient(135deg, #ffa733, #ff6a00);
+  color: white;
+}
+
+[data-theme="dark"] .category-btn.active {
+  background: linear-gradient(135deg, #ffa733, #ff6a00);
+  color: white;
+}

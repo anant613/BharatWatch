@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: #f8f9fa;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   COMPLETE DARK THEME OVERRIDE
+   ======================================== */
+
+[data-theme="dark"] html {
+  background: #0a0a0a;
+}
+
+[data-theme="dark"] body {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+[data-theme="dark"] #root {
+  background: #0a0a0a;
+}
+
+/* Force all sections to be full width and dark */
+[data-theme="dark"] .reels-section,
+[data-theme="dark"] .recommended-section,
+[data-theme="dark"] .categories-container,
+[data-theme="dark"] .header {
+  background: #0a0a0a !important;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+  padding-left: calc(50vw - 50% + 24px) !important;
+  padding-right: calc(50vw - 50% + 24px) !important;
+  box-sizing: border-box !important;
+}
+
+/* Specific component dark backgrounds */
+[data-theme="dark"] .video-card {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .category-btn {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%) !important;
+}
+
+[data-theme="dark"] .search-container {
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%) !important;
+}
+
+/* Text colors for dark theme */
+[data-theme="dark"] .video-title,
+[data-theme="dark"] .section-header h2,
+[data-theme="dark"] .reels-header h2 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .channel-name,
+[data-theme="dark"] .video-stats,
+[data-theme="dark"] .reel-title {
+  color: #aaa !important;
+}
+
+[data-theme="dark"] .hamburger-line {
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] .search-input {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .search-input::placeholder {
+  color: #888 !important;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff9500 0%, #ff6b35 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff9500 100%);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+/* Focus styles */
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid #ff9500;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Final overflow fix */
+body {
+  overflow-x: hidden;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Selection Colors */
+::selection {
+  background: rgba(255, 149, 0, 0.3);
+  color: #ffffff;
+}
+
+[data-theme="dark"] ::selection {
+  background: rgba(255, 149, 0, 0.5);
+  color: #ffffff;
+}
+
+/* Performance */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

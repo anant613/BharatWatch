@@ -1,0 +1,276 @@
+.navbar {
+    padding: 12px 28px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    color: #000;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.hamburg-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+}
+
+.hamburg-menu .line {
+    width: 100%;
+    height: 2.5px;
+    background-color: #000;
+    border-radius: 2px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.hamburg-menu:hover {
+    transform: scale(1.1);
+}
+
+.hamburg-menu:hover .line {
+    background-color: #ff4d4d;
+}
+
+.navbar-logo {
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo .logo {
+  height: 100%;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.navbar-logo .logo:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+
+/* 🔍 Search Bar */
+.navbar-search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 520px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.search-box:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+.search-box:focus-within {
+    border-color: #ff3b3b;
+    box-shadow: 0 0 8px rgba(255, 59, 59, 0.4);
+}
+
+.search-input {
+    flex: 1;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: #000;
+    padding: 0 45px;
+    font-size: 15px;
+    outline: none;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.search-box:hover .search-icon {
+    transform: scale(1.25);
+    opacity: 1;
+}
+
+.mic-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+}
+
+.mic-icon:hover {
+    background-color: #ccc;
+    transform: scale(1.15);
+    box-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-btn,
+.signup-btn {
+    background: linear-gradient(135deg, #ff9900, #ff4d00);
+    color: #fff;
+    border: none;
+    padding: 15px 23px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.login-btn:hover,
+.signup-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 4px 16px rgba(255, 77, 0, 0.5);
+    background: linear-gradient(135deg, #ffb347, #ff4500);
+    color: #000;
+}
+
+.theme-toggle-button {
+    background: linear-gradient(135deg, #007bff, #00aaff);
+    color: #fff;
+    border: none;
+    padding: 15px 23px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-button:hover {
+    transform: scale(1.12);
+    background: linear-gradient(135deg, #0099ff, #0066cc);
+    box-shadow: 0 4px 14px rgba(0, 123, 255, 0.4);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+@media (max-width: 900px) {
+    .navbar-container {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .search-box {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .mic-icon {
+        display: none;
+    }
+}
+
+[data-theme="dark"] {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .navbar {
+    background-color: #2c2c2c;
+    border-bottom-color: #444;
+}
+
+[data-theme="dark"] .navbar-links a {
+    color: #f0f0f0;
+}
+
+[data-theme="dark"] .navbar-links a:hover {
+    color: #66b3ff;
+}
+
+[data-theme="dark"] .theme-toggle-button {
+    background-color: #66b3ff;
+}
+
+[data-theme="dark"] .theme-toggle-button:hover {
+    background-color: #3399ff;
+}
+
+[data-theme="dark"] .hamburg-menu .line {
+    background-color: #f0f0f0;
+}
+
+[data-theme="dark"] .search-box {
+  background-color: #000; 
+  border: 1px solid #444;
+  color: #fff;
+}
+
+[data-theme="dark"].search-box:hover{
+    border-color: #0099ff;
+}
+
+[data-theme="dark"] .search-input {
+  color: #fff;
+}
+
+[data-theme="dark"] .search-input::placeholder {
+  color: #888;
+}
+
+[data-theme="dark"] .mic-icon {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+[data-theme="dark"] .mic-icon:hover {
+  background-color: rgba(255, 94, 0, 0.2);
+  transform: scale(1.15);
+}

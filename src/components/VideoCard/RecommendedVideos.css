@@ -1,0 +1,138 @@
+/* ===== Recommended Section ===== */
+.recommended-section {
+  width: 100%;
+  padding: 24px 5%;
+  font-family: "Ubuntu", sans-serif;
+  box-sizing: border-box;
+  color: var(--text-color, #000);
+  border-top: 1px solid rgba(200, 200, 200, 0.2);
+}
+
+/* --- Header (Title + See More) --- */
+.recommended-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.recommended-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* --- See More button (like Snips) --- */
+.see-more-text {
+  background: none;
+  border: none;
+  color: #ff8c00;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.see-more-text:hover {
+  color: #ffa733;
+  transform: translateX(3px);
+}
+
+/* --- Videos Grid --- */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+/* --- Individual Video Card --- */
+.video-card {
+  background-color: var(--card-bg, #fff);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(255, 140, 0, 0.15);
+}
+
+/* --- Video Thumbnail --- */
+.video-thumbnail {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: #000;
+}
+
+/* --- Video Info --- */
+.video-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 10px 12px 4px;
+  color: inherit;
+}
+
+.video-author {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 12px 10px;
+}
+
+.no-videos-text {
+  color: #999;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+[data-theme="dark"] .recommended-section {
+  color: #fff;
+  border-top: 1px solid #222;
+}
+
+[data-theme="dark"] .video-card {
+  background-color: #181818;
+}
+
+[data-theme="dark"] .video-author {
+  color: #aaa;
+}
+
+[data-theme="dark"] .see-more-text {
+  color: #ff8c00;
+}
+
+[data-theme="dark"] .see-more-text:hover {
+  color: #ffa733;
+}
+
+
+[data-theme="light"] .recommended-section {
+  color: #000;
+  border-top: 1px solid #e0e0e0;
+}
+
+[data-theme="light"] .video-card {
+  background-color: #fff;
+}
+
+[data-theme="light"] .video-author {
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .recommended-title {
+    font-size: 1.4rem;
+  }
+
+  .see-more-text {
+    font-size: 0.9rem;
+  }
+
+  .videos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+}
