@@ -274,3 +274,276 @@
   background-color: rgba(255, 94, 0, 0.2);
   transform: scale(1.15);
 }
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------------------------------
+    --------------------------------------------------------------------------------------------------------------------------------------------
+    ----------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+ /* ========= BASE SIDEBAR STRUCTURE ========= */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -270px;
+  width: 270px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border-right: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  transition: left 0.5s cubic-bezier(0.77, 0, 0.175, 1),
+              background 0.5s ease, color 0.5s ease;
+  z-index: 1000;
+  overflow-y: auto;
+  padding-top: 30px;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+/* ========= THEME VARIABLES ========= */
+[data-theme="light"] {
+  --sidebar-bg: linear-gradient(135deg, #ffffff, #e6e9f0);
+  --sidebar-text: #111;
+  --icon-filter: brightness(0);
+}
+
+[data-theme="dark"] {
+  --sidebar-bg: linear-gradient(145deg, #080808, #121212);
+  --sidebar-text: #f8f8f8;
+  --icon-filter: brightness(0) invert(1);
+}
+
+/* ========= LOGO SECTION ========= */
+.sidebar-logo {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: floatLogo 5s ease-in-out infinite alternate;
+}
+
+.sidebar-logo-img {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.sidebar-logo-img:hover {
+  transform: scale(1.08) rotate(3deg);
+  filter: drop-shadow(0 0 40px cyan);
+}
+
+@keyframes floatLogo {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* ========= SIDEBAR MENU ========= */
+.sidebar-menu {
+  list-style: none;
+  padding: 0 20px;
+  margin: 0;
+}
+
+/* Each menu item */
+.sidebar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 14px 22px;
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  color: inherit;
+}
+
+/* Neon ripple aura */
+.sidebar-item::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(0,255,255,0.3), transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.sidebar-item:hover::before {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
+/* Hover transformation */
+.sidebar-item:hover {
+  transform: scale(1.05) translateX(10px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+  background: rgba(0, 255, 255, 0.05);
+  letter-spacing: 1px;
+  color: black;
+}
+
+/* Text and icon animation */
+.sidebar-item span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.4s, text-shadow 0.4s;
+}
+
+.sidebar-item:hover span {
+  color: cyan;
+  text-shadow: 0 0 12px cyan;
+}
+
+/* ========= ICONS ========= */
+.sidebar-item .icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 14px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: var(--icon-filter);
+}
+
+.sidebar-item:hover .icon {
+  transform: scale(1.25) rotate(5deg);
+  filter: drop-shadow(0 0 12px cyan);
+}
+
+/* ========= THEME TOGGLE ========= */
+.theme-toggle {
+  margin-top: 40px;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08));
+  transition: all 0.5s ease;
+}
+
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, cyan, magenta, cyan);
+  opacity: 0.25;
+  transition: left 0.6s ease;
+}
+
+.theme-toggle:hover::after {
+  left: 0;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0,255,255,0.2);
+  color: #fff;
+}
+
+/* ========= STAGGERED ENTRY ANIMATION ========= */
+.sidebar-item {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeSlide 0.6s forwards;
+}
+
+.sidebar.open .sidebar-item:nth-child(1) { animation-delay: 0.1s; }
+.sidebar.open .sidebar-item:nth-child(2) { animation-delay: 0.2s; }
+.sidebar.open .sidebar-item:nth-child(3) { animation-delay: 0.3s; }
+.sidebar.open .sidebar-item:nth-child(4) { animation-delay: 0.4s; }
+.sidebar.open .sidebar-item:nth-child(5) { animation-delay: 0.5s; }
+.sidebar.open .sidebar-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========= BACKDROP ========= */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.5);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 900;
+}
+
+.backdrop.visible {
+  opacity: 1;
+}
+
+/* Common scrollbar setup */
+.sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, cyan, magenta);
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* ===== Dark theme scrollbar ===== */
+body[data-theme="dark"] .sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ffffaa, #ff00ffaa); /* slightly translucent neon */
+}
+
+body[data-theme="dark"] .sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] .sidebar-item:hover {
+  color: #111 !important;
+  background: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .sidebar-item:hover span {
+  color: #111;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .sidebar-item:hover {
+  color: cyan !important;
+  background: rgba(0, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+}
+
+[data-theme="dark"] .sidebar-item:hover span {
+  color: cyan;
+  text-shadow: 0 0 15px cyan;
+}
