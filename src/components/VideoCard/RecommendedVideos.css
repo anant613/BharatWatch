@@ -22,7 +22,10 @@
   margin: 0;
 }
 
+
+
 /* --- See More button (like Snips) --- */
+
 .see-more-text {
   background: none;
   border: none;
@@ -47,16 +50,110 @@
 
 /* --- Individual Video Card --- */
 .video-card {
-  background-color: var(--card-bg, #fff);
+  background-color: var(--card-bg, #fff); /* default to CSS variable */
   border-radius: 12px;
+  /* box-shadow: 0 2px 8px rgba(0,0,0,0.08); */
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding-bottom: 14px;
+  /* border: 1px solid #e2e2e2;        Optional subtle border */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
+
 
 .video-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 20px rgba(255, 140, 0, 0.15);
+}
+
+
+/* --- Video/Image Thumbnail --- */
+.video-thumbnail {
+  width: 100%;
+  /* round only top corners so bottom meets profile bar seamlessly */
+  border-radius: 12px 12px 0 0;
+  object-fit: cover;
+  background: #000;
+  margin: 0; /* remove gap between thumbnail and profile bar */
+  height: 160px;
+}
+
+/* --- Title/Meta --- */
+.video-meta {
+  padding: 12px 12px 8px 12px;
+  width: 100%;
+  background: #f6f6f6; 
+  box-sizing: border-box;
+}
+
+.video-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.video-submeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Views & Time BLACK --- */
+.video-views, .video-time {
+  font-size: 0.88rem;
+  color: #111; /* Black */
+  font-weight: 500;
+}
+
+/* --- Profile Section BOX & TEXT --- */
+.video-profile {
+  display: flex;
+  align-items: center;
+  background: #f6f6f6;              /* Full bar grey */
+  border-radius: 0 0 12px 12px;     /* Only bottom corners rounded */
+  padding: 10px 18px;
+  width: 100%;                      /* Bar fills entire width */
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0,0,0,0.04); /* subtle divider */
+}
+
+
+.profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+  border: 1.5px solid #eee;
+}
+
+/* --- Profile name BLACK --- */
+.profile-name {
+  font-weight: 500;
+  font-size: 0.98rem;
+  margin-right: 8px;
+  color: #111; /* Black */
+}
+
+/* --- AI Content BLACK --- */
+.profile-type {
+  font-size: 0.82rem;
+  color: #111; /* Black */
+  font-weight: 500;
+}
+
+/* --- Author below card (if needed) --- */
+.video-author {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 12px 6px;
 }
 
 /* --- Video Thumbnail --- */
@@ -79,18 +176,38 @@
   font-size: 0.9rem;
   color: #666;
   margin: 0 12px 10px;
+
 }
 
 .no-videos-text {
   color: #999;
   font-size: 1rem;
   margin-top: 20px;
+
+  grid-column: 1/-1;
+  text-align: center;
+
+
 }
 
 [data-theme="dark"] .recommended-section {
   color: #fff;
   border-top: 1px solid #222;
 }
+
+[data-theme="dark"] .video-card {
+  background-color: #181818;
+}
+[data-theme="dark"] .video-author {
+  color: #aaa;
+}
+[data-theme="dark"] .see-more-text {
+  color: #ff8c00;
+}
+[data-theme="dark"] .see-more-text:hover {
+  color: #ffa733;
+}
+
 
 [data-theme="dark"] .video-card {
   background-color: #181818;
@@ -109,6 +226,7 @@
 }
 
 
+
 [data-theme="light"] .recommended-section {
   color: #000;
   border-top: 1px solid #e0e0e0;
@@ -117,6 +235,12 @@
 [data-theme="light"] .video-card {
   background-color: #fff;
 }
+
+
+[data-theme="light"] .video-card {
+  background-color: #fff;
+}
+
 
 [data-theme="light"] .video-author {
   color: #666;
@@ -131,8 +255,24 @@
     font-size: 0.9rem;
   }
 
+
+  .see-more-text {
+    font-size: 0.9rem;
+  }
+
+
   .videos-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 14px;
   }
+
+  .video-thumbnail {
+    height: 115px;
+  }
+  .profile-pic {
+    width: 26px;
+    height: 26px;
+  }
+
+
 }
