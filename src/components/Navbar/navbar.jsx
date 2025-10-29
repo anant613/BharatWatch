@@ -111,7 +111,7 @@ const Navbar = () => {
           </li>
           <li className="sidebar-item">
             <img src= {Reel} className="icon" />
-            <span>Reels</span>
+            <span>Snips</span>
           </li>
           <li className="sidebar-item">
             <img src= {Trendinglogo} className="icon" />
