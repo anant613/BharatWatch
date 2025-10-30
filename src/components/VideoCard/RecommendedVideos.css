@@ -276,3 +276,64 @@
 
 
 }
+/* === Dark Theme Enhancement === */
+[data-theme="dark"] .recommended-section {
+  background: #0e0e0e; /* Deep dark base */
+}
+
+[data-theme="dark"] .video-card {
+  background: linear-gradient(180deg, #1a1a1a 0%, #121212 100%);
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .video-meta,
+[data-theme="dark"] .video-profile {
+  background: #1a1a1a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .video-thumbnail {
+  filter: brightness(0.88);
+}
+
+[data-theme="dark"] .video-title,
+[data-theme="dark"] .profile-name,
+[data-theme="dark"] .video-views,
+[data-theme="dark"] .video-time,
+[data-theme="dark"] .profile-type {
+  color: #f1f1f1;
+}
+
+/* === Light Glow Hover for Card === */
+.video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(255, 140, 0, 0.18);
+}
+
+/* === Subtle Floating Animation === */
+.video-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.4s ease;
+}
+
+/* === Thumbnail polish === */
+.video-thumbnail {
+  border-radius: 12px 12px 0 0;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail {
+  filter: brightness(1.05);
+}
+
+.profile-name {
+  letter-spacing: 0.3px;
+}
+
+/* === Responsive Fix for Clean UI on Mobile === */
+@media (max-width: 600px) {
+  [data-theme="dark"] .video-card {
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.12);
+  }
+}
