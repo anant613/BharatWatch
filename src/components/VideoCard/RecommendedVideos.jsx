@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./RecommendedVideos.css";
 
 import blog1 from './cs-1.jpg';
@@ -79,6 +80,7 @@ const demoImages = [
 ];
 
 const RecommendedVideos = ({ videos = [] }) => {
+  const navigate = useNavigate();
   const itemsToShow = videos.length > 0 ? videos : demoImages;
   const isRealVideos = videos.length > 0;
 
@@ -91,7 +93,7 @@ const RecommendedVideos = ({ videos = [] }) => {
 
       <div className="videos-grid">
         {itemsToShow.map((item, index) => (
-          <div className="video-card" key={index}>
+          <div className="video-card" key={index} onClick={() => navigate(`/videoplayer/${index}`)} style={{cursor: 'pointer'}}>
             {isRealVideos ? (
               <video
                 className="video-thumbnail"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./navbar.css";
 import logo from "../../logo.png";
 import darklogo from "../../logodark.png";
@@ -19,6 +20,7 @@ import help from "./help.png"
 
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -82,8 +84,8 @@ const Navbar = () => {
 
           {/* --- Auth Buttons --- */}
           <div className="navbar-links">
-            <a href="#" className="navbar-link login-btn">Login</a>
-            <a href="#" className="navbar-link signup-btn">Sign up</a>
+            <a href="/logIn" className="navbar-link login-btn">Login</a>
+            <a href="/signup" className="navbar-link signup-btn">Sign up</a>
           </div>
         </div>
       </nav>
@@ -105,7 +107,7 @@ const Navbar = () => {
               className="sidebar-logo-img"
             />
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/home')}>
             <img src= {Homelogo} className="icon" />
             <span>Home</span>
           </li>
