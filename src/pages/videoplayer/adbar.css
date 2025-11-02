@@ -1,8 +1,8 @@
 /* ========= ADBAR CONTAINER ========= */
 .adbar {
-  position: fixed;
-  top: 100px;
-  right: 20px;
+  position: relative !important;
+  top: 0 !important;
+  right: 0 !important;
   width: 350px;
   display: flex;
   align-items: center;
@@ -12,16 +12,15 @@
   border-radius: 14px;
   padding: 12px 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease, color 0.3s ease;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .adbar:hover {
-  transform: translateY(-3px);
+  background: var(--adbar-bg-hover, #efefef);
 }
 
-/* ========= LEFT SECTION ========= */
 .adbar-left {
   display: flex;
   align-items: center;
