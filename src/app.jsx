@@ -1,31 +1,31 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar/navbar";
-import Reels from "./components/Reels/Reels";
-import Categories from "./components/categories/categories";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Snips from "./components/Snips/Snips";
+import SnipsPage from "./components/Snips/SnipsPage";
+import Categories from "./components/categories/Categories";
 import RecommendedVideos from "./components/VideoCard/RecommendedVideos";
 import Login from "./pages/login/logIn";
 import Signup from "./pages/login/signup";
 import VideoPlayer from "./pages/videoplayer/VideoPlayer";
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const HomePage = () => (
-    <div className="app-container">
-      <div className="main-content">
-        <Navbar />
-        <Reels />
-        <Categories />
-        <RecommendedVideos />
-      </div>
+const HomePage = () => (
+  <div className="app-container">
+    <div className="main-content">
+      <Navbar />
+      <Snips />
+      <Categories />
+      <RecommendedVideos />
     </div>
-  );
+  </div>
+);
 
+const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/snips" element={<SnipsPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
