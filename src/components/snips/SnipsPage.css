@@ -1,0 +1,443 @@
+body, * {
+  font-family: 'Ubuntu', Arial, sans-serif !important;
+}
+
+
+.reel-ui-row {
+  display: flex;
+  gap: 10px;
+  max-width: 1350px;
+  margin: 20px auto 0 auto;
+  align-items: flex-start;
+}
+
+body, html {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  height: auto !important;
+}
+
+
+/* Left - Centered Reel Image */
+.reel-left-align {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+.reel-img-box {
+  position: relative;
+  width: 420px;
+  height: 600px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #eee;
+  box-shadow: 0 6px 24px #0001;
+}
+.reel-img-main {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+
+.reel-overlay-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  left: 18px;
+  bottom: 90px;
+  background: rgba(20,20,20,0.91);
+  border-radius: 23px;
+  box-shadow: 0 4px 16px #0001;
+  padding: 7px 21px 7px 11px;
+  z-index: 10;
+  min-width: 230px;
+  max-width: 78%;
+}
+
+.song-profile-round {
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff6;
+  background: #222;
+}
+.song-meta {
+  flex: 1;
+  min-width: 0;
+}
+.song-title {
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.08;
+  letter-spacing: 0.02rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.song-artist {
+  color: #d3d3d3;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01rem;
+}
+/* Caption under song bar, insta style */
+.caption-instastyle {
+  position: absolute;
+  left: 20px;
+  right: 18px;
+  bottom: 29px;
+  background: rgba(0,0,0,0.27);
+  border-radius: 13px;
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  z-index: 8;
+  padding: 7px 18px 6px 13px;
+  box-shadow: 0 2px 8px #0002;
+  max-width: 83%;
+}
+.caption-more {
+  color: #74a5fa;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 5px;
+}
+.caption-more:hover {
+  text-decoration: underline;
+}
+
+
+.reel-caption-overlay {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 90%, transparent 100%);
+  color: #fff;
+  padding: 18px 21px 13px 23px;
+  box-sizing: border-box;
+}
+.caption-title {
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 3px;
+  line-height: 1.2;
+}
+.caption-desc {
+  font-size: 13px;
+  color: #eee;
+  margin-bottom: 4px;
+}
+
+/* Right Major Stack */
+.reel-right-stack {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  /* gap: 21px; */
+  margin-bottom: 0 !important; /* forcefully remove */
+  padding-bottom: 0 !important;
+}
+
+/* AD box */
+.ad-box-ui {
+  height: 140px;
+  background: #e6e6e6;
+  font-size: 32px;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+  padding-top: 48px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 16px #0001;
+  /* border-radius: 17px; */
+}
+
+/* Below: Like/Share and Comments - same row */
+.action-comment-row {
+  display: flex;
+  flex-direction: row;
+  gap: 17px;
+}
+
+/* Vertical Actionbar Gap */
+.vertical-actionbar-ui.clean-actionbar {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  gap: 13px;
+  padding: 0;
+  align-items: center;
+  min-width: unset;
+  max-width: unset;
+}
+
+/* MAIN CIRCLE BUTTON (big, neat) */
+.circle-action-btn {
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.11s;
+}
+.circle-action-btn:active {
+  transform: scale(0.92);
+}
+
+/* ICON ONLY: max space use */
+.circle-action-btn svg {
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50%;
+  display: block;
+  background: none;
+  margin-bottom: 2px;
+  box-shadow: 0 0 0 0 transparent;
+}
+
+/* TEXT> 1 Like, etc. chhoti, neat below icon */
+.circle-count {
+  font-size: 11px;           /* Small & modern */
+  color: #222;
+  margin-top: 0px;
+  margin-bottom: 4%;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  font-family: inherit;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.action-sub {
+  font-size: 9px;
+  color: #444;
+  margin-top: 4%;
+  font-family: inherit;
+  text-align: center;
+}
+
+.more-popup-box {
+  position: absolute;
+  left: 110%;
+  top: 8px;
+  min-width: 110px;
+  box-shadow: 0 4px 18px #2222, 0 1px 4px #0001;
+  background: #fff;
+  border-radius: 13px;
+  padding: 6px 0;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+}
+
+.more-popup-btn {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #222;
+  font-family: inherit;
+  padding: 9px 22px 9px 14px;
+  text-align: left;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.13s;
+}
+
+.more-popup-btn:hover {
+  background: #f3f4f7;
+  color: #e3405f;
+}
+
+
+
+
+/* Comments+Profile column */
+.comment-profile-col {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%; /* force max width for comment and profile same */
+}
+
+/* PROFILE CARD UI */
+.profile-card-ui {
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  background: #E4E4E4;
+  min-height: 62px;
+  padding: 2px 25px 2px 17px;
+  gap: 16px;
+  box-shadow: 0 3px 16px #0001;
+}
+
+.follow-btn {
+  background: #FB9600;
+  color: #000000;
+  border: none;
+  border-radius: 9px;
+  padding: 7px 17px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.17s, color 0.16s;
+  outline: none;
+}
+.follow-btn.following {
+  background: #e4e4e4;
+  color: #333;
+}
+
+.follow-btn.following:hover { background: #dadada; color: #008d0c; }
+
+
+
+
+.profile-headpic {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-title { font-weight: 600; font-size: 19px; }
+.follow-btn:hover { background: #ff9800; }
+
+.action-btn-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+}
+.action-btn-ui span[role="img"] { font-size: 27px; }
+.action-btn-ui div { font-size: 15px; color: #444; text-align: center; }
+.action-sub { font-size: 13px; color: #000000; display: block; }
+
+/* Comments Card (right of action bar) */
+
+.comments-list-ui {
+  margin-left: 4%;
+  margin-top: 8px;
+  flex: 1;
+  overflow-y: auto;           /* Most important: enable scroll */
+  max-height: 155px;          /* As per need, kitna portion scrollable ho */
+  /* Optional: for smooth aesthetic */
+  scrollbar-width: thin;
+  scrollbar-color: #888 #B3B3B3;
+}
+
+.comment-header-ui {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 11px;
+}
+.comment-input-row {
+  display: flex;
+  align-items: center;
+  gap: 1px;        /* jitna distance chahiye utna rakh lo */
+  margin-left: 8px; /* optional, thoda alignment ke liye */
+  margin-bottom: 14px;
+}
+.comment-input-ui {
+  flex: 1;
+}
+
+.comment-input-ui {
+  margin-right: 7%;
+  width: 93%;
+  margin-bottom: 14px;
+  padding: 13px 16px;
+  border-radius: 30px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 15px;
+  box-shadow: 0 1px 6px #0003;
+}
+.comment-input-ui::placeholder {
+  color: #fff !important;
+  opacity: 1;          /* Make sure it's opaque/visible */
+}
+.comment-card-ui {
+  background: #B3B3B3;
+  border-radius: 18px;
+  padding: 22px 22px 15px 22px;
+  color: #000000;
+  min-height: 180px;         /* Thoda chhota/medium height */
+  max-height: 260px;         /* Yeh final height jiska andar scroll ho */
+  box-shadow: 0 2px 20px #0001;
+  flex: 1;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0; 
+}
+
+.comment-row-ui {
+  display: flex;
+  gap: 11px;
+  margin-bottom: 13px;
+  align-items: flex-start;
+}
+.comment-userimg-ui {
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+}
+.user { font-weight: 600; font-size: 14px; }
+.comment-actions-ui span { color: #000000; font-size: 13px; margin-right: 9px; }
+
+
+.scroll-arrows-fixed {
+  position: fixed;
+  bottom: 26px;
+  right: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  z-index: 2222;
+}
+.arrow-btn {
+  background: #fff;
+  border: none;
+  outline: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 3px 14px 0 #0002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.14s, box-shadow 0.14s;
+}
+.arrow-btn:hover {
+  background: #f4bc42;
+  box-shadow: 0 4px 24px 0 #f4bc429a;
+}
+.arrow-btn.up svg {
+  transform: rotate(180deg);
+}
+.arrow-btn svg {
+  display: block;
+}
+
+

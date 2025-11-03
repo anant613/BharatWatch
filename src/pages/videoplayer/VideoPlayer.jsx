@@ -73,7 +73,7 @@ const VideoPlayer = () => {
                 <p className="channel-name">Demo Creator</p>
                 <p className="channel-subs">100K subscribers</p>
               </div>
-              <button className="subscribe-btn">Subscribe</button>
+              <button className="subscribe-btn">Follow</button>
             </div>
           </div>
         </div>
@@ -81,6 +81,8 @@ const VideoPlayer = () => {
         </div>
         <div className="sidebar-section">
           <Adbar />
+          <button className="Content-btn">Content</button>
+          <button className="comment-btn">Comments</button>
           <div className="recommended-sidebar">
             <RecommendedVideos />
           </div>

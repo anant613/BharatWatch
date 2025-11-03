@@ -29,6 +29,20 @@
   height: fit-content;
 }
 
+.comment-btn,.Content-btn{
+  background: #ffc266;
+  border-radius: 10px;
+  height:40px;
+  width: 100px;
+  font-family: 'ubuntu', sans-serif;
+  font-weight: 30px;
+  margin-right: 12px;
+}
+
+.comment-btn:hover ,.Content-btn:hover{
+  background-color: #000;
+}
+
 .recommended-sidebar {
   margin-top: 20px;
 }
@@ -299,9 +313,56 @@
 }
 
 /* ======= Responsive ======= */
+@media (max-width: 1200px) {
+  .video-page-layout {
+    flex-direction: column;
+    padding: 10px;
+  }
+  
+  .sidebar-section {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+  
+  .main-video-section {
+    max-width: 100%;
+  }
+  
+  .video-player {
+    width: 100%;
+    border-radius: 0;
+  }
+  
+  .video-info {
+    border-radius: 0;
+    padding: 12px;
+  }
+  
+  .video-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 @media (max-width: 900px) {
   .video-player-container {
-    padding: 16px;
+    padding: 0;
+  }
+  
+  .video-page-layout {
+    padding: 0;
+    margin-top: 0;
   }
 }
 

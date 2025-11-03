@@ -1,14 +1,15 @@
 .navbar {
-    padding: 12px 28px;
+    padding: 12px 28px !important;
     background-color: #ffffff;
     border-bottom: 1px solid #e5e5e5;
     color: #000;
     font-family: 'Ubuntu', sans-serif;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-bottom-color 0.3s ease;
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box !important;
 }
 
 .navbar-container {
@@ -76,13 +77,18 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 520px;
-    height: 40px;
+    width: 520px !important;
+    min-width: 520px !important;
+    max-width: 520px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
     border: 1px solid #ccc;
     border-radius: 40px;
     background-color: #f9f9f9;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box !important;
 }
 
 .search-box:hover {
@@ -200,18 +206,56 @@
 }
 
 @media (max-width: 900px) {
+    .navbar {
+        padding: 8px 16px !important;
+    }
+    
     .navbar-container {
-        flex-wrap: wrap;
-        justify-content: space-between;
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+    
+    .navbar-search {
+        flex: 0;
+        order: 3;
+        width: 100%;
     }
 
     .search-box {
-        width: 100%;
-        margin-top: 10px;
+        width: 40px !important;
+        min-width: 40px !important;
+        max-width: 40px !important;
+        padding: 0;
+    }
+    
+    .search-input {
+        display: none;
+    }
+    
+    .search-icon {
+        position: static;
+        margin: auto;
     }
 
     .mic-icon {
         display: none;
+    }
+    
+    .navbar-logo {
+        height: 32px;
+    }
+    
+    .navbar-logo .logo {
+        height: 32px;
+    }
+    
+    .navbar-links {
+        gap: 8px;
+    }
+    
+    .login-btn, .signup-btn {
+        padding: 8px 12px;
+        font-size: 12px;
     }
 }
 
@@ -223,6 +267,7 @@
 [data-theme="dark"] .navbar {
     background-color: #2c2c2c;
     border-bottom-color: #444;
+    padding: 12px 28px !important;
 }
 
 [data-theme="dark"] .navbar-links a {
@@ -249,6 +294,16 @@
   background-color: #000; 
   border: 1px solid #444;
   color: #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 520px !important;
+  min-width: 520px !important;
+  max-width: 520px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  border-radius: 40px;
 }
 
 [data-theme="dark"].search-box:hover{
