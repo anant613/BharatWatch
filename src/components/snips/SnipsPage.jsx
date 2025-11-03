@@ -6,6 +6,7 @@ import Img from "./images/thum2.png";
 import Img2 from "./images/profile1.png";
 import Img3 from "./images/profile2.png";
 import songPng from "./images/thum.png";
+import Navbar from '../../components/Navbar/navbar';
 
 const reelsList = [
   {
@@ -150,6 +151,8 @@ const SnipsPage = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="reel-ui-row">
       {/* LEFT */}
       <div className="reel-left-align">
@@ -709,6 +712,7 @@ const SnipsPage = () => {
         </button>
       </div>
     </div>
+  </>
   );
 };
 
