@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/navbar";
-import Reels from "./components/Reels/Reels";
+import Snips from "./components/snips/snips";
 import Categories from "./components/categories/categories";
 import RecommendedVideos from "./components/VideoCard/RecommendedVideos";
 import Login from "./pages/login/logIn";
 import Signup from "./pages/login/signup";
 import VideoPlayer from "./pages/videoplayer/VideoPlayer";
+import SnipsPage from "./components/snips/SnipsPage";
 
 const HomePage = () => (
   <div className="app-container">
@@ -28,6 +29,8 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/videoplayer/:id" element={<VideoPlayer />} />
+        <Route path="/snip" element={<SnipsPage/>}/>
+
       </Routes>
     </Router>
   );
