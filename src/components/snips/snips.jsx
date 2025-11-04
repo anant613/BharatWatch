@@ -41,7 +41,7 @@ const Snips = ({ Snips = [] }) => {
             <div
               className="snip-item"
               key={index}
-              onClick={() => navigate(`/snip`)}
+              onClick={() => navigate(`/snips`)}
               // onClick={() => navigate(`/reel/${index}`)} yai tab use hoga jab backend se reel aane lgega
               style={{ cursor: 'pointer' }}
             >
