@@ -5,7 +5,7 @@
   justify-content: center;  
   padding: 20px;
   font-family: 'Ubuntu', sans-serif;
-  background: linear-gradient(135deg, #ff8c00 0%, #ffa733 50%, #ff6b35 100%);
+  background: url('./background.jpg') center/cover no-repeat;
   position: relative;
   overflow: hidden;
 }
@@ -13,66 +13,20 @@
 .auth-container::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    rgba(255, 255, 255, 0.03) 10px,
-    rgba(255, 255, 255, 0.03) 20px
-  );
-  animation: moveBackground 20s linear infinite;
-}
-
-.auth-container::after {
-  content: '';
-  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.3) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.3) 0%, transparent 50%),
-              radial-gradient(circle at 40% 20%, rgba(255, 167, 51, 0.2) 0%, transparent 50%);
-  animation: pulse 8s ease-in-out infinite;
-}
-
-@keyframes moveBackground {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-[data-theme="dark"] .auth-container {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
 }
 
 [data-theme="dark"] .auth-container::before {
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 10px,
-    rgba(0, 255, 255, 0.02) 10px,
-    rgba(0, 255, 255, 0.02) 20px
-  );
-}
-
-[data-theme="dark"] .auth-container::after {
-  background: radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 40% 20%, rgba(0, 200, 255, 0.08) 0%, transparent 50%);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .auth-card {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 40px;
   width: 100%;
@@ -85,7 +39,6 @@
 
 [data-theme="dark"] .auth-card {
   background: rgba(51, 51, 51, 0.95);
-  backdrop-filter: blur(10px);
   color: white;
   box-shadow: 0 20px 60px rgba(0, 255, 255, 0.1);
 }
@@ -96,7 +49,7 @@
 }
 
 .auth-header h1 {
-  color: #ff8c00;
+  color: #ff9900;
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 8px 0;
@@ -150,7 +103,7 @@
 
 .input-group input:focus {
   outline: none;
-  border-color: #ff8c00;
+  border-color: #ff9900;
 }
 
 .auth-btn {
@@ -171,12 +124,12 @@
 }
 
 .auth-btn.primary {
-  background: #ff8c00;
+  background: #ff9900;
   color: white;
 }
 
 .auth-btn.primary:hover {
-  background: #e67c00;
+  background: #ff9900;
   transform: translateY(-2px);
 }
 
@@ -240,12 +193,12 @@
 .link-btn {
   background: none;
   border: none;
-  color: #ff8c00;
+  color: #ff9900;
   font-weight: 600;
   cursor: pointer;
   text-decoration: underline;
 }
 
 .link-btn:hover {
-  color: #e67c00;
+  color: #ff9900;
 }
