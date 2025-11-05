@@ -160,7 +160,6 @@
     background: linear-gradient(135deg, #ffd699, #ff9900);
     color: #2c2c2c;
     border: none;
-    padding: 15px 23px;
     border-radius: 15px;
     font-size: 14px;
     font-weight: 600;
@@ -169,15 +168,15 @@
     cursor: pointer;
     transition: all 0.35s ease;
     text-decoration: none;
-    width:45px;
-    height:15px;
+    width:80px;
+    height:43px;
+    text-align: center;
 }
 
 .signup-btn {
     background: linear-gradient(135deg, #dbdbdb, #6D6D6D);
     color: #2c2c2c;
     border: none;
-    padding: 15px 23px;
     border-radius: 15px;
     font-size: 14px;
     font-weight: 600;
@@ -186,8 +185,9 @@
     cursor: pointer;
     transition: all 0.35s ease;
     text-decoration: none;
-    width: 45px;
-    height:15px;
+    width: 120px;
+    height:43px;
+    text-align: center;
 }
 
 .login-btn:hover,

@@ -25,7 +25,8 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+    <Navbar/>
+      
       <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
@@ -42,7 +43,6 @@ const Login = () => {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleInputChange}
-              required
             />
           </div>
 
@@ -52,8 +52,7 @@ const Login = () => {
               name="password"
               placeholder="Password"
               value={formData.password}
-              onChange={handleInputChange}
-              required
+              onChange={handleInputChange}     
             />
           </div>
 

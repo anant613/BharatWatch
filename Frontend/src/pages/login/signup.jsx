@@ -59,17 +59,38 @@ const Signup = () => {
 
   return (
     <>
-      <Navbar />
+    <Navbar/>
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
             <h1>BharatWatch</h1>
             <h2>Create Account</h2>
-            <p>Join BharatWatch today</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="auth-form" noValidate>
-            {errors.server && <div className="form-error">{errors.server}</div>}
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="input-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                aria-label="Password"
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                required
+                aria-label="Confirm Password"
+              />
+            </div>
 
             <div className="input-group">
               <input
@@ -78,10 +99,8 @@ const Signup = () => {
                 placeholder="Full Name"
                 value={formData.name}
                 onChange={handleInputChange}
-                required
                 aria-label="Full Name"
               />
-              {errors.name && <div className="field-error">{errors.name}</div>}
             </div>
 
             <div className="input-group">
@@ -94,33 +113,6 @@ const Signup = () => {
                 required
                 aria-label="Email Address"
               />
-              {errors.email && <div className="field-error">{errors.email}</div>}
-            </div>
-
-            <div className="input-group password-row">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                aria-label="Password"
-              />
-              {errors.password && <div className="field-error">{errors.password}</div>}
-            </div>
-
-            <div className="input-group">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                required
-                aria-label="Confirm Password"
-              />
-              {errors.confirmPassword && <div className="field-error">{errors.confirmPassword}</div>}
             </div>
 
             <button type="submit" className="auth-btn primary" disabled={submitting}>
@@ -129,7 +121,7 @@ const Signup = () => {
           </form>
 
           <div className="auth-divider">
-            <span></span>
+            <span>or</span>
           </div>
 
           <div className="social-auth">
