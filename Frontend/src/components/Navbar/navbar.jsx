@@ -85,7 +85,7 @@ const Navbar = () => {
           {/* --- Auth Buttons --- */}
           <div className="navbar-links">
             <a href="/logIn" className="navbar-link login-btn">Login</a>
-            <a href="/signup" className="navbar-link signup-btn">Sign up</a>
+            <a href="/signup" className="navbar-link signup-btn">Signup</a>
           </div>
         </div>
       </nav>
@@ -131,7 +131,7 @@ const Navbar = () => {
             <img src= {NotificationLogo} className="icon" />
             <span>Notifications</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/settings')}>
             <img src= {SettingsLogo} className="icon" />
             <span>Settings</span></li>
           <li className="sidebar-item">

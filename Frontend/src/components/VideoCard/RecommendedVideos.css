@@ -29,7 +29,7 @@
 .see-more-text {
   background: none;
   border: none;
-  color: #ff8c00;
+  color: #ffad33;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -37,7 +37,7 @@
 }
 
 .see-more-text:hover {
-  color: #ffa733;
+  color: #ff9900;
   transform: translateX(3px);
 }
 

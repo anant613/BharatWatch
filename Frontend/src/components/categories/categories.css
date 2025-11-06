@@ -35,13 +35,13 @@
 
 .category-btn:hover {
   transform: scale(1.08);
-  background: linear-gradient(135deg, #ff6a00, #ffa733);
+  background: linear-gradient(135deg, #ff9900, #ffc266);
   color: white;
   box-shadow: 0 0 8px rgba(255, 165, 51, 0.4);
 }
 
 .category-btn.active {
-  background: linear-gradient(135deg, #ff6a00, #ffa733);
+  background: linear-gradient(135deg, #ff9900, #ffc266);
   color: white;
   font-weight: 600;
   transform: scale(1.1);
@@ -58,11 +58,11 @@
 }
 
 [data-theme="dark"] .category-btn:hover {
-  background: linear-gradient(135deg, #ffa733, #ff6a00);
+  background: linear-gradient(135deg, #ff9900, #ffc266);
   color: white;
 }
 
 [data-theme="dark"] .category-btn.active {
-  background: linear-gradient(135deg, #ffa733, #ff6a00);
+  background: linear-gradient(135deg, #ffc266, #ff9900);
   color: white;
 }

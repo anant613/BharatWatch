@@ -14,6 +14,7 @@ import downloadIcon from "./download.png";
 const VideoPlayer = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [showComments, setShowComments] = React.useState(false);
 
   return (
     <div>
@@ -94,11 +95,38 @@ const VideoPlayer = () => {
         </div>
         <div className="sidebar-section">
           <Adbar />
-          <button className="Content-btn">Content</button>
-          <button className="comment-btn">Comments</button>
-          <div className="recommended-sidebar">
-            <RecommendedVideos />
-          </div>
+          <button className={`Content-btn ${!showComments ? 'active' : ''}`} onClick={() => setShowComments(false)}>Content</button>
+          <button className={`comment-btn ${showComments ? 'active' : ''}`} onClick={() => setShowComments(true)}>Comments</button>
+          
+          {showComments ? (
+            <div className="comments-section">
+              <h3 className="comments-title">Comments</h3>
+              <div className="comment-input-box">
+                <input type="text" placeholder="Add a comment..." className="comment-input" />
+                <button className="comment-submit">Post</button>
+              </div>
+              <div className="comments-list">
+                <div className="comment-item">
+                  <img src={thumbnail} alt="User" className="comment-avatar" />
+                  <div className="comment-content">
+                    <p className="comment-author">User Name</p>
+                    <p className="comment-text">Great video! Really enjoyed it.</p>
+                  </div>
+                </div>
+                <div className="comment-item">
+                  <img src={thumbnail} alt="User" className="comment-avatar" />
+                  <div className="comment-content">
+                    <p className="comment-author">Another User</p>
+                    <p className="comment-text">Amazing content, keep it up!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="recommended-sidebar">
+              <RecommendedVideos />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -44,7 +44,7 @@
 }
 
 .hamburg-menu:hover .line {
-    background-color: #ff4d4d;
+    background-color: #ff9900;
 }
 
 .navbar-logo {
@@ -156,27 +156,46 @@
     gap: 20px;
 }
 
-.login-btn,
-.signup-btn {
-    background: linear-gradient(135deg, #ff9900, #ff4d00);
-    color: #fff;
+.login-btn {
+    background: linear-gradient(135deg, #ffd699, #ff9900);
+    color: #2c2c2c;
     border: none;
     padding: 15px 23px;
-    border-radius: 25px;
+    border-radius: 15px;
     font-size: 14px;
     font-weight: 600;
     font-family: 'Ubuntu', sans-serif;
     box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
     cursor: pointer;
     transition: all 0.35s ease;
+    text-decoration: none;
+    width:45px;
+    height:15px;
+}
+
+.signup-btn {
+    background: linear-gradient(135deg, #dbdbdb, #6D6D6D);
+    color: #2c2c2c;
+    border: none;
+    padding: 15px 23px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Ubuntu', sans-serif;
+    box-shadow: 0 2px 8px rgba(255, 77, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.35s ease;
+    text-decoration: none;
+    width: 45px;
+    height:15px;
 }
 
 .login-btn:hover,
 .signup-btn:hover {
     transform: scale(1.12);
     box-shadow: 0 4px 16px rgba(255, 77, 0, 0.5);
-    background: linear-gradient(135deg, #ffb347, #ff4500);
-    color: #000;
+    background: linear-gradient(135deg, #ff9900, #ff3b3b);
+    color: #f8f8f8;
 }
 
 .theme-toggle-button {

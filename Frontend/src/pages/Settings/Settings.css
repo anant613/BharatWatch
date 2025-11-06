@@ -1,0 +1,365 @@
+.settings-page {
+  min-height: 100vh;
+  background: var(--bg-color, #fff);
+  padding: 40px 20px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.settings-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 30px;
+}
+
+.settings-sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.settings-sidebar button {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.settings-sidebar button:hover {
+  background: #f5f5f5;
+}
+
+.settings-sidebar button.active {
+  background: linear-gradient(135deg, #ff9900, #ffd699);
+  color: #fff;
+}
+
+.settings-content {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.settings-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.settings-sidebar .user-info {
+  flex-direction: column;
+  text-align: center;
+}
+
+.login-prompt {
+  padding: 20px;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.login-prompt p {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-link {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #ffd699, #ff9900);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-link:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.4);
+}
+
+.login-required {
+  color: #ff9900;
+  font-size: 14px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #fff3e0;
+  border-radius: 6px;
+  border-left: 3px solid #ff9900;
+}
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff9900, #ff0000);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.settings-sidebar .user-avatar {
+  width: 80px;
+  height: 80px;
+  font-size: 32px;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.user-email {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0 0;
+}
+
+.settings-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.settings-section:last-of-type {
+  border-bottom: none;
+}
+
+.settings-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.setting-item span {
+  font-size: 16px;
+  color: #333;
+}
+
+.setting-item input[type="text"],
+.setting-item input[type="email"] {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.setting-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.setting-item select {
+  width: 150px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.action-link {
+  background: transparent;
+  border: 1px solid #ff9900;
+  color: #ff9900;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-link:hover {
+  background: #ff9900;
+  color: #fff;
+}
+
+.action-link.danger {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.action-link.danger:hover {
+  background: #ff0000;
+  color: #fff;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #ff9900, #ff4d00);
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(255, 77, 0, 0.5);
+}
+
+[data-theme="dark"] .settings-page {
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .settings-sidebar,
+[data-theme="dark"] .settings-content {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .settings-sidebar button {
+  color: #fff;
+}
+
+[data-theme="dark"] .settings-sidebar button:hover {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .settings-title {
+  color: #fff;
+}
+
+[data-theme="dark"] .user-info {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .user-name {
+  color: #fff;
+}
+
+[data-theme="dark"] .user-email {
+  color: #aaa;
+}
+
+[data-theme="dark"] .login-prompt {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .login-prompt p {
+  color: #aaa;
+}
+
+[data-theme="dark"] .login-required {
+  background: #2a2a2a;
+  color: #ff9900;
+}
+
+[data-theme="dark"] .settings-section {
+  border-bottom-color: #333;
+}
+
+[data-theme="dark"] .settings-section h2 {
+  color: #ddd;
+}
+
+[data-theme="dark"] .setting-item span {
+  color: #fff;
+}
+
+[data-theme="dark"] .setting-item input[type="text"],
+[data-theme="dark"] .setting-item input[type="email"],
+[data-theme="dark"] .setting-item select {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #fff;
+}
+
+[data-theme="dark"] .action-link {
+  border-color: #ff9900;
+  color: #ff9900;
+}
+
+[data-theme="dark"] .action-link:hover {
+  background: #ff9900;
+  color: #000;
+}
+
+@media (max-width: 900px) {
+  .settings-layout {
+    flex-direction: column;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+    position: relative;
+    top: 0;
+  }
+
+  .settings-sidebar .user-info {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .settings-sidebar .user-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-content {
+    padding: 20px;
+  }
+
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .setting-item input[type="text"],
+  .setting-item input[type="email"] {
+    width: 100%;
+  }
+}
