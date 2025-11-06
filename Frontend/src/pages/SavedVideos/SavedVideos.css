@@ -1,0 +1,103 @@
+.saved-page {
+  min-height: 100vh;
+  background: var(--bg-color, #fff);
+  padding: 20px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.saved-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.saved-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.login-prompt-box {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.login-prompt-box h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.login-prompt-box p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.auth-buttons .login-btn,
+.auth-buttons .signup-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-buttons .login-btn {
+  background: #fff;
+  color: #ff9900;
+  border: 2px solid #ff9900;
+}
+
+.auth-buttons .signup-btn {
+  background: #ff9900;
+  color: #fff;
+}
+
+.auth-buttons .login-btn:hover {
+  background: #ff9900;
+  color: #fff;
+}
+
+.auth-buttons .signup-btn:hover {
+  background: #e68a00;
+}
+
+[data-theme="dark"] .saved-page {
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .saved-title {
+  color: #fff;
+}
+
+[data-theme="dark"] .login-prompt-box {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .login-prompt-box h2 {
+  color: #fff;
+}
+
+[data-theme="dark"] .login-prompt-box p {
+  color: #aaa;
+}
+
+[data-theme="dark"] .auth-buttons .login-btn {
+  background: #1a1a1a;
+  border-color: #ff9900;
+}

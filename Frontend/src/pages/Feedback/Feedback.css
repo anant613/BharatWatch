@@ -1,0 +1,107 @@
+.feedback-page {
+  min-height: 100vh;
+  background: var(--bg-color, #fff);
+  padding: 20px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.feedback-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.feedback-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.feedback-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.feedback-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: "Ubuntu", sans-serif;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff9900;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #ff9900;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submit-btn:hover {
+  background: #e68a00;
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .feedback-page {
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .feedback-title {
+  color: #fff;
+}
+
+[data-theme="dark"] .feedback-subtitle {
+  color: #aaa;
+}
+
+[data-theme="dark"] .feedback-form {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .form-group label {
+  color: #fff;
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #fff;
+}

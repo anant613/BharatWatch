@@ -111,34 +111,31 @@ const Navbar = () => {
             <img src= {Homelogo} className="icon" />
             <span>Home</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/snips')}>
             <img src= {Reel} className="icon" />
             <span>Snips</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/trending')}>
             <img src= {Trendinglogo} className="icon" />
             <span>Trending</span>
           </li>
-          <li className="sidebar-item">
-            <img src= {Favorite} className="icon" />
-            <span>Favorites</span>
-          </li>
-          <li className="sidebar-item">
+          
+          <li className="sidebar-item" onClick={() => navigate('/saved')}>
             <img src= {save} className="icon" />
             <span>Saved Videos</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/notifications')}>
             <img src= {NotificationLogo} className="icon" />
             <span>Notifications</span>
           </li>
           <li className="sidebar-item" onClick={() => navigate('/settings')}>
             <img src= {SettingsLogo} className="icon" />
             <span>Settings</span></li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/feedback')}>
             <img src= {Feedbacklogo} className="icon" />
             <span>Feedback</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate('/help')}>
             <img src= {help} className="icon" />
             <span>Help</span>
           </li>
