@@ -84,8 +84,8 @@ const Navbar = () => {
 
           {/* --- Auth Buttons --- */}
           <div className="navbar-links">
-            <a href="/logIn" className="navbar-link login-btn">Login</a>
-            <a href="/signup" className="navbar-link signup-btn">Signup</a>
+             <button onClick={() => navigate("/login")} className="navbar-link login-btn">Login</button>
+             <button onClick={() => navigate("/signup")} className="navbar-link signup-btn">Get Started</button>
           </div>
         </div>
       </nav>
