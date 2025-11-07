@@ -1,0 +1,124 @@
+.help-page {
+  min-height: 100vh;
+  background: var(--bg-color, #fff);
+  padding: 20px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.help-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.help-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.help-subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.faq-section {
+  margin-bottom: 40px;
+}
+
+.faq-item {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.3s;
+}
+
+.faq-question:hover {
+  background: #f9f9f9;
+}
+
+.faq-icon {
+  font-size: 24px;
+  color: #ff9900;
+  font-weight: 600;
+}
+
+.faq-answer {
+  padding: 0 20px 18px 20px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.contact-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.contact-section h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.contact-section p {
+  font-size: 16px;
+  color: #666;
+}
+
+[data-theme="dark"] .help-page {
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .help-title {
+  color: #fff;
+}
+
+[data-theme="dark"] .help-subtitle {
+  color: #aaa;
+}
+
+[data-theme="dark"] .faq-item {
+  background: #1a1a1a;
+  border-color: #333;
+}
+
+[data-theme="dark"] .faq-question {
+  color: #fff;
+}
+
+[data-theme="dark"] .faq-question:hover {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .faq-answer {
+  color: #aaa;
+}
+
+[data-theme="dark"] .contact-section {
+  background: #1a1a1a;
+}
+
+[data-theme="dark"] .contact-section h2 {
+  color: #fff;
+}
+
+[data-theme="dark"] .contact-section p {
+  color: #aaa;
+}

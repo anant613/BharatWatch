@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./navbar.css"; // CSS file
 import logo from "../../logo.png";
 import darklogo from "../../logodark.png";
-import searchLight from "./search.png";
-import micLight from "./mic.png";
-import searchDark from "./search.dark.png";
-import micDark from "./micdark.png";
 import NotificationLogo from "./Notification.png";
 import Homelogo from "./home.png";
 import Reel from "./reel.png";
@@ -244,6 +240,34 @@ const Navbar = () => {
           </li>
           <li className="sidebar-item">
             <img src={help} className="icon" alt="Help" />
+            <span>Help</span>
+          </li>
+          <li className="sidebar-item" onClick={() => navigate('/snips')}>
+            <img src= {Reel} className="icon" />
+            <span>Snips</span>
+          </li>
+          <li className="sidebar-item" onClick={() => navigate('/trending')}>
+            <img src= {Trendinglogo} className="icon" />
+            <span>Trending</span>
+          </li>
+          
+          <li className="sidebar-item" onClick={() => navigate('/saved')}>
+            <img src= {save} className="icon" />
+            <span>Saved Videos</span>
+          </li>
+          <li className="sidebar-item" onClick={() => navigate('/notifications')}>
+            <img src= {NotificationLogo} className="icon" />
+            <span>Notifications</span>
+          </li>
+          <li className="sidebar-item" onClick={() => navigate('/settings')}>
+            <img src= {SettingsLogo} className="icon" />
+            <span>Settings</span></li>
+          <li className="sidebar-item" onClick={() => navigate('/feedback')}>
+            <img src= {Feedbacklogo} className="icon" />
+            <span>Feedback</span>
+          </li>
+          <li className="sidebar-item" onClick={() => navigate('/help')}>
+            <img src= {help} className="icon" />
             <span>Help</span>
           </li>
           <li className="sidebar-item theme-toggle" onClick={toggleTheme}>
