@@ -70,6 +70,28 @@ const Signup = () => {
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="input-group">
               <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleInputChange}
+                aria-label="Full Name"
+              />
+            </div>
+
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                aria-label="Email Address"
+              />
+            </div>
+            <div className="input-group">
+              <input
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -89,29 +111,6 @@ const Signup = () => {
                 onChange={handleInputChange}
                 required
                 aria-label="Confirm Password"
-              />
-            </div>
-
-            <div className="input-group">
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                value={formData.name}
-                onChange={handleInputChange}
-                aria-label="Full Name"
-              />
-            </div>
-
-            <div className="input-group">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                aria-label="Email Address"
               />
             </div>
 
