@@ -41,6 +41,7 @@
 }
 
 .category-btn.active {
+  margin-left: 10px;
   background: linear-gradient(135deg, #ff9900, #ffc266);
   color: white;
   font-weight: 600;
