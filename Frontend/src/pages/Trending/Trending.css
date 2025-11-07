@@ -1,0 +1,27 @@
+.trending-page {
+  min-height: 100vh;
+  background: var(--bg-color, #fff);
+  padding: 20px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.trending-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.trending-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+[data-theme="dark"] .trending-page {
+  background: #0f0f0f;
+}
+
+[data-theme="dark"] .trending-title {
+  color: #fff;
+}

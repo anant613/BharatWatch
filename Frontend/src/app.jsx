@@ -9,6 +9,11 @@ import Login from "./pages/login/logIn";
 import Signup from "./pages/login/signup";
 import VideoPlayer from "./pages/videoplayer/VideoPlayer";
 import Settings from "./pages/Settings/Settings";
+import Trending from "./pages/Trending/Trending";
+import SavedVideos from "./pages/SavedVideos/SavedVideos";
+import Notifications from "./pages/Notifications/Notifications";
+import Feedback from "./pages/Feedback/Feedback";
+import Help from "./pages/Help/Help";
 
 const HomePage = () => (
   <div className="app-container">
@@ -32,6 +37,11 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/videoplayer/:id" element={<VideoPlayer />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/trending" element={<Trending />} />
+        <Route path="/saved" element={<SavedVideos />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
     </Router>
   );

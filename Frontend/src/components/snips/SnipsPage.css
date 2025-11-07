@@ -20,6 +20,7 @@ body, html {
 
 /* Left - Centered Reel Image */
 .reel-left-align {
+  margin-right: 10%;
   display: flex;
   justify-content: flex-end;
   flex: 1;
@@ -138,7 +139,12 @@ body, html {
 
 /* Right Major Stack */
 .reel-right-stack {
-  flex: 1.5;
+  margin-right: 3%;
+  width: 340px;
+  min-width: 290px;
+  max-width: 360px;
+  margin-left: 25px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   /* gap: 21px; */
@@ -148,17 +154,15 @@ body, html {
 
 /* AD box */
 .ad-box-ui {
-  height: 140px;
-  background: #e6e6e6;
-  font-size: 32px;
-  font-weight: 600;
-  color: #555;
-  text-align: center;
-  padding-top: 48px;
-  margin-bottom: 16px;
-  box-shadow: 0 3px 16px #0001;
-  /* border-radius: 17px; */
+  width: 100%;
+  height: 180px;
+  border-radius: 17px;
+  overflow: hidden;
+  background: #ddd;
+  box-shadow: 0 4px 18px #0001;
+  margin-bottom: 22px;
 }
+
 
 /* Below: Like/Share and Comments - same row */
 .action-comment-row {
@@ -169,14 +173,12 @@ body, html {
 
 /* Vertical Actionbar Gap */
 .vertical-actionbar-ui.clean-actionbar {
-  background: none;
-  box-shadow: none;
-  border-radius: 0;
-  gap: 13px;
-  padding: 0;
+   min-height: 600px;   /* same as reel-img-box height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  min-width: unset;
-  max-width: unset;
+  margin-right: 18px;
 }
 
 /* MAIN CIRCLE BUTTON (big, neat) */
@@ -206,7 +208,7 @@ body, html {
   border-radius: 50%;
   display: block;
   background: none;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
   box-shadow: 0 0 0 0 transparent;
 }
 
@@ -280,7 +282,7 @@ body, html {
   border-radius: 17px;
   display: flex;
   align-items: center;
-  background: #E4E4E4;
+  background: #B3B3B3;
   min-height: 62px;
   padding: 2px 25px 2px 17px;
   gap: 16px;
@@ -288,7 +290,7 @@ body, html {
 }
 
 .follow-btn {
-  background: #FB9600;
+  background: #FFC266;
   color: #000000;
   border: none;
   border-radius: 9px;
@@ -306,8 +308,13 @@ body, html {
 
 .follow-btn.following:hover { background: #dadada; color: #008d0c; }
 
-
-
+.profile-username {
+  font-size: 13px;
+  color: #555;
+  font-weight: 400;
+  margin-top: -1px;
+  letter-spacing: 0.01rem;
+}
 
 .profile-headpic {
   width: 44px;
@@ -332,22 +339,27 @@ body, html {
 /* Comments Card (right of action bar) */
 
 .comments-list-ui {
-  margin-left: 4%;
-  margin-top: 8px;
+  min-height: 70px;  
+  
+  font-size: 11px;
+  padding: 8px 12px;
+  margin-bottom: 9px;
   flex: 1;
   overflow-y: auto;           /* Most important: enable scroll */
-  max-height: 155px;          /* As per need, kitna portion scrollable ho */
+ /* As per need, kitna portion scrollable ho */
   /* Optional: for smooth aesthetic */
   scrollbar-width: thin;
   scrollbar-color: #888 #B3B3B3;
 }
 
 .comment-header-ui {
+  align-items: center; 
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  font-size: 13px;
+  margin-bottom: 7px;
   font-weight: 500;
-  margin-bottom: 11px;
+  
 }
 .comment-input-row {
   display: flex;
@@ -356,54 +368,113 @@ body, html {
   margin-left: 8px; /* optional, thoda alignment ke liye */
   margin-bottom: 14px;
 }
-.comment-input-ui {
-  flex: 1;
-}
 
 .comment-input-ui {
+  margin-top:  3%;
+  font-size: 11px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
   margin-right: 7%;
+    flex: 1;
   width: 93%;
   margin-bottom: 14px;
-  padding: 13px 16px;
+  /* padding: 13px 16px; */
   border-radius: 30px;
   border: none;
   background: #222;
   color: #fff;
-  font-size: 15px;
+  /* font-size: 15px; */
   box-shadow: 0 1px 6px #0003;
 }
 .comment-input-ui::placeholder {
+  font-size: 11px !important;
   color: #fff !important;
   opacity: 1;          /* Make sure it's opaque/visible */
 }
 .comment-card-ui {
-  background: #B3B3B3;
-  border-radius: 18px;
-  padding: 22px 22px 15px 22px;
-  color: #000000;
-  min-height: 180px;         /* Thoda chhota/medium height */
-  max-height: 260px;         /* Yeh final height jiska andar scroll ho */
-  box-shadow: 0 2px 20px #0001;
-  flex: 1;
-  /* width: 100%; */
+  min-height: 300px;        /* jitna fix card chahiye utna do */
+  max-height: 300px;        /* same as min-height for exact height */
   display: flex;
   flex-direction: column;
-  margin-bottom: 0; 
+  justify-content: flex-start;
+
+  font-size: 11px;
+  padding: 14px 12px 10px 12px;
+  /* min-height: 110px; */
+  /* justify-content: space-between; */
+  background: #B3B3B3;
+  border-radius: 18px 18px 0 0;  /* new: only top corners rounded */
+  color: #000000;
+  box-shadow: 0 2px 20px #0001;
+  flex: 1;
+  /* display: flex; */
+  flex-direction: column;
+  margin-bottom: 0;
 }
+
 
 .comment-row-ui {
   display: flex;
-  gap: 11px;
-  margin-bottom: 13px;
+  gap: 6px;
+  margin-bottom: 6%;
   align-items: flex-start;
 }
+.comment-row-ui > div > p {
+  margin: 4px 0 1px 0; /* comment text ke upar-niche ka gap minimum */
+  font-size: 12px;
+  line-height: 1.25;
+}
+.comment-row-ui > div > span {
+  margin: 5px 0 1px 0;
+  font-size: 13px;
+  color: #000000;
+}
+
 .comment-userimg-ui {
-  width: 33px;
-  height: 33px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
-.user { font-weight: 600; font-size: 14px; }
-.comment-actions-ui span { color: #000000; font-size: 13px; margin-right: 9px; }
+.user { font-weight: 600;
+        font-size: 12px; }
+.comment-actions-ui span { color: #000000;  font-size: 10px;
+  margin-right: 5px;
+margin-bottom: 0;
+flex-direction: row;
+gap: 20px; 
+}
+/* .comment-actions-ui{
+  flex-direction: row;
+  gap: 50px;
+} */
+.action-btnn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* gap: 2px; */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.action-btnn svg {
+  font-size: 10px;
+  color: #222;
+  /* margin-bottom: 2px; */
+}
+
+.action-label {
+  font-size: 11px;
+  color: #333;
+  font-weight: 500;
+}
+
+.action-count {
+  font-size: 10px;
+  color: #7b7b7be0;
+  margin-top: 1px;
+}
 
 
 .scroll-arrows-fixed {
