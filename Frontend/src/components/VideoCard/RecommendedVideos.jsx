@@ -4,11 +4,12 @@ import "./RecommendedVideos.css";
 
 import blog1 from './cs-1.jpg';
 import demoProfilePic from './cs-1.jpg'; // Demo user photo
+import sundar from "./sundar pichayi.jpeg";
 
 const demoImages = [
   {
-    url: blog1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
@@ -120,9 +121,9 @@ const RecommendedVideos = ({ videos = [] }) => {
 
             <div className="video-profile">
               <img
-                src={demoProfilePic}
+                src={sundar}
                 className="profile-pic"
-                alt={item.author || "Creator"}
+                alt={"item.author" || "Creator"}
               />
               <span className="profile-name">
                 {item.author || "Unknown Creator"} |{" "}

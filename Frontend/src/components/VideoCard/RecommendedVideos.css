@@ -102,6 +102,8 @@
 .video-submeta {
   display: flex;
   align-items: center;
+  padding-left: 15px;
+  /* justify-content: flex-end; */
   gap: 10px;
 }
 

@@ -5,6 +5,7 @@ import Adbar from './adbar';
 import RecommendedVideos from '../../components/VideoCard/RecommendedVideos';
 import './Videopalyer.css'; // fixed typo
 import thumbnail from '../../components/VideoCard/cs-1.jpg';
+import modiji from "./modiji.jpeg"
 import backlogo from './back.png';
 
 const VideoPlayer = () => {
@@ -54,7 +55,7 @@ const VideoPlayer = () => {
               <video
                 ref={videoRef}
                 className="video-el"
-                poster={thumbnail}
+                poster={modiji}
                 preload="metadata"
                 // TODO: replace with your actual source
                 src="/videos/demo.mp4"
@@ -62,22 +63,22 @@ const VideoPlayer = () => {
                 onPause={() => setIsPlaying(false)}
                 controls={false}
               />
-              <div className="video-controls-overlay">
-                <button
+              {/* <div className="video-controls-overlay"> */}
+                {/* <button
                   className="control-btn back-btn"
                   onClick={handleBack}
                   aria-label="Go Back"
                 >
                   <img src={backlogo} alt="Back" className="back-icon" />
-                </button>
-                <button
+                </button> */}
+                {/* <button
                   className="control-btn play-btn"
                   onClick={handlePlayPause}
                   aria-label={isPlaying ? 'Pause' : 'Play'}
                 >
                   {isPlaying ? '⏸' : '▶'}
                 </button>
-              </div>
+              </div> */}
 
               <div className="video-bottom-controls">
                 <div className="progress-bar">
@@ -101,7 +102,7 @@ const VideoPlayer = () => {
                     </button>
                     <span className="time">
                       {/* dummy time text; wire up with timeupdate if you want */}
-                      0:00 / 10:00
+                      3:48 / 10:00
                     </span>
                   </div>
 
@@ -212,7 +213,7 @@ const VideoPlayer = () => {
               <div className="channel-info">
                 <img src={thumbnail} alt="Channel avatar" className="channel-avatar" />
                 <div>
-                  <p className="channel-name">Demo Creator</p>
+                  <p className="channel-name">Future creator</p>
                   <p className="channel-subs">100K subscribers</p>
                 </div>
                 <button className="subscribe-btn">Follow</button>
