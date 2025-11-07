@@ -161,7 +161,7 @@
   background: none;
   cursor: pointer;
   transition: transform 0.2s ease;
-  background-color: #666;
+  /* background-color: #666; */
 }
 
 .circle-action-btn:hover {
