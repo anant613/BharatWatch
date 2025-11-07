@@ -179,6 +179,7 @@
   background: transparent;
   cursor: pointer;
   transition: transform 0.2s ease;
+  /* background-color: #666; */
   padding: 8px;
   border-radius: 8px;
 }
