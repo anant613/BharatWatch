@@ -11,23 +11,28 @@ import img7 from './images/profile6.jpeg';
 import img8 from './images/profile7.jpeg';
 import img9 from './images/profile8.jpeg';
 import img10 from './images/profile9.jpeg';
+import img11 from './images/profile10.jpeg';
+import img12 from './images/profile11.png';
+import img13 from './images/profile12.jpeg';
+import img14 from './images/profile13.jpeg';
+
 
 const demoSnips = [
   { url: img4, title: "Demo 2" },
   { url: img5, title: "Demo 1" },
   { url: img6, title: "Demo 2" },
   { url: img3, title: "Demo 2" },
-  { url: img4, title: "Demo 2" },
-  { url: img5, title: "Demo 1" },
-  { url: img6, title: "Demo 2" },
-    { url: img1, title: "Demo 1" },
-  { url: img2, title: "Demo 2" },
-  { url: img7, title: "Demo 2" },
   { url: img8, title: "Demo 2" },
   { url: img9, title: "Demo 1" },
   { url: img10, title: "Demo 2" },
+  { url: img14, title: "Demo 1" },
+  { url: img12, title: "Demo 2" },
+  { url: img13, title: "Demo 2" },
+  { url: img7, title: "Demo 2" },
+  { url: img9, title: "Demo 1" },
+  { url: img10, title: "Demo 2" },
   { url: img3, title: "Demo 2" },
-  { url: img2, title: "Demo 2" },
+  { url: img7, title: "Demo 2" },
   { url: img3, title: "Demo 1" },
   { url: img2, title: "Demo 2" },
   { url: img3, title: "Demo 2" },
