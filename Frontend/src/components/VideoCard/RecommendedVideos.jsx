@@ -4,79 +4,89 @@ import "./RecommendedVideos.css";
 
 import blog1 from './cs-1.jpg';
 import demoProfilePic from './cs-1.jpg'; // Demo user photo
+import thumb1 from './thum1.png';
+import thumb2 from './thum2.png';
+import thumb3 from './thum3.png';
+import thumb4 from './thum4.png';
 
 const demoImages = [
   {
-    url: blog1,
+    url: thumb1,
+    title: "Hitler Biography | World war 2 ",
+    author: "Documentary",
+    views: "9.8k Views",
+    time: "6 Days Ago"
+  },
+  {
+    url: thumb2,
+    title: "The Rise and Fall of Mughal Empire | Animated India ",
+    author: " Animated India",
+    views: "3 Million Views",
+    time: "12 Years Ago"
+  },
+  {
+    url: thumb3,
+    title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
+    author: "Shushant Upadhyay",
+    views: "110k Views",
+    time: "2 Days Ago"
+  },
+  {
+    url: thumb4,
+    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field | Shushant Upadhyay",
+    author: "Shushant Upadhyay",
+    views: "110k Views",
+    time: "2 Days Ago"
+  },
+  {
+    url: thumb1,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb2,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb3,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb1,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb2,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb3,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
   {
-    url: blog1,
+    url: thumb1,
     title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
     author: "Demo Creator",
     views: "2.1K Views",
     time: "2 Days Ago"
   },
-  {
-    url: blog1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  {
-    url: blog1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  {
-    url: blog1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  // ...add more objects as needed
 ];
 
 const RecommendedVideos = ({ videos = [] }) => {
