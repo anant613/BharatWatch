@@ -103,6 +103,8 @@
   margin-left: 12px;
   display: flex;
   align-items: center;
+  padding-left: 15px;
+  /* justify-content: flex-end; */
   gap: 10px;
 }
 

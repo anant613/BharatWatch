@@ -1,7 +1,9 @@
 import express from "express"
 import cors from "cors"
+import cookieparser from 
 
 const app = express()
+
 app.use(cors({
     origin:[
         "http://localhost:3000",

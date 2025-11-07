@@ -4,18 +4,15 @@ import "./RecommendedVideos.css";
 
 import blog1 from './cs-1.jpg';
 import demoProfilePic from './cs-1.jpg'; // Demo user photo
-import thumb1 from './thum1.png';
-import thumb2 from './thum2.png';
-import thumb3 from './thum3.png';
-import thumb4 from './thum4.png';
+import sundar from "./sundar pichayi.jpeg";
 
 const demoImages = [
   {
-    url: thumb1,
-    title: "Hitler Biography | World war 2 ",
-    author: "Documentary",
-    views: "9.8k Views",
-    time: "6 Days Ago"
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
+    author: "Demo Creator",
+    views: "2.1K Views",
+    time: "2 Days Ago"
   },
   {
     url: thumb2,
@@ -130,9 +127,9 @@ const RecommendedVideos = ({ videos = [] }) => {
 
             <div className="video-profile">
               <img
-                src={demoProfilePic}
+                src={sundar}
                 className="profile-pic"
-                alt={item.author || "Creator"}
+                alt={"item.author" || "Creator"}
               />
               <span className="profile-name">
                 {item.author || "Unknown Creator"} |{" "}
