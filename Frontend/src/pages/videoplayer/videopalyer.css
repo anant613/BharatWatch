@@ -170,7 +170,7 @@
   flex-wrap: wrap;
 }
 
-.circle-action-btn {
+.video-circle-action-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,14 +178,14 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  /* transition: transform 0.2s ease; */
   /* background-color: #666; */
   padding: 8px;
   border-radius: 8px;
 }
 
-.circle-action-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
+.video-circle-action-btn:hover {
+  background: rgba(145, 145, 145, 0.05);
 }
 
 
