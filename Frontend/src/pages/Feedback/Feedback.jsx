@@ -6,13 +6,33 @@ const Feedback = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    category: "general",
     message: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const feedbackCategories = [
+    { value: "general", label: "General Feedback" },
+    { value: "bug", label: "Bug Report" },
+    { value: "feature", label: "Feature Request" },
+    { value: "content", label: "Content Issue" },
+    { value: "performance", label: "Performance Issue" }
+  ];
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Thank you for your feedback!");
-    setFormData({ name: "", email: "", message: "" });
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      setSubmitted(true);
+      setIsSubmitting(false);
+      setFormData({ name: "", email: "", category: "general", message: "" });
+      
+      // Reset success message after 3 seconds
+      setTimeout(() => setSubmitted(false), 3000);
+    }, 1000);
   };
 
   return (
@@ -23,39 +43,98 @@ const Feedback = () => {
           <h1 className="feedback-title">Feedback</h1>
           <p className="feedback-subtitle">We'd love to hear from you!</p>
           
-          <form className="feedback-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                required
-              />
+          {submitted ? (
+            <div className="success-message">
+              <div className="success-icon">✓</div>
+              <h3>Thank you for your feedback!</h3>
+              <p>We appreciate your input and will review it shortly.</p>
             </div>
-            
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                required
-              />
+          ) : (
+            <form className="feedback-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Name *</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    required
+                    placeholder="Enter your name"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    required
+                    placeholder="Enter your email"
+                  />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label>Category *</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({...formData, category: e.target.value})}
+                  required
+                >
+                  {feedbackCategories.map(cat => (
+                    <option key={cat.value} value={cat.value}>{cat.label}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label>Message *</label>
+                <textarea
+                  rows="6"
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  required
+                  placeholder="Please describe your feedback in detail..."
+                />
+              </div>
+              
+              <button 
+                type="submit" 
+                className="submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+              </button>
+            </form>
+          )}
+          
+          <div className="feedback-info">
+            <h3>Other ways to reach us:</h3>
+            <div className="contact-methods">
+              <div className="contact-item">
+                <span className="contact-icon">📧</span>
+                <div>
+                  <strong>Email</strong>
+                  <p>support@bharatwatch.com</p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">📞</span>
+                <div>
+                  <strong>Phone</strong>
+                  <p>+91 12345 67890</p>
+                </div>
+              </div>
+              <div className="contact-item">
+                <span className="contact-icon">📍</span>
+                <div>
+                  <strong>Address</strong>
+                  <p>123 Tech Street, Mumbai, India</p>
+                </div>
+              </div>
             </div>
-            
-            <div className="form-group">
-              <label>Message</label>
-              <textarea
-                rows="6"
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                required
-              />
-            </div>
-            
-            <button type="submit" className="submit-btn">Submit Feedback</button>
-          </form>
+          </div>
         </div>
       </div>
     </>

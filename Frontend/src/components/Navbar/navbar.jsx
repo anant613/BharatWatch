@@ -214,19 +214,15 @@ const Navbar = () => {
             <img src={Reel} className="icon" alt="Snips" />
             <span>Snips</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/trending")}>
             <img src={Trendinglogo} className="icon" alt="Trending" />
             <span>Trending</span>
           </li>
-          <li className="sidebar-item">
-            <img src={Favorite} className="icon" alt="Favorites" />
-            <span>Favorites</span>
-          </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/saved")}>
             <img src={save} className="icon" alt="Saved Videos" />
             <span>Saved Videos</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/notifications")}>
             <img src={NotificationLogo} className="icon" alt="Notifications" />
             <span>Notifications</span>
           </li>
@@ -234,40 +230,12 @@ const Navbar = () => {
             <img src={SettingsLogo} className="icon" alt="Settings" />
             <span>Settings</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/feedback")}>
             <img src={Feedbacklogo} className="icon" alt="Feedback" />
             <span>Feedback</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/help")}>
             <img src={help} className="icon" alt="Help" />
-            <span>Help</span>
-          </li>
-          <li className="sidebar-item" onClick={() => navigate('/snips')}>
-            <img src= {Reel} className="icon" />
-            <span>Snips</span>
-          </li>
-          <li className="sidebar-item" onClick={() => navigate('/trending')}>
-            <img src= {Trendinglogo} className="icon" />
-            <span>Trending</span>
-          </li>
-          
-          <li className="sidebar-item" onClick={() => navigate('/saved')}>
-            <img src= {save} className="icon" />
-            <span>Saved Videos</span>
-          </li>
-          <li className="sidebar-item" onClick={() => navigate('/notifications')}>
-            <img src= {NotificationLogo} className="icon" />
-            <span>Notifications</span>
-          </li>
-          <li className="sidebar-item" onClick={() => navigate('/settings')}>
-            <img src= {SettingsLogo} className="icon" />
-            <span>Settings</span></li>
-          <li className="sidebar-item" onClick={() => navigate('/feedback')}>
-            <img src= {Feedbacklogo} className="icon" />
-            <span>Feedback</span>
-          </li>
-          <li className="sidebar-item" onClick={() => navigate('/help')}>
-            <img src= {help} className="icon" />
             <span>Help</span>
           </li>
           <li className="sidebar-item theme-toggle" onClick={toggleTheme}>
