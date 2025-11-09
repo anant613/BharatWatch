@@ -22,6 +22,14 @@ body, * {
   margin: 0;
   letter-spacing: 0.011em;
 }
+.yt-d-count {
+  color: #f59e29;
+  font-size: 1.16rem;
+  font-weight: 700;
+  margin-left: 2px;
+  letter-spacing: .01em;
+}
+
 .yt-d-settings-btn {
   padding: 7px 20px;
   background: #fff;
