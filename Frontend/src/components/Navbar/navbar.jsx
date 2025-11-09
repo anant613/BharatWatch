@@ -17,7 +17,7 @@ import themeLogo from "./theme.png";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [userName, setUserName] = useState("User123");
@@ -27,6 +27,7 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   useEffect(() => {
