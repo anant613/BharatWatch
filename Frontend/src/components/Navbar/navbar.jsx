@@ -129,10 +129,10 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <button className="navbar-link notification-btn">
+                <button className="navbar-link notification-btn" onClick={() => navigate("/notifications")}>
                   <svg
-                    width="35"
-                    height="35"
+                    width="30"
+                    height="30"
                     viewBox="0 0 50 50"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                <button className="navbar-link download-btn">
+                <button className="navbar-link download-btn" onClick={() => navigate("/downloads")}>
                   <svg
                     width="38"
                     height="38"
@@ -210,7 +210,7 @@ const Navbar = () => {
             <img src={Homelogo} className="icon" alt="Home" />
             <span>Home</span>
           </li>
-          <li className="sidebar-item">
+          <li className="sidebar-item" onClick={() => navigate("/snips")}>
             <img src={Reel} className="icon" alt="Snips" />
             <span>Snips</span>
           </li>
