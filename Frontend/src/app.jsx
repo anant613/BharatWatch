@@ -5,6 +5,7 @@ import Snips from "./components/Snips/Snips";
 import SnipsPage from "./components/Snips/SnipsPage";
 import Categories from "./components/categories/Categories";
 import RecommendedVideos from "./components/VideoCard/RecommendedVideos";
+import Downloads from './pages/downloads/Download';
 import Login from "./pages/login/logIn";
 import Signup from "./pages/login/signup";
 import VideoPlayer from "./pages/videoplayer/VideoPlayer";
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/videoplayer/:id" element={<VideoPlayer />} />
+        <Route path="/downloads" element={<Downloads />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/saved" element={<SavedVideos />} />
