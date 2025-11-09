@@ -20,6 +20,11 @@ const Navbar = () => {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
+  
+  // Set token in localStorage to simulate logged in user
+  useEffect(() => {
+    localStorage.setItem('token', 'mock-user-token');
+  }, []);
   const [userName, setUserName] = useState("User123");
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
@@ -130,7 +135,10 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <button className="navbar-link notification-btn">
+                <button 
+                  className="navbar-link notification-btn"
+                  onClick={() => navigate("/notifications")}
+                >
                   <svg
                     width="35"
                     height="35"
@@ -144,7 +152,10 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                <button className="navbar-link download-btn">
+                <button 
+                  className="navbar-link download-btn"
+                  onClick={() => navigate("/saved")}
+                >
                   <svg
                     width="38"
                     height="38"
