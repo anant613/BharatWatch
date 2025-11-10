@@ -1,144 +1,152 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecommendedVideos.css";
-
-import blog1 from './cs-1.jpg';
-import demoProfilePic from './cs-1.jpg'; // Demo user photo
 import sundar from './sundar pichayi.jpeg';
-import thum1 from './thum1.png';
+// import thum1 from './thum1.png';
 import thum2 from './thum2.png';
 import thum3 from './thum3.png';
 import thum4 from './thum4.png';
+import profile1 from './profile9.jpeg'; // Alag alag ya ek hi photo bhi chalega
 
 const demoImages = [
   {
     url: sundar,
     title: "Google deemed exposed | Sundar",
-    author: "Demo Creator",
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    profile: profile1,
     views: "2.1K Views",
-    time: "2 Days Ago"
+    time: "2 Days Ago",
   },
   {
     url: thum2,
     title: "The Rise and Fall of Mughal Empire | Animated India ",
-    author: " Animated India",
-    views: "3 Million Views",
-    time: "12 Years Ago"
+    author: "Animated India",
+    profile: profile1,
+    views: "30M Views",
+    time: "12 Years Ago",
   },
   {
     url: thum3,
     title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
-    author: "Shushant Upadhyay",
+    author: "Shushant Upadhyay",  
+    profile: profile1,
     views: "110k Views",
-    time: "2 Days Ago"
+    time: "2 Days Ago",
   },
   {
     url: thum4,
-    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field | Shushant Upadhyay",
+    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field",
     author: "Shushant Upadhyay",
+    profile: profile1,
     views: "110k Views",
-    time: "2 Days Ago"
+    time: "2 Days Ago",
   },
   {
-    url: thum1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    profile: profile1,
     views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  {
-    url: thum2,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  {
-    url: thum3,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
-  },
-  {
-    url: thum1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
+    time: "2 Days Ago",
   },
   {
     url: thum2,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
+    title: "The Rise and Fall of Mughal Empire | Animated India ",
+    author: "Animated India",
+    profile: profile1,
+    views: "30M Views",
+    time: "12 Years Ago",
   },
   {
     url: thum3,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
+    title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
+    author: "Shushant Upadhyay",  
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
   },
   {
-    url: thum1,
-    title: "ULLU KHI KA HATT YAAR | NEW HINDI SHORT FILM 2023",
-    author: "Demo Creator",
-    views: "2.1K Views",
-    time: "2 Days Ago"
+    url: thum4,
+    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field",
+    author: "Shushant Upadhyay",
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
   },
+  {
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    profile: profile1,
+    views: "2.1K Views",
+    time: "2 Days Ago",
+  },
+  {
+    url: thum2,
+    title: "The Rise and Fall of Mughal Empire | Animated India ",
+    author: "Animated India",
+    profile: profile1,
+    views: "30M Views",
+    time: "12 Years Ago",
+  },
+  {
+    url: thum3,
+    title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
+    author: "Shushant Upadhyay",  
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
+  },
+  {
+    url: thum4,
+    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field",
+    author: "Shushant Upadhyay",
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
+  },
+  // ...rest
 ];
 
 const RecommendedVideos = ({ videos = [] }) => {
   const navigate = useNavigate();
   const itemsToShow = videos.length > 0 ? videos : demoImages;
-  const isRealVideos = videos.length > 0;
 
   return (
-    <section className="recommended-section">
-      <div className="recommended-header">
-        <h2 className="recommended-title">Recommended Videos</h2>
-        <span className="see-more-text">See More →</span>
+    <section className="yt-recommended-section">
+      <div className="yt-recommended-header">
+        <h2 className="yt-recommended-title">Recommended Videos</h2>
+        <span className="yt-see-more-text">See More →</span>
       </div>
-
-      <div className="videos-grid">
+      <div className="yt-recommended-grid">
         {itemsToShow.map((item, index) => (
-          <div className="video-card" key={index} onClick={() => navigate(`/videoplayer/${index}`)} style={{cursor: 'pointer'}}>
-            {isRealVideos ? (
-              <video
-                className="video-thumbnail"
-                src={item.url}
-                muted
-                loop
-                playsInline
-              />
-            ) : (
+          <div
+            className="yt-rec-card"
+            key={index}
+            onClick={() => navigate(`/videoplayer/${index}`)}
+            tabIndex={0}
+          >
+            <div className="yt-rec-thumb-wrap">
               <img
-                className="video-thumbnail"
+                className="yt-rec-thumb"
                 src={item.url}
                 alt={item.title || "Demo thumbnail"}
               />
-            )}
-
-            <div className="video-meta">
-              <h4 className="video-title">{item.title || "Untitled Video"}</h4>
-              <div className="video-submeta">
-                <span className="video-views">{item.views || ""}</span>
-                <span className="video-time">{item.time || ""}</span>
-              </div>
             </div>
-
-            <div className="video-profile">
-              <img
-                src={sundar}
-                className="profile-pic"
-                alt={"item.author" || "Creator"}
-              />
-              <span className="profile-name">
-                {item.author || "Unknown Creator"} |{" "}
-              </span>
-              <span className="profile-type">AI Content</span>
+            <div className="yt-rec-info">
+              <div className="yt-rec-title">{item.title || "Untitled Video"}</div>
+              <div className="yt-rec-metarow">
+                <img
+                  src={item.profile}
+                  alt={item.author}
+                  className="yt-rec-profile"
+                />
+                <span className="yt-rec-channel">{item.author}</span>
+                <span className="yt-rec-dot">•</span>
+                <span>{item.views}</span>
+                <span className="yt-rec-dot">•</span>
+                <span>{item.time}</span>
+              </div>
             </div>
           </div>
         ))}
