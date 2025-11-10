@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import thum1 from "./thum1.png";
 import thum2 from "./thum2.png";
 import thum3 from "./thum3.png";
+import profile from "./profile3.jpeg";
 
 const downloads = [
   {
@@ -15,6 +16,7 @@ const downloads = [
     views: "227K views",
     days: "5 days ago",
     length: "1:28",
+    profile: profile,
   },
   {
     thumbnail: thum2,
@@ -23,6 +25,7 @@ const downloads = [
     views: "339 views",
     days: "22 hours ago",
     length: "15:17",
+    profile: profile,
   },
   {
     thumbnail: thum3,
@@ -31,6 +34,7 @@ const downloads = [
     views: "17M views",
     days: "1 day ago",
     length: "1:58",
+    profile: profile,
   },
   {
     thumbnail: thum3,
@@ -39,6 +43,7 @@ const downloads = [
     views: "17M views",
     days: "1 day ago",
     length: "1:58",
+    profile: profile,
   },
   {
     thumbnail: thum3,
@@ -47,6 +52,7 @@ const downloads = [
     views: "17M views",
     days: "1 day ago",
     length: "1:58",
+    profile: profile,
   },
 
   {
@@ -56,6 +62,7 @@ const downloads = [
     views: "17M views",
     days: "1 day ago",
     length: "1:58",
+    profile: profile,
   },
   {
     thumbnail: thum3,
@@ -64,8 +71,9 @@ const downloads = [
     views: "17M views",
     days: "1 day ago",
     length: "1:58",
+    profile: profile,
   },
-  
+
   // ...baaki cards same structure
 ];
 
@@ -130,6 +138,11 @@ const Downloads = () => {
               <div className="yt-d-info">
                 <div className="yt-d-title">{item.title}</div>
                 <div className="yt-d-metarow">
+                  <img
+                    src={item.profile}
+                    alt={item.channel}
+                    className="yt-d-profile"
+                  />
                   <span className="yt-d-channel">{item.channel}</span>
                   <span className="yt-d-dot">•</span>
                   <span>{item.views}</span>
