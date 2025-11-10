@@ -84,7 +84,8 @@ const Downloads = () => {
   return (
     <>
       <Navbar />
-      <div className="yt-downloads-main">
+      <div className="yt-downloads">
+        <div className="yt-downloads-main">
         <div className="yt-d-header-flex">
           <h2 className="yt-d-h2">
             DOWNLOADS <span className="yt-d-count">({downloads.length})</span>
@@ -156,6 +157,7 @@ const Downloads = () => {
         <div className="yt-d-footer">
           Downloads stay available as long as your device is online at least
           once every 30 days.
+        </div>
         </div>
       </div>
       <DownloadSettingsDrawer

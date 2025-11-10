@@ -9,6 +9,7 @@
 }
 
 .categories-container {
+  margin-right: 7px;
   display: flex;
   gap: 9px; 
   overflow-x: auto;
@@ -49,7 +50,7 @@
 }
 
 [data-theme="dark"] .categories-section {
-  background-color: #121212;
+  background-color: #0f0f0f;
   border-bottom: 1px solid #333;
 }
 
