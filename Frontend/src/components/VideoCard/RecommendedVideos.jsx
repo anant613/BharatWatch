@@ -108,12 +108,15 @@ const demoImages = [
   // ...rest
 ];
 
+
 const RecommendedVideos = ({ videos = [] }) => {
   const navigate = useNavigate();
   const itemsToShow = videos.length > 0 ? videos : demoImages;
 
   return (
-    <section className="yt-recommended-section">
+    
+    <section className="yt-section">
+      <div  className="yt-recommended-section">
       <div className="yt-recommended-header">
         <h2 className="yt-recommended-title">Recommended Videos</h2>
         <span className="yt-see-more-text">See More →</span>
@@ -150,6 +153,7 @@ const RecommendedVideos = ({ videos = [] }) => {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

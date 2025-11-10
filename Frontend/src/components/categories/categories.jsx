@@ -16,6 +16,11 @@ const Categories = () => {
     "Education",
     "Travel",
     "News",
+    "More",
+    // "Marvel",
+    // "Food",
+    // "Health",
+    // "Science",
   ];
 
   return (

@@ -2,8 +2,12 @@ body, * {
   font-family: 'Ubuntu', Arial, sans-serif !important;
 }
 
+.yt-section {
+  max-width: 1550px;
+
+}
 .yt-recommended-section {
-  max-width: 1300px;
+  max-width: 1380px;
   margin: 0 auto;
   padding: 20px 0 36px 0;
   /* background: #fafbfc; */
@@ -126,3 +130,47 @@ body, * {
 }
 .yt-rec-dot { color: #C7C8CC; font-size: 1em; }
 .yt-rec-channel { color: #181b28; font-weight: 700; letter-spacing:.018em; }
+
+
+/* Light mode: same as original CSS (doesn't need update if variables not set) */
+
+/* Dark mode variables */
+[data-theme="dark"] {
+
+
+  --rec-bg: #0f0f0f;                                    /* section bg */
+  --rec-title: #f3f4f9;                                 /* main heading */
+  --rec-card-bg: #19192a;
+  --rec-thumb-bg: #212232;                              /* thumb wrapper */
+  --rec-heading: #fff;                                  /* video title */
+  --rec-meta-bg: #2c2c3e;                              /* meta row bg */
+  --rec-meta-txt: #bbbdc7;                             /* meta normal txt */
+  --rec-channel: #ffe57a;                              /* channel txt highlight */
+}
+[data-theme="dark"] {
+.yt-section {
+  background: var(--rec-bg, #0f0f0f);
+}
+}
+.yt-recommended-section {
+  background: var(--rec-bg, #fafbfc);
+}
+.yt-recommended-title {
+  color: var(--rec-title, #23262a);
+}
+.yt-rec-card, .yt-rec-info {
+  background: var(--rec-card-bg, #fff);
+}
+.yt-rec-thumb-wrap {
+  background: var(--rec-thumb-bg, #f4f4f7);
+}
+.yt-rec-title {
+  color: var(--rec-heading, #111c28);
+}
+.yt-rec-metarow {
+  background-color: var(--rec-meta-bg, #a4a4a522);
+  color: var(--rec-meta-txt, #7a7990);
+}
+.yt-rec-channel {
+  color: var(--rec-channel, #181b28);
+}

@@ -84,6 +84,31 @@ body, * {
   transform: translateY(-50%);
   color: #aaa;
 }
+.mic-btn {
+  background: #ececec;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 38px;
+  box-shadow: 0 1.5px 14px #23232315;
+  margin-left: 2px;
+  transition: background .12s;
+}
+.mic-btn svg {
+  /* color: #606060; */
+  transition: color 0.2s;
+}
+.mic-btn:hover {
+  /* background: #dbffe1; */
+}
+.mic-btn:hover svg {
+  /* color: #1ca643; */
+}
 .navbar-links {
   display: flex;
   align-items: center;
@@ -145,7 +170,7 @@ body, * {
   position: fixed;
   top: 0; left: -100vw;
   width: var(--sidebar-width);
-  max-width: 97vw;
+  max-width: 30vw;
   height: 100vh;
   background: #fefefe;
   color: #1c1c1c;
@@ -281,9 +306,37 @@ body, * {
     height: 1.5px;
   }
 }
+/* Default icons black */
+.navbar-link svg path {
+  fill: #151515;
+  transition: fill 0.2s;
+}
 
-[data-theme="dark"] .navbar { background: #24243e; color: #d0d0ea; border-bottom: 1px solid #27283d; }
-[data-theme="dark"] .search-box { background: #232234; border: 1px solid #383859; color: #f5f5f5; }
+/* Dark Mode icons white */
+[data-theme="dark"] .mic-btn {
+  background: #0f0f0f;
+}
+[data-theme="dark"] .mic-btn svg {
+  color: #fff !important;
+}
+[data-theme="dark"] .hamburg-menu .line {
+  background: #fff !important;
+}
+[data-theme="dark"] .hamburg-menu:hover .line {
+  background: #f1ab33 !important; /* ya koi accent color */
+}
+[data-theme="dark"] .navbar-link svg path {
+  fill: #fff;
+}
+
+/* Sidebar icons bhi yahi approach agar SVG hai */
+[data-theme="dark"] .sidebar-item svg path {
+  fill: #fff;
+}
+
+
+[data-theme="dark"] .navbar { background: #0f0f0f; color: #d0d0ea; border-bottom: 1px solid #27283d; }
+[data-theme="dark"] .search-box { background: #3d3d3d; border: 1px solid #020202; color: #f5f5f5; }
 [data-theme="dark"] .sidebar { background: #13131d; color: #f2f2f0; }
 [data-theme="dark"] .sidebar-item { color: #f4f4f2; }
 [data-theme="dark"] .sidebar-item:hover { background: #261401; color: #f1ab33; }
