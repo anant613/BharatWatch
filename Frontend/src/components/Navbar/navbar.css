@@ -1,5 +1,5 @@
 body, * {
-  font-family: 'Ubuntu', Arial, sans-serif !important;
+  font-family: 'Ubuntu', 'Inter' !important;
 }
 :root {
   --sidebar-width: 265px;
