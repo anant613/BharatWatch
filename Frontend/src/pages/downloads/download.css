@@ -1,12 +1,16 @@
-/* Dark mode variables */
-/* [data-theme="dark"] {
+body, * {
+  font-family: 'Ubuntu', 'Inter' !important;
+}
+
+/* Dark mode variables */ 
+[data-theme="dark"] {
   --dl-bg: #0f0f0f;
   --dl-header: #edeef7;
   --dl-accent: #ffa835;
   --dl-btn: #24243b;
   --dl-btn-border: #36345b;
   --dl-btn-hover: #262644;
-  --dl-title: #ffeaa7;
+  --dl-title: #ffffff;
   --dl-card: #211f33;
   --dl-shadow: #07080f6a;
   --dl-thumb: #232234;
@@ -15,21 +19,33 @@
   --dl-profile-border: #19192a;
   --dl-meta: #25253a;
   --dl-meta-txt: #c0c4d8;
-  --dl-channel: #ffe194;
+  --dl-channel: #FFE57A;
   --dl-dot: #75747d;
 .yt-downloads {
   background-color: #0f0f0f;
 }
-} */
+}
 
 /* SECTION */
 .yt-downloads {
-  margin-top: 0%;
+  /* margin-top: 0%; */
   max-width: 1550px;
 }
 .yt-downloads-main {
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1200px;
-  margin: 48px auto 0 auto;
+  /* margin: 48px auto 0 auto; */
+  padding: 10px 0 32px 0;
+  background: var(--dl-bg, #fff);
+}
+.yt-downloads-mainn {
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  /* margin: 48px auto 0 auto; */
   padding: 10px 0 32px 0;
   background: var(--dl-bg, #fff);
 }
@@ -43,13 +59,15 @@
   padding: 0 13px;
 }
 .yt-d-h2 {
+   font-family: 'Ubuntu', 'Inter' !important;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 500;
   color: var(--dl-header, #171616);
   margin: 0;
   letter-spacing: 0.011em;
 }
 .yt-d-count {
+   font-family: 'Ubuntu', 'Inter' !important;
   color: var(--dl-accent, #f59e29);
   font-size: 1.16rem;
   font-weight: 700;
@@ -59,6 +77,7 @@
 
 /* BUTTON */
 .yt-d-settings-btn {
+   font-family: 'Ubuntu', 'Inter' !important;
   padding: 7px 20px;
   background: var(--dl-btn, #fff);
   border: 1.5px solid var(--dl-btn-border, #dbdbdb);
@@ -93,6 +112,10 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+    border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;     
+    border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .yt-d-card:active,
 .yt-d-card:focus,
@@ -154,21 +177,35 @@
 
 /* INFO */
 .yt-d-info {
+   font-family: 'Ubuntu', 'Inter' !important;
   padding: 13px 13px 10px 14px;
   background: var(--dl-card, #fff);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;     
 }
+
 .yt-d-title {
-  font-weight: 800;
+  font-family: 'Ubuntu', 'Inter' !important;
+  font-weight: 500;
   font-size: 1.11rem;
   color: var(--dl-title, #22262a);
   margin-bottom: 7px;
   line-height: 1.17em;
-  white-space: nowrap;
+  letter-spacing: 0.007em;
+  min-width: 0;
+
+  /* Multi-line truncate for 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      /* <= 2 lines visible */
+  line-clamp: 2;              /* standard property for compatibility */
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: 0.007em;
+  white-space: normal;
 }
+
 .yt-d-metarow {
+   font-family: 'Ubuntu', 'Inter' !important;
   border-radius: 8px;
   padding: 10px 5px 10px 5px;
   background-color: var(--dl-meta, #b5b5b622);
@@ -186,12 +223,14 @@
   font-size: 1em;
 }
 .yt-d-channel {
+   font-family: 'Ubuntu', 'Inter' !important;
   color: var(--dl-channel, #10213e);
   font-weight: 700;
 }
 
 /* FOOTER */
 .yt-d-footer {
+   font-family: 'Ubuntu', 'Inter' !important;
   text-align: center;
   color: var(--dl-footer-color, #878888);
   font-size: 1.04rem;
@@ -206,6 +245,22 @@
 }
 
 /* Responsive tweaks */
+.hide-on-mobile {
+  display: inline;
+}
+.yt-d-settings-btn svg {
+  color: #191919;
+}
+[data-theme="dark"] .yt-d-settings-btn svg {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
 @media (max-width: 700px){
   .yt-d-header-flex { flex-direction: column; row-gap: 8px; align-items: flex-start; }
   .yt-downloads-main { padding: 8px 0 22px 0; }
@@ -218,4 +273,5 @@
   .yt-d-settings-btn { font-size: .98rem; padding: 7px 12px;}
 }
 
-/* Font-family stays as Ubuntu everywhere as per your root body rule */
+/* Font-family stays as Ubuntu everywhere as per your root body rule*/
+
