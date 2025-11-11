@@ -48,7 +48,7 @@ body, * {
   margin: 0;
   font-size: 1.25rem;
   color: #171616;
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: .015em;
 }
 .drawer-close-btn {

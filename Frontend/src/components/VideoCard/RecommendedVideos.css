@@ -1,5 +1,5 @@
 body, * {
-  font-family: 'Ubuntu', Arial, sans-serif !important;
+  font-family: 'Ubuntu', 'Inter' !important;
 }
 
 .yt-section {
@@ -87,7 +87,7 @@ body, * {
   border-bottom-right-radius: 15px;
 }
 .yt-rec-title {
-  font-weight: 800;
+  font-weight: 500;
   font-size: 1.14rem;
   color: #111c28;
   margin-bottom: 9px;

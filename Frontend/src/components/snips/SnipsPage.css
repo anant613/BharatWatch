@@ -1,5 +1,5 @@
 body, * {
-  font-family: 'Ubuntu', Arial, sans-serif !important;
+  font-family: 'Ubuntu', 'Inter' !important;
 }
 
 
@@ -71,7 +71,7 @@ body, html {
   min-width: 0;
 }
 .song-title {
-  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', 'Segoe UI', 'Inter';
   font-weight: 700;
   color: #fff;
   font-size: 16px;
@@ -83,7 +83,7 @@ body, html {
 }
 .song-artist {
   color: #d3d3d3;
-  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Montserrat', 'Segoe UI', 'Inter';
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01rem;
@@ -98,7 +98,7 @@ body, html {
   border-radius: 13px;
   color: #fff;
   font-size: 15px;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: 'Segoe UI', 'Inter';
   z-index: 8;
   padding: 7px 18px 6px 13px;
   box-shadow: 0 2px 8px #0002;
@@ -290,7 +290,7 @@ body, html {
 }
 
 .follow-btn {
-  background: #FFC266;
+  background: #fdbe5f;
   color: #000000;
   border: none;
   border-radius: 9px;
@@ -511,5 +511,109 @@ gap: 20px;
   display: block;
 }
 
+
+/* Drak Mode Changes Added Below */
+[data-theme="dark"] {
+  --reel-bg: #101013;
+  --reel-img-box: #181927;
+  --reel-overlay-bar: rgba(32,32,39,0.94);
+  --reel-song-bar-bg: rgba(27,27,37,0.99);
+  --reel-caption-bg: rgba(32,32,39,0.67);
+  --reel-caption-overlay: linear-gradient(0deg, #18192c 90%, transparent 100%);
+  --reel-profile-card: #333;
+  --reel-profile-border: #333;
+  --reel-song-title: #fff9e7;
+  --reel-song-artist: #d1dee7;
+  --reel-meta-faint: #c8cce3;
+  --reel-caption-font: #fafafd;
+  --caption-more: #7eafff;
+  --reel-dot: #8485b6;
+  --reel-action-count: #eee;
+  --reel-actionlabel: #a9a8a8;
+  --reel-actionbar-card: #191b2a;
+  --comment-bg: #333;
+  --comment-card-txt: #d0d1d3;
+  --comment-input-bg: #101010;
+  --comment-input-txt: #f5f5ff;
+}
+
+.action-btnn {
+  color: #191919;
+}
+[data-theme="dark"] .profile-username {
+  color: #afafaf;
+}
+[data-theme="dark"] .comments-list-ui  {
+  scrollbar-color: #888 #333;
+}
+[data-theme="dark"] .comment-row-ui > div > span{
+  color: #e4e4e4;
+}
+body[data-theme="dark"], [data-theme="dark"] .reel-ui-row {
+  background: var(--reel-bg, #181c24);
+}
+
+[data-theme="dark"] .reel-img-box {
+  background: var(--reel-img-box, #232546);
+}
+[data-theme="dark"] .reel-overlay-bar {
+  background: var(--reel-song-bar-bg, rgba(27,27,37,0.99));
+}
+[data-theme="dark"] .song-title {
+  color: var(--reel-song-title, #fff);
+}
+[data-theme="dark"] .song-artist {
+  color: var(--reel-song-artist, #d1dee7);
+}
+/* [data-theme="dark"] .caption-instastyle {
+  background: var(--reel-caption-bg, rgba(32,32,39,0.67));
+  color: var(--reel-caption-font, #fafafd);
+}
+[data-theme="dark"] .caption-more {
+  color: var(--caption-more, #7eafff);
+} */
+[data-theme="dark"] .reel-caption-overlay {
+  background: var(--reel-caption-overlay, linear-gradient(0deg, #18192c 90%, transparent 100%));
+  color: var(--reel-caption-font, #fafafd);
+}
+[data-theme="dark"] .profile-card-ui {
+  background: var(--reel-profile-card, #23243c);
+  color: var(--reel-caption-font, #fafafd);
+}
+[data-theme="dark"] .profile-headpic {
+  border: 2px solid var(--reel-profile-border, #334280);
+}
+[data-theme="dark"] .circle-count {
+  color: var(--reel-action-count, #e7e7ef);
+}
+[data-theme="dark"] .action-label {
+  color: var(--reel-actionlabel, #e4e6f9);
+}
+[data-theme="dark"] .comment-card-ui {
+  background: var(--comment-bg, #23243c);
+  color: var(--comment-card-txt, #fafafd);
+}
+[data-theme="dark"] .comment-input-ui {
+  background: var(--comment-input-bg, #18192b);
+  color: var(--comment-input-txt, #f5f5ff);
+}
+[data-theme="dark"] .comment-input-ui::placeholder {
+  color: var(--comment-input-txt, #f5f5ff) !important;
+}
+[data-theme="dark"] .arrow-btn {
+  background: var(--reel-profile-card, #23243c);
+  color: var(--reel-action-count, #e7e7ef);
+}
+/* [data-theme="dark"] .more-popup-box {
+  background: var(--reel-profile-card, #23243c);
+  color: var(--reel-caption-font, #fafafd);
+} */
+/* [data-theme="dark"] .more-popup-btn {
+  color: var(--reel-dot, #9b9baf);
+} */
+/* [data-theme="dark"] .more-popup-btn:hover {
+  background: var(--reel-img-box, #282947);
+  color: #e75c7c;
+} */
 
 
