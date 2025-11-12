@@ -70,11 +70,11 @@ body {
 
 .video-player-container {
   display: grid;
-  grid-template-columns: 1fr 500px;
-  gap: 32px;
-  max-width: 1600px;
+  grid-template-columns: 1fr min(500px , 35vw);
+  gap: 2vw;
+  max-width: 95vw;
   margin: 0 auto;
-  padding: 24px;
+  padding: 1.5rem;
   align-items: start;
 }
 
@@ -1153,21 +1153,21 @@ body {
 
 /* 🎯 PREMIUM SIDEBAR */
 .video-recommendations-panel {
-  width: 500px;
+  width: min(500px , 35vw);
   flex-shrink: 0;
   align-self: start;
   position: sticky;
-  top: 80px;
-  height: calc(100vh - 40px);
+  top: 10px;
+  height: calc(100vh + 9vh)
 }
 
 /* 📢 ENHANCED ADS SECTION */
 .ads-section {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
-  padding: 16px;
+  padding: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
