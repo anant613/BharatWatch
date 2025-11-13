@@ -5,39 +5,51 @@ const videoSchema = new mongoose.Schema(
     {
         videoFile: {
             type: String, //cloudinary
-            required: true
+            required: true,
         },
         thumbnail: {
             type: String, //cloudinary
-            required: true
         },
         title: {
             type: String,
-            required: true
+            required: true,
         },
         description: {
             type: String, //cloudinary
-            required: true
+            required: true,
         },
         duration: {
             type: Number,
-            required: true
+            required: true,
         },
         views: {
             type: Number,
-            default: 0
+            default: 0,
+        },
+        likes: {
+            type: Number,
+            default: 0,
+        },
+        comments: {
+            type: Number,
+            default: 0,
         },
         isPublished: {
             type: Boolean,
-            default: true
+            default: true,
         },
         owner: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-        }
-
+            ref: "User",
+        },
+        visibility: {
+            type: String,
+            enum: ["public", "private"],
+            default: "public",
+        },
     },
-    {timestamps: true})
+  { timestamps: true }
+);
 
 videoSchema.plugin(mongooseAggregatePaginate)
 
