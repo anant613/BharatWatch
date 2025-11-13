@@ -1,90 +1,169 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar/navbar";
 import "./SavedVideos.css";
+import Navbar from "../../components/Navbar/navbar";
+import sundar from '../../components/VideoCard/sundar pichayi.jpeg';
+import thum2 from '../../components/VideoCard/thum2.png';
+import thum3 from '../../components/VideoCard/thum3.png';
+import thum4 from '../../components/VideoCard/thum4.png';
+import profile1 from '../../components/VideoCard/profile9.jpeg';
 
-const SavedVideos = () => {
+const demoSavedVideos = [
+  {
+    id: 1,
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
+    author: "Demo Creator",
+    profile: profile1,
+    views: "2.1K Views",
+    time: "2 Days Ago",
+    savedDate: "Saved 3 days ago"
+  },
+  {
+    id: 2,
+    url: thum2,
+    title: "The Rise and Fall of Mughal Empire | Animated India ",
+    author: "Animated India",
+    profile: profile1,
+    views: "30M Views",
+    time: "12 Years Ago",
+    savedDate: "Saved 1 week ago"
+  },
+  {
+    id: 3,
+    url: thum3,
+    title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
+    author: "Shushant Upadhyay",
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
+    savedDate: "Saved 2 days ago"
+  },
+  {
+    id: 4,
+    url: thum4,
+    title: "1500 ELO Chess Game | How To Be in Top 10% in Chess Field",
+    author: "Shushant Upadhyay",
+    profile: profile1,
+    views: "110k Views",
+    time: "2 Days Ago",
+    savedDate: "Saved 5 days ago"
+  },
+  {
+    id: 5,
+    url: sundar,
+    title: "Google deemed exposed | Sundar",
+    author: "Demo Creator",
+    profile: profile1,
+    views: "2.1K Views",
+    time: "2 Days Ago",
+    savedDate: "Saved 1 day ago"
+  },
+  {
+    id: 6,
+    url: thum2,
+    title: "The Rise and Fall of Mughal Empire | Animated India ",
+    author: "Animated India",
+    profile: profile1,
+    views: "30M Views",
+    time: "12 Years Ago",
+    savedDate: "Saved 2 weeks ago"
+  }
+];
+
+const SavedVideos = ({ videos = [] }) => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [savedVideos, setSavedVideos] = useState([]);
+  const [savedVideos, setSavedVideos] = useState(videos.length > 0 ? videos : demoSavedVideos);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-    
-    if (token) {
-      // Mock saved videos data
-      setSavedVideos([
-        {
-          id: 1,
-          title: "Understanding React Hooks",
-          thumbnail: "/api/placeholder/300/200",
-          duration: "15:30",
-          views: "125K",
-          uploadedAt: "2 days ago"
-        },
-        {
-          id: 2,
-          title: "JavaScript ES6 Features",
-          thumbnail: "/api/placeholder/300/200",
-          duration: "22:15",
-          views: "89K",
-          uploadedAt: "1 week ago"
-        }
-      ]);
-    }
-  }, []);
+  const handleRemoveVideo = (videoId) => {
+    setSavedVideos(savedVideos.filter(video => video.id !== videoId));
+    setDropdownOpen(null);
+  };
 
-  const removeSavedVideo = (videoId) => {
-    setSavedVideos(prev => prev.filter(video => video.id !== videoId));
+  const toggleDropdown = (videoId, e) => {
+    e.stopPropagation();
+    setDropdownOpen(dropdownOpen === videoId ? null : videoId);
   };
 
   return (
     <>
       <Navbar />
-      <div className="saved-page">
-        <div className="saved-container">
-          <h1 className="saved-title">Saved Videos</h1>
-          {!isLoggedIn ? (
-            <div className="login-prompt-box">
-              <h2>Sign in to see your saved videos</h2>
-              <p>Save videos to watch later and access them from any device</p>
-              <div className="auth-buttons">
-                <button className="login-btn" onClick={() => navigate('/login')}>Login</button>
-                <button className="signup-btn" onClick={() => navigate('/signup')}>Sign Up</button>
-              </div>
-            </div>
-          ) : (
-            <div className="saved-videos-grid">
-              {savedVideos.length === 0 ? (
-                <div className="empty-state">
-                  <h3>No saved videos yet</h3>
-                  <p>Videos you save will appear here</p>
-                </div>
-              ) : (
-                savedVideos.map(video => (
-                  <div key={video.id} className="saved-video-card">
-                    <div className="video-thumbnail">
-                      <img src={video.thumbnail} alt={video.title} />
-                      <span className="duration">{video.duration}</span>
-                    </div>
-                    <div className="video-info">
-                      <h3 className="video-title">{video.title}</h3>
-                      <p className="video-meta">{video.views} views • {video.uploadedAt}</p>
+      <section className="sv-section">
+      <div className="sv-recommended-section">
+        <div className="sv-recommended-header">
+          <h2 className="sv-recommended-title">Saved Videos</h2>
+          <span className="sv-see-more-text">{savedVideos.length} Videos</span>
+        </div>
+        <div className="sv-recommended-grid">
+          {savedVideos.map((item) => (
+            <div
+              className="sv-rec-card"
+              key={item.id}
+              onClick={() => navigate(`/videoplayer/${item.id}`)}
+              tabIndex={0}
+            >
+              <div className="sv-rec-thumb-wrap">
+                <img
+                  className="sv-rec-thumb"
+                  src={item.url}
+                  alt={item.title || "Demo thumbnail"}
+                />
+                <div className="sv-dropdown-container">
+                  <button 
+                    className="sv-dropdown-btn"
+                    onClick={(e) => toggleDropdown(item.id, e)}
+                  >
+                    ⋮
+                  </button>
+                  {dropdownOpen === item.id && (
+                    <div className="sv-dropdown-menu">
                       <button 
-                        className="remove-btn"
-                        onClick={() => removeSavedVideo(video.id)}
+                        className="sv-dropdown-item"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveVideo(item.id);
+                        }}
                       >
-                        Remove
+                        🗑️ Remove from Saved
+                      </button>
+                      <button 
+                        className="sv-dropdown-item"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigator.share?.({ 
+                            title: item.title, 
+                            url: window.location.href 
+                          });
+                        }}
+                      >
+                        📤 Share
                       </button>
                     </div>
-                  </div>
-                ))
-              )}
+                  )}
+                </div>
+              </div>
+              <div className="sv-rec-info">
+                <div className="sv-rec-title">{item.title || "Untitled Video"}</div>
+                <div className="sv-rec-metarow">
+                  <img
+                    src={item.profile}
+                    alt={item.author}
+                    className="sv-rec-profile"
+                  />
+                  <span className="sv-rec-channel">{item.author}</span>
+                  <span className="sv-rec-dot">•</span>
+                  <span>{item.views}</span>
+                  <span className="sv-rec-dot">•</span>
+                  <span>{item.time}</span>
+                </div>
+                <div className="sv-saved-date">{item.savedDate}</div>
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
+    </section>
     </>
   );
 };

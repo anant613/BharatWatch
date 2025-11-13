@@ -119,7 +119,6 @@ const RecommendedVideos = ({ videos = [] }) => {
       <div  className="yt-recommended-section">
       <div className="yt-recommended-header">
         <h2 className="yt-recommended-title">Recommended Videos</h2>
-        <span className="yt-see-more-text">See More →</span>
       </div>
       <div className="yt-recommended-grid">
         {itemsToShow.map((item, index) => (

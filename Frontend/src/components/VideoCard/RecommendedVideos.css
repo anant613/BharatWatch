@@ -34,7 +34,6 @@ body, * {
   font-size: 1.09rem;
   padding: 2px 12px;
   border-radius: 9px;
-  user-select: none;
   transition: background .14s;
 }
 .yt-see-more-text:hover { background: #fff3e4; }

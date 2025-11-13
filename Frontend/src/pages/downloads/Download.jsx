@@ -81,7 +81,14 @@ const downloads = [
 
 const Downloads = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const [downloadList, setDownloadList] = useState(downloads);
   const navigate = useNavigate();
+
+  const handleDeleteVideo = (index) => {
+    setDownloadList(downloadList.filter((_, i) => i !== index));
+    setOpenDropdown(null);
+  };
 
   return (
     <>
@@ -128,14 +135,9 @@ const Downloads = () => {
               </button>
             </div>
             <div className="yt-downloads-grid">
-              {downloads.map((item, idx) => (
-                <div
-                  className="yt-d-card"
-                  key={idx}
-                  onClick={() => navigate(`/videoplayer/${idx}`)}
-                  tabIndex={0}
-                >
-                  <div className="yt-d-thumb-wrap">
+              {downloadList.map((item, idx) => (
+                <div className="yt-d-card" key={idx}>
+                  <div className="yt-d-thumb-wrap" onClick={() => navigate(`/videoplayer/${idx}`)}>
                     <img
                       src={item.thumbnail}
                       alt={item.title}
@@ -143,7 +145,7 @@ const Downloads = () => {
                     />
                     <div className="yt-d-length">{item.length}</div>
                   </div>
-                  <div className="yt-d-info">
+                  <div className="yt-d-info" onClick={() => navigate(`/videoplayer/${idx}`)}>
                     <div className="yt-d-title">{item.title}</div>
                     <div className="yt-d-metarow">
                       <img
@@ -158,12 +160,36 @@ const Downloads = () => {
                       <span>{item.days}</span>
                     </div>
                   </div>
+                  <div className="yt-d-menu">
+                    <button 
+                      className="yt-d-menu-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenDropdown(openDropdown === idx ? null : idx);
+                      }}
+                    >
+                      ⋮
+                    </button>
+                    {openDropdown === idx && (
+                      <div className="yt-d-dropdown">
+                        <button 
+                          className="yt-d-dropdown-item delete"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteVideo(idx);
+                          }}
+                        >
+                          🗑️ Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
             <div className="yt-d-footer">
               Downloads stay available as long as your device is online at least
-              once every 30 days.
+              once every 30 days. ({downloadList.length} videos)
             </div>
           </div>
         </div>

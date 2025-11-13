@@ -25,7 +25,7 @@ import adt3 from './adthuu3.jpeg';
 import adt4 from './adthuu4.jpeg';
 
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ darkMode, setDarkMode }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const videoRef = useRef(null);
@@ -56,7 +56,6 @@ const VideoPlayer = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showClips, setShowClips] = useState(false);
   const [showComments, setShowComments] = useState(true);
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
   
   // Comments States
   const [comments, setComments] = useState([]);
@@ -501,11 +500,7 @@ const VideoPlayer = () => {
     }
   }, [id]);
 
-  useEffect(() => {
-    document.body.className = darkMode ? 'dark-mode' : '';
-    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-    localStorage.setItem('darkMode', darkMode.toString());
-  }, [darkMode]);
+
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -559,7 +554,7 @@ const VideoPlayer = () => {
   if (loading) {
     return (
       <>
-        <Navbar />
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <div className="video-player-page">
           <div className="loading-container">
             <div className="loading-spinner"></div>
@@ -574,7 +569,7 @@ const VideoPlayer = () => {
   if (error) {
     return (
       <>
-        <Navbar />
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
         <div className="video-player-page">
           <div className="error-container">
             <h2>Oops! Something went wrong</h2>
@@ -590,7 +585,7 @@ const VideoPlayer = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <div className={`video-player-page ${darkMode ? 'dark' : ''}`}>
         <div className="video-player-container">
           <div className="video-main-content">

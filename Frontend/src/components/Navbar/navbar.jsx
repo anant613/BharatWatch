@@ -13,22 +13,15 @@ import Feedbacklogo from "./feedback.png";
 import help from "./help.png";
 import themeLogo from "./theme.png";
 
-const Navbar = () => {
+const Navbar = ({ darkMode, setDarkMode }) => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
-  );
+  const theme = darkMode ? "dark" : "light";
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(true);
   const [userName] = useState("HeyitsMe");
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
   const dropdownRef = useRef();
-
-  useEffect(() => {
-    document.body.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   useEffect(() => {
     if (isSidebarOpen) {
@@ -48,8 +41,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleTheme = () =>
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  const toggleTheme = () => setDarkMode(!darkMode);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const handleLogout = () => {

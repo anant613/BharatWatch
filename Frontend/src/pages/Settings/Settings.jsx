@@ -4,7 +4,7 @@ import "./Settings.css";
 
 const Settings = () => {
   const [activeSection, setActiveSection] = React.useState("account");
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const userName = "John Doe";
   const userEmail = "john@example.com";
 

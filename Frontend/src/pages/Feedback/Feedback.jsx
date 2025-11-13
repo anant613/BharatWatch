@@ -51,30 +51,6 @@ const Feedback = () => {
             </div>
           ) : (
             <form className="feedback-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Name *</label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    required
-                    placeholder="Enter your name"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Email *</label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    required
-                    placeholder="Enter your email"
-                  />
-                </div>
-              </div>
-              
               <div className="form-group">
                 <label>Category *</label>
                 <select
@@ -116,21 +92,21 @@ const Feedback = () => {
                 <span className="contact-icon">📧</span>
                 <div>
                   <strong>Email</strong>
-                  <p>support@bharatwatch.com</p>
+                  <p>anantkapoor320@gmail.com</p>
                 </div>
               </div>
               <div className="contact-item">
                 <span className="contact-icon">📞</span>
                 <div>
                   <strong>Phone</strong>
-                  <p>+91 12345 67890</p>
+                  <p>Kya krega phone mila ke kaam keo naa </p>
                 </div>
               </div>
               <div className="contact-item">
                 <span className="contact-icon">📍</span>
                 <div>
                   <strong>Address</strong>
-                  <p>123 Tech Street, Mumbai, India</p>
+                  <p>ghr pe milte hai </p>
                 </div>
               </div>
             </div>

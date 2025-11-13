@@ -1066,6 +1066,27 @@ body {
   background: #f2f2f2;
 }
 
+/* ===== COMMENT ITEMS DARK MODE ===== */
+.dark .vp-comment-item:hover,
+.dark .comment-item:hover {
+  background: #2a2a2a;
+}
+
+.dark .vp-comment-item.pinned,
+.dark .comment-item.pinned {
+  background: #333;
+}
+
+.dark .vp-comment-item,
+.dark .comment-item {
+  background: transparent;
+}
+
+.dark .vp-comment-content,
+.dark .comment-content {
+  color: #ffffff;
+}
+
 .vp-comment-content,
 .comment-content {
   flex: 1;
@@ -1613,11 +1634,258 @@ body {
   }
 }
 
-/* 🌟 DARK MODE PERFECTION */
+/* ========================================
+   🌟 DARK MODE SECTION - EDIT HERE
+   ======================================== */
+
+/* Main Dark Mode Base */
 body.dark-mode {
-  background: var(--bg-light);
-  color: var(--text-primary);
+  background: #0a0a0a;
+  color: #ffffff;
 }
+
+.video-player-page.dark {
+  background: #0a0a0a;
+}
+
+/* ===== VIDEO PLAYER DARK MODE ===== */
+.dark .video-player-wrapper {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.dark .video-content-info {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.dark .video-headline {
+  color: #ffffff;
+}
+
+.dark .video-stats {
+  color: #ccc;
+}
+
+/* ===== ACTION BUTTONS DARK MODE ===== */
+.dark .action-btn {
+  background: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+.dark .action-btn:hover {
+  background: #333;
+  border-color: #555;
+}
+
+.dark .like-btn.liked {
+  background: #ff6b35 !important;
+  color: white !important;
+}
+
+/* ===== CHANNEL SECTION DARK MODE ===== */
+.dark .channel-section {
+  background: #0a0a0a;
+  border-bottom: 2px solid #333;
+}
+
+.dark .channel-name {
+  color: #ffffff;
+}
+
+.dark .subscriber-count {
+  color: #ccc;
+}
+
+/* ===== DESCRIPTION DARK MODE ===== */
+.dark .description-content {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.dark .description-text {
+  color: #ffffff;
+}
+
+.dark .tag {
+  background: rgba(255, 107, 53, 0.2);
+  color: #ff6b35;
+}
+
+.dark .expand-btn {
+  color: #ff6b35;
+}
+
+/* ===== CLIPS SECTION DARK MODE ===== */
+.dark .clips-section {
+  background: #1a1a1a;
+}
+
+.dark .clip-item {
+  background: #2a2a2a;
+  border: 1px solid #444;
+}
+
+.dark .clip-info {
+  background: #2a2a2a;
+}
+
+.dark .clip-title {
+  color: #ffffff;
+}
+
+.dark .clip-time {
+  color: #ccc;
+}
+
+/* ===== ADS SECTION DARK MODE ===== */
+.dark .ads-section {
+  background: #1a1a1a;
+  border: 1px solid #333;
+}
+
+.dark .ad-card {
+  background: #2a2a2a;
+  border: 1px solid #444;
+}
+
+.dark .ad-title {
+  color: #ffffff;
+}
+
+.dark .ad-advertiser {
+  color: #ccc;
+}
+
+/* ===== RIGHT PANEL DARK MODE ===== */
+.dark .right-panel-tabs {
+  background: #1a1a1a;
+  border: 2px solid #333;
+}
+
+.dark .tab-buttons {
+  background: #2a2a2a;
+  border-bottom: 2px solid #333;
+}
+
+.dark .tab-btn {
+  color: #ccc;
+}
+
+.dark .tab-btn.active {
+  color: #ff6b35;
+}
+
+.dark .tab-content {
+  background: #1a1a1a;
+}
+
+/* ===== VIDEO RECOMMENDATIONS DARK MODE ===== */
+.dark .video-recommendation-card {
+  background: transparent;
+}
+
+.dark .video-recommendation-card:hover {
+  background: #2a2a2a;
+}
+
+.dark .video-rec-title {
+  color: #ffffff;
+}
+
+.dark .video-rec-channel-name {
+  color: #ccc;
+}
+
+.dark .video-rec-stats {
+  color: #999;
+}
+
+/* ===== COMMENTS DARK MODE ===== */
+.dark .comments-count h3 {
+  color: #ffffff;
+}
+
+.dark .comments-sort select {
+  background: #2a2a2a;
+  color: #ffffff;
+  border: 2px solid #444;
+}
+
+.dark .comment-input {
+  border-bottom: 1px solid #444;
+  color: #ffffff;
+  background: #1a1a1a;
+}
+
+.dark .comment-input:focus {
+  border-bottom-color: #ff6b35;
+}
+
+.dark .comment-user {
+  color: #ffffff;
+}
+
+.dark .comment-text {
+  color: #ffffff;
+}
+
+.dark .comment-time {
+  color: #999;
+}
+
+.dark .comment-actions button {
+  color: #ccc;
+}
+
+.dark .comment-actions button:hover {
+  background: #333;
+  color: #ffffff;
+}
+
+.dark .pinned-badge {
+  background: #333;
+  color: #ffffff;
+}
+
+/* ===== FORM ELEMENTS DARK MODE ===== */
+.dark .comment-actions button[type="submit"] {
+  background: #ff6b35;
+  color: white;
+}
+
+.dark .comment-actions button[type="submit"]:hover {
+  background: #ff5722;
+}
+
+/* ===== AUTOPLAY TOGGLE DARK MODE ===== */
+.dark .autoplay-toggle {
+  color: #ffffff;
+}
+
+.dark .toggle-switch {
+  background: #2a2a2a;
+  border: 2px solid #444;
+}
+
+/* ===== DARK MODE SCROLLBARS ===== */
+.dark ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ========================================
+   END OF DARK MODE SECTION
+   ======================================== */
 
 /* 🎨 CUSTOM SCROLLBARS */
 ::-webkit-scrollbar {
