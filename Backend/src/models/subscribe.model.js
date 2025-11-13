@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const subscriberSchema = new mongoose.Schema({
-    Id:{
+    User:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
@@ -11,14 +11,11 @@ const subscriberSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    channel:{
+    channelName:{
         type: String,
         required: true
     },
-    User:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }
+   
 })
 
 export default  mongoose.model("Subscriber",subscriberSchema)
