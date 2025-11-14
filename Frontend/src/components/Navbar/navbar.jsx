@@ -132,7 +132,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                 </button>
                 <button
                   className="navbar-link download-btn"
-                  onClick={() => navigate("/downloads")}
+                  onClick={() => navigate("/upload")}
                 >
                   <svg width="30" height="30" viewBox="0 0 70 70">
                     <path
@@ -223,6 +223,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
 
             <span>Downloads</span>
           </li>
+
           <li className="sidebar-item" onClick={() => navigate("/trending")}>
             <img src={Trendinglogo} className="icon" alt="Trending" />
             <span>Trending</span>
@@ -245,8 +246,8 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                 <span>Notifications</span>
               </li>
               <li
-                className="sidebar-item"
-                onClick={() => navigate("/downloads")}
+                className="sidebar-item upload-btn"
+                onClick={() => navigate("/upload")}
               >
                 <svg width="22" height="22" viewBox="0 0 70 70">
                   <path
@@ -254,7 +255,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                     fill="black"
                   />
                 </svg>
-                <span>Downloads</span>
+                <span>Upload</span>
               </li>
             </>
           )}

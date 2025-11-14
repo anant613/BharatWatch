@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar/navbar";
 import Snips from "./components/Snips/Snips";
 import SnipsPage from "./components/Snips/SnipsPage";
 import Categories from "./components/categories/Categories";
@@ -16,6 +16,7 @@ import Notifications from "./pages/Notifications/Notifications";
 import Feedback from "./pages/Feedback/Feedback";
 import Help from "./pages/Help/Help";
 import ChannelPage from "./pages/Channel/ChannelPage";
+import UploadVideo from "./pages/Upload/uploadvideo";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(
@@ -56,6 +57,7 @@ const App = () => {
         <Route path="/feedback" element={<Feedback darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/help" element={<Help darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/channel" element={<ChannelPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/upload" element={<UploadVideo darkMode={darkMode} setDarkMode={setDarkMode} />} />
       </Routes>
     </Router>
   );

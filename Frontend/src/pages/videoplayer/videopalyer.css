@@ -1597,40 +1597,159 @@ body {
 @media (max-width: 1200px) {
   .video-player-container {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
+    max-width: 100%;
+    padding: 1rem;
   }
   
   .video-recommendations-panel {
     width: 100%;
+    position: static;
+    height: auto;
   }
   
-  .video-title {
-    font-size: 28px;
+  .video-headline {
+    font-size: 20px !important;
   }
 }
 
 @media (max-width: 768px) {
   .video-player-container {
-    padding: 16px;
+    padding: 12px;
+    gap: 15px;
   }
   
-  .video-title {
-    font-size: 24px;
+  .video-player-wrapper {
+    margin-bottom: 16px;
+  }
+  
+  .video-headline {
+    font-size: 18px !important;
+    padding: 8px;
+  }
+  
+  .video-stats {
+    font-size: 13px;
+    padding: 8px;
+    flex-wrap: wrap;
   }
   
   .video-meta-actions {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
   
   .video-actions-container {
     flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+    margin: 2px;
   }
   
   .channel-section {
     flex-direction: column;
     align-items: flex-start;
-    gap: 16px;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  
+  .channel-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+  
+  .channel-name {
+    font-size: 18px;
+  }
+  
+  .subscribe-btn, .follow-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .video-player-container {
+    padding: 8px;
+  }
+  
+  .video-headline {
+    font-size: 16px !important;
+    padding: 6px;
+  }
+  
+  .video-stats {
+    font-size: 12px;
+    padding: 6px;
+  }
+  
+  .action-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin: 1px;
+  }
+  
+  .channel-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .channel-name {
+    font-size: 16px;
+  }
+  
+  .video-rec-thumbnail {
+    width: 140px;
+    height: 78px;
+  }
+  
+  .video-rec-title {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-player-container {
+    padding: 5px;
+  }
+  
+  .video-headline {
+    font-size: 14px !important;
+    padding: 4px;
+  }
+  
+  .video-stats {
+    font-size: 11px;
+    padding: 4px;
+  }
+  
+  .action-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  
+  .channel-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .video-rec-thumbnail {
+    width: 120px;
+    height: 67px;
+  }
+  
+  .tab-btn {
+    padding: 10px 8px;
+    font-size: 12px;
   }
 }
 

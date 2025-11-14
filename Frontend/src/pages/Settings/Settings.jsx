@@ -41,7 +41,6 @@ const Settings = () => {
 
           {activeSection === "account" && isLoggedIn && (
           <div className="settings-section">
-            <h2>Account</h2>
             <div className="setting-item">
               <span>Email</span>
               <input type="email" defaultValue={userEmail} />
@@ -59,7 +58,6 @@ const Settings = () => {
 
           {activeSection === "privacy" && isLoggedIn && (
           <div className="settings-section">
-            <h2>Privacy</h2>
             <div className="setting-item">
               <span>Private Account</span>
               <input type="checkbox" />
@@ -77,7 +75,6 @@ const Settings = () => {
 
           {activeSection === "notifications" && (
           <div className="settings-section">
-            <h2>Notifications</h2>
             {!isLoggedIn && <p className="login-required">Login required for personalized notifications</p>}
             <div className="setting-item">
               <span>Push Notifications</span>
@@ -98,7 +95,6 @@ const Settings = () => {
 
           {activeSection === "playback" && (
           <div className="settings-section">
-            <h2>Playback</h2>
             <div className="setting-item">
               <span>Auto-play Videos</span>
               <input type="checkbox" defaultChecked />
@@ -126,7 +122,6 @@ const Settings = () => {
 
           {activeSection === "payment" && isLoggedIn && (
           <div className="settings-section">
-            <h2>Payment</h2>
             <div className="setting-item">
               <span>Payment Methods</span>
               <button className="action-link">Add Card</button>
@@ -144,7 +139,6 @@ const Settings = () => {
 
           {activeSection === "advanced" && (
           <div className="settings-section">
-            <h2>Advanced</h2>
             <div className="setting-item">
               <span>Clear Cache</span>
               <button className="action-link">Clear</button>

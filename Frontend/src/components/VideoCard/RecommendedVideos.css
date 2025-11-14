@@ -121,11 +121,149 @@ body, * {
   vertical-align: middle;
 }
 
-@media (max-width: 520px){
-  .yt-rec-grid { gap: 18px 4px; }
-  .yt-rec-profile { width: 19px; height: 19px; margin-right: 4px; }
-  .yt-rec-info { padding: 11px 7px 12px 10px; }
-  .yt-rec-title { font-size: 1.01rem;}
+/* Mobile Responsive Styles */
+@media (max-width: 1200px) {
+  .yt-recommended-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .yt-recommended-section {
+    padding: 15px 0 25px 0;
+  }
+  
+  .yt-recommended-header {
+    margin-bottom: 20px;
+    padding: 0 5px;
+  }
+  
+  .yt-recommended-title {
+    font-size: 1.4rem;
+  }
+  
+  .yt-see-more-text {
+    font-size: 1rem;
+  }
+  
+  .yt-recommended-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px 12px;
+  }
+  
+  .yt-rec-title {
+    font-size: 1.05rem;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .yt-rec-metarow {
+    font-size: 0.9rem;
+    gap: 6px;
+    padding: 8px 4px;
+  }
+  
+  .yt-rec-profile {
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 640px) {
+  .yt-recommended-section {
+    padding: 12px 0 20px 0;
+  }
+  
+  .yt-recommended-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px 8px;
+    padding: 0 2px;
+  }
+  
+  .yt-rec-card {
+    border-radius: 12px;
+  }
+  
+  .yt-rec-info {
+    padding: 12px 14px 11px 15px;
+  }
+  
+  .yt-rec-title {
+    font-size: 1rem;
+    margin-bottom: 7px;
+  }
+  
+  .yt-rec-metarow {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .yt-recommended-grid {
+    gap: 18px 4px;
+  }
+  
+  .yt-rec-profile {
+    width: 19px;
+    height: 19px;
+    margin-right: 4px;
+  }
+  
+  .yt-rec-info {
+    padding: 11px 7px 12px 10px;
+  }
+  
+  .yt-rec-title {
+    font-size: 1.01rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .yt-recommended-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .yt-rec-card {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .yt-rec-title {
+    font-size: 0.95rem;
+  }
+  
+  .yt-rec-metarow {
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .yt-recommended-section {
+    padding: 10px 0 15px 0;
+  }
+  
+  .yt-recommended-header {
+    margin-bottom: 15px;
+  }
+  
+  .yt-recommended-title {
+    font-size: 1.2rem;
+  }
+  
+  .yt-rec-info {
+    padding: 10px 12px 9px 13px;
+  }
+  
+  .yt-rec-title {
+    font-size: 0.9rem;
+  }
 }
 .yt-rec-dot { color: #C7C8CC; font-size: 1em; }
 .yt-rec-channel { color: #181b28; font-weight: 700; letter-spacing:.018em; }
