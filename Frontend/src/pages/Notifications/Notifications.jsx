@@ -63,7 +63,7 @@ const Notifications = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="notifications-page">
         <div className="notifications-container">
           <div className="notifications-header">

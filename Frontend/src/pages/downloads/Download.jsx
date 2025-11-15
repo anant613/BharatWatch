@@ -92,7 +92,7 @@ const Downloads = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="yt-downloads">
         <div className="yt-downloads-main">
           <div className="yt-downloads-mainn">

@@ -109,7 +109,7 @@ const ChannelPage = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="ch-page">
       {/* Channel Banner */}
       <div className="ch-banner">

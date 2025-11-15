@@ -158,7 +158,7 @@ const SnipsPage = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="reel-ui-row">
         {/* LEFT */}
         <div className="reel-left-align">

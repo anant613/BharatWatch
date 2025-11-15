@@ -37,7 +37,7 @@ const Feedback = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="feedback-page">
         <div className="feedback-container">
           <h1 className="feedback-title">Feedback</h1>
