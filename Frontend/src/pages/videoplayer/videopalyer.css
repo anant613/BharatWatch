@@ -766,8 +766,7 @@ body {
 }
 
 /* 🔔 SPECTACULAR FOLLOW BUTTON */
-.subscribe-btn,
-.follow-btn {
+.subscribe-btn{
   background: var(--primary-gradient);
   color: white;
   border: none;
