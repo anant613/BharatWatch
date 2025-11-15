@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './uploadVideo.css';
 import Navbar from '../../components/Navbar/navbar';
 
 const UploadVideo = () => {
+  
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -33,6 +34,18 @@ const UploadVideo = () => {
   
   const fileInputRef = useRef(null);
   const thumbnailInputRef = useRef(null);
+
+  // Add scroll lock while on upload page
+  useEffect(() => {
+    // Scroll disable
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    return () => {
+      // Scroll enable on unmount
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, []);
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -104,6 +117,7 @@ const UploadVideo = () => {
       simulateUpload();
     }
   };
+  
 
   return (
     <>
