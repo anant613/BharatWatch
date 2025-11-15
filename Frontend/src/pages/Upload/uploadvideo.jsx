@@ -107,7 +107,7 @@ const UploadVideo = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="upload-container">
         <div className="floating-particles">
           {[...Array(6)].map((_, i) => (

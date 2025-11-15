@@ -21,7 +21,7 @@ const Trending = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="trending-page">
         <div className="trending-container">
           <div className="trending-header">

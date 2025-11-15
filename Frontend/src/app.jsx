@@ -29,25 +29,32 @@ const App = () => {
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
 
-  const HomePage = () => (
-    <div className="app-container">
-      <div className="main-content">
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-        <Snips />
-        <Categories />
-        <RecommendedVideos />
-      </div>
-    </div>
-  );
-
   return (
     <Router>
+      {/* ---- YAHAN AISE ---- */}
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={
+          <div className="app-container">
+            <div className="main-content">
+              <Snips />
+              <Categories />
+              <RecommendedVideos />
+            </div>
+          </div>
+        } />
         <Route path="/snips" element={<SnipsPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/home" element={
+          <div className="app-container">
+            <div className="main-content">
+              <Snips />
+              <Categories />
+              <RecommendedVideos />
+            </div>
+          </div>
+        } />
         <Route path="/videoplayer/:id" element={<VideoPlayer darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/downloads" element={<Downloads darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} />} />

@@ -10,7 +10,7 @@ const Settings = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="settings-page">
         <div className="settings-layout">
           <div className="settings-sidebar">

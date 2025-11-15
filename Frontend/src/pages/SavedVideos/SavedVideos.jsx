@@ -88,7 +88,7 @@ const SavedVideos = ({ videos = [] }) => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <section className="sv-section">
       <div className="sv-recommended-section">
         <div className="sv-recommended-header">

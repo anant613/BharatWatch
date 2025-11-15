@@ -50,7 +50,7 @@ const Help = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="help-page">
         <div className="help-container">
           <h1 className="help-title">Help Center</h1>
