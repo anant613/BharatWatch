@@ -554,7 +554,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   if (loading) {
     return (
       <>
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        {/* <Navbar darkMode={darkMode} setDarkMode={setDarkMode} /> */}
         <div className="video-player-page">
           <div className="loading-container">
             <div className="loading-spinner"></div>
@@ -569,7 +569,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   if (error) {
     return (
       <>
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+        {/* <Navbar darkMode={darkMode} setDarkMode={setDarkMode} /> */}
         <div className="video-player-page">
           <div className="error-container">
             <h2>Oops! Something went wrong</h2>
@@ -585,7 +585,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   return (
     <>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      {/* <Navbar darkMode={darkMode} setDarkMode={setDarkMode} /> */}
       <div className={`video-player-page ${darkMode ? 'dark' : ''}`}>
         <div className="video-player-container">
           <div className="video-main-content">
