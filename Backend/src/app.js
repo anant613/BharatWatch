@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieparser from "cookie-parser"
 import errorHandler from "./middlewares/errors.middleware.js";
+import videoRouter from "./routes/video.routes.js";
 
 const app = express();
 
@@ -21,6 +22,11 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieparser());
 
+import userRouter from "./routes/user.routes.js";
+
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/videos", videoRouter);
+
 app.get("/", (req, res) => {
     res.send("Hello World")
 })
@@ -29,17 +35,6 @@ const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`)
 })
-
-
-
-import userRouter from "./routes/user.routes.js";
-
-
-app.use("/api/v1/users", userRouter);
-
-
-
-
 
 app.use(errorHandler);
 export { app };

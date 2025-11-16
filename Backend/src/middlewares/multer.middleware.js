@@ -1,6 +1,5 @@
 import multer from "multer";
-import fs from "fs"
-upload = multer();
+import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
