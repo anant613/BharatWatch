@@ -1,31 +1,35 @@
 import mongoose from "mongoose";
 
-const WarchhistorySchema = new mongoose.Schema({
-    Id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+const watchHistorySchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
     },
-    WatchedBy:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+
+    video: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video",
+      required: true,
+      index: true,
     },
-    video:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Video"
+
+    watchDuration: {
+      type: Number, // seconds user watched
+      default: 0,
     },
-    lastPosition:{
-        type: Number,
-        default: 0
+
+    videoDuration: {
+      type: Number, // cached total duration
+      default: 0,
     },
-    duration:{
-        type: Number,
-        default: 0
+
+    watchedAt: {
+      type: Date,
+      default: Date.now,
     },
-    WatchedAt:{
-      default: Date.now(),
-      type: Date  
-    }
-},{
-    timestamps:true
-})
+  },
+  { timestamps: true }
+);
