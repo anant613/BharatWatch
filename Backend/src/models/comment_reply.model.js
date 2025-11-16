@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 const commentReplySchema = new mongoose.Schema({
-    Id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    },
     message:{
         type: String,
         required: true
@@ -23,7 +18,8 @@ const commentReplySchema = new mongoose.Schema({
         ref: "User"
     },
     likes:{
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "commentLike",
         default: 0
     },
     replies:{

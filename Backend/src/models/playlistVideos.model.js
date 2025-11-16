@@ -1,26 +1,25 @@
 import mongoose from "mongoose";
 
 const playlistVideosSchema = new mongoose.schema({
-    Id: {
+    playlistId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Playlist",
         required: true
     },
-    PlaylistId: {
+    videoId:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Playlist"
-    },
-    position:{
-        type: Number,
-        default: 0
+        ref: "Video",
+        required: true
     },
     addedAt:{
         default: Date.now(),
-        type: Date
+        type: Date,
+        required: true
     },
     Owner:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
 
 },{

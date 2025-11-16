@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const LikedSchema = new mongoose.Schema(
     {
-        Id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true
-        },
         likedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
