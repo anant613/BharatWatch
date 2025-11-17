@@ -8,10 +8,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
       // required: true,
-      // unique: true,
+      unique: true,
       trim: true,
       lowercase: true,
-      // index: true,
+      index: true,
     },
     isEmailverified: {
       type: Boolean,
@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      default:""
     },
     fullName: {
       type: String,
@@ -46,7 +47,7 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String, //cloudinary url
     },
-    coverImage: {
+    Banner: {
       type: String, //cloudinary url
     },
     watchHistory: [

@@ -59,7 +59,7 @@ const Signup = () => {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
       <div className="auth-container">
         <div className="auth-card">
           <div className="auth-header">

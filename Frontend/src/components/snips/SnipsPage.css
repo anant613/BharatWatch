@@ -549,9 +549,9 @@ gap: 20px;
 [data-theme="dark"] .comment-row-ui > div > span{
   color: #e4e4e4;
 }
-body[data-theme="dark"], [data-theme="dark"] .reel-ui-row {
+/* body[data-theme="dark"], [data-theme="dark"] .reel-ui-row {
   background: var(--reel-bg, #181c24);
-}
+} */
 
 [data-theme="dark"] .reel-img-box {
   background: var(--reel-img-box, #232546);
