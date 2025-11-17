@@ -1,9 +1,9 @@
 import { ApiError, ApiResponse } from "../utils/utils.js";
 import { Video } from "../models/video.model.js";
 import { User } from "../models/user.model.js";
-import { Liked } from "../models/like.model.js";
+import { Liked } from "../models/videoLike.model.js";
 import { Comment } from "../models/comment.model.js";
-import { WatchLater } from "../models/watchlater.modal.js";
+import { WatchLater } from "../models/watchLater.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import mongoose from "mongoose";
