@@ -17,7 +17,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
   const navigate = useNavigate();
   const theme = darkMode ? "dark" : "light";
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userName] = useState("HeyitsMe");
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
