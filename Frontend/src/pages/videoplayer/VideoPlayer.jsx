@@ -73,20 +73,49 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   const fetchVideoData = useCallback(async (videoId) => {
     try {
       setLoading(true);
-      // Replace with actual API endpoint
-      const response = await fetch(`/api/videos/${videoId}`);
-      if (!response.ok) throw new Error('Video not found');
+      const response = await fetch(`http://localhost:4000/api/v1/videos/${videoId}`);
+      if (!response.ok) {
+        throw new Error(`Backend error: ${response.status} - Video not found`);
+      }
       
-      const data = await response.json();
-      setVideoData(data);
+      const result = await response.json();
+      if (!result.data) {
+        throw new Error('No video data in response');
+      }
+      const data = result.data;
       
-      // Set user interaction states
-      setIsLiked(data.userInteractions?.isLiked || false);
-      setIsSaved(data.userInteractions?.isSaved || false);
-      setIsSubscribed(data.userInteractions?.isSubscribed || false);
+      // Transform backend data to match existing UI format
+      const transformedData = {
+        id: data._id,
+        title: data.title,
+        description: data.description,
+        views: `${data.views}`,
+        likes: `${data.likes}K`,
+        videoUrl: data.videoFile,
+        thumbnail: data.thumbnail,
+        duration: data.duration,
+        uploadedAt: new Date(data.createdAt).toLocaleDateString(),
+        channel: data.owner?.fullName || 'Unknown Channel',
+        channelId: data.owner?._id,
+        channelAvatar: data.owner?.fullName?.charAt(0) || 'U',
+        subscribers: data.owner?.subscribersCount || '0',
+        verified: data.owner?.verified || false,
+        tags: data.tags || [],
+        category: data.category || 'General',
+        language: data.language || 'English',
+        captions: data.captions || false,
+        hd: data.quality === 'HD' || false
+      };
+      
+      console.log('Backend video data:', data);
+      console.log('Video URL from backend:', data.videoFile);
+      console.log('Thumbnail from backend:', data.thumbnail);
+      setVideoData(transformedData);
+      setError(null);
       
     } catch (err) {
-      setError(err.message);
+      console.error('Backend fetch failed:', err);
+      setError('Failed to load video. Please check your connection.');
     } finally {
       setLoading(false);
     }
@@ -96,11 +125,14 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   const fetchComments = useCallback(async (videoId) => {
     try {
       setCommentsLoading(true);
-      const response = await fetch(`/api/videos/${videoId}/comments?sort=${sortBy}`);
+      const response = await fetch(`http://localhost:4000/api/v1/videos/${videoId}/comments?sort=${sortBy}`);
+      if (!response.ok) throw new Error('Failed to fetch comments');
       const data = await response.json();
+      console.log('Comments data:', data.comments);
       setComments(data.comments || []);
     } catch (err) {
       console.error('Failed to fetch comments:', err);
+      setComments([]);
     } finally {
       setCommentsLoading(false);
     }
@@ -110,10 +142,14 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   const fetchRecommendations = useCallback(async (videoId) => {
     try {
       const [recsResponse, adsResponse, clipsResponse] = await Promise.all([
-        fetch(`/api/videos/${videoId}/recommendations`),
-        fetch(`/api/ads/video-page`),
-        fetch(`/api/videos/${videoId}/clips`)
+        fetch(`http://localhost:4000/api/v1/videos/${videoId}/recommendations`),
+        fetch(`http://localhost:4000/api/v1/ads/video-page`),
+        fetch(`http://localhost:4000/api/v1/videos/${videoId}/clips`)
       ]);
+      
+      if (!recsResponse.ok || !adsResponse.ok || !clipsResponse.ok) {
+        throw new Error('One or more recommendation endpoints failed');
+      }
       
       const [recsData, adsData, clipsData] = await Promise.all([
         recsResponse.json(),
@@ -121,181 +157,187 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
         clipsResponse.json()
       ]);
       
-      setRecommendedVideos(recsData.videos || []);
-      setAds(adsData.ads || []);
-      setClips(clipsData.clips || []);
+      setRecommendedVideos(recsData.videos?.length > 0 ? recsData.videos : []);
+      setAds(adsData.ads?.length > 0 ? adsData.ads : []);
+      setClips(clipsData.clips?.length > 0 ? clipsData.clips : []);
+      console.log('Recommendations data:', { videos: recsData.videos, ads: adsData.ads, clips: clipsData.clips });
     } catch (err) {
       console.error('Failed to fetch recommendations:', err);
+      setRecommendedVideos([]);
+      setAds([]);
+      setClips([]);
     }
   }, []);
   
-  // Mock data for development (remove when backend is ready)
-  const mockVideoData = {
-    id: id,
-    title: "Modi's Historic Speech on Digital India 2024: Complete Analysis",
-    views: "15.2M",
-    uploadedAt: "2 hours ago",
-    likes: "892K",
-    dislikes: "12K",
-    channel: "BharatWatch Official",
-    channelId: "bharatwatch-official",
-    channelAvatar: "BW",
-    subscribers: "2.5M",
-    verified: true,
-    description: "Prime Minister Modi delivers a groundbreaking speech on India's digital transformation, outlining revolutionary policies that will shape the nation's technological future. This historic address covers key initiatives in AI, blockchain, and digital infrastructure development.",
-    tags: ["Modi", "Digital India", "Technology", "Politics", "Analysis"],
-    videoUrl: "/api/placeholder/video",
-    thumbnail: modiji,
-    duration: 1847, // in seconds
-    category: "News & Politics",
-    language: "Hindi",
-    captions: true,
-    hd: true,
-    uploadDate: "2024-01-15T10:30:00Z"
-  };
+  // Mock data for development (fallback only)
+  // const mockVideoData = {
+  //   id: id,
+  //   title: "Modi's Historic Speech on Digital India 2024: Complete Analysis",
+  //   views: "15.2M",
+  //   uploadedAt: "2 hours ago",
+  //   likes: "892K",
+  //   dislikes: "12K",
+  //   channel: "BharatWatch Official",
+  //   channelId: "bharatwatch-official",
+  //   channelAvatar: "BW",
+  //   subscribers: "2.5M",
+  //   verified: true,
+  //   description: "Prime Minister Modi delivers a groundbreaking speech on India's digital transformation, outlining revolutionary policies that will shape the nation's technological future. This historic address covers key initiatives in AI, blockchain, and digital infrastructure development.",
+  //   tags: ["Modi", "Digital India", "Technology", "Politics", "Analysis"],
+  //   videoUrl: "/api/placeholder/video",
+  //   thumbnail: modiji,
+  //   duration: 1847,
+  //   category: "News & Politics",
+  //   language: "Hindi",
+  //   captions: true,
+  //   hd: true,
+  //   uploadDate: "2024-01-15T10:30:00Z"
+  // };
 
-  const mockClips = [
-    { id: 1, title: "Modi's Key Points on AI", time: "2:15", startTime: 135, thumbnail: modiji },
-    { id: 2, title: "Digital Infrastructure Plans", time: "8:30", startTime: 510, thumbnail: modiji},
-    { id: 3, title: "Blockchain Initiative", time: "12:45", startTime: 765, thumbnail: modiji },
-    { id: 4, title: "Future Tech Roadmap", time: "18:20", startTime: 1100, thumbnail: modiji},
-    { id: 5, title: "AI in Healthcare", time: "22:10", startTime: 1300, thumbnail: modiji}
-  ];
+  // const mockClips = [
+  //   { id: 1, title: "Modi's Key Points on AI", time: "2:15", startTime: 135, thumbnail: modiji },
+  //   { id: 2, title: "Digital Infrastructure Plans", time: "8:30", startTime: 510, thumbnail: modiji},
+  //   { id: 3, title: "Blockchain Initiative", time: "12:45", startTime: 765, thumbnail: modiji },
+  //   { id: 4, title: "Future Tech Roadmap", time: "18:20", startTime: 1100, thumbnail: modiji},
+  //   { id: 5, title: "AI in Healthcare", time: "22:10", startTime: 1300, thumbnail: modiji}
+  // ];
 
-  const mockAds = [
-    { 
-      id: 1, 
-      title: "Invest in Digital India Stocks - Get 20% Bonus", 
-      url: "#", 
-      image: ad1,
-      type: "sponsored",
-      advertiser: "Zerodha"
-    }
-  ];
+  // const mockAds = [
+  //   { 
+  //     id: 1, 
+  //     title: "Invest in Digital India Stocks - Get 20% Bonus", 
+  //     url: "#", 
+  //     image: ad1,
+  //     type: "sponsored",
+  //     advertiser: "Zerodha"
+  //   }
+  // ];
 
-  const mockComments = [
-    {
-      id: 1,
-      user: "Rajesh Kumar",
-      userId: "rajesh_kumar_123",
-      avatar: "RK",
-      time: "2 hours ago",
-      text: "Excellent analysis of Modi's digital vision! This will transform India's tech landscape. 🚀",
-      likes: 234,
-      replies: 12,
-      isLiked: false,
-      isPinned: true,
-      isVerified: false
-    },
-    {
-      id: 2,
-      user: "Priya Sharma",
-      userId: "priya_tech_analyst",
-      avatar: "PS",
-      time: "3 hours ago",
-      text: "The blockchain initiatives mentioned here are game-changing. Great breakdown of the policy implications.",
-      likes: 189,
-      replies: 8,
-      isLiked: true,
-      isPinned: false,
-      isVerified: true
-    },
-    {
-      id: 3,
-      user: "Tech Enthusiast",
-      userId: "tech_enthusiast_2024",
-      avatar: "TE",
-      time: "4 hours ago",
-      text: "Finally someone explaining these policies in simple terms. Keep up the great work BharatWatch! 👏",
-      likes: 156,
-      replies: 5,
-      isLiked: false,
-      isPinned: false,
-      isVerified: false
-    },
-    {
-      id: 4,
-      user: "Mumbai Investor",
-      userId: "mumbai_investor_pro",
-      avatar: "MI",
-      time: "5 hours ago",
-      text: "This is why I follow this channel. In-depth analysis with real insights. 🔥",
-      likes: 98,
-      replies: 3,
-      isLiked: false,
-      isPinned: false,
-      isVerified: false
-    }
-  ];
+  // const mockComments = [
+  //   {
+  //     id: 1,
+  //     user: "Rajesh Kumar",
+  //     userId: "rajesh_kumar_123",
+  //     avatar: "RK",
+  //     time: "2 hours ago",
+  //     text: "Excellent analysis of Modi's digital vision! This will transform India's tech landscape. 🚀",
+  //     likes: 234,
+  //     replies: 12,
+  //     isLiked: false,
+  //     isPinned: true,
+  //     isVerified: false
+  //   },
+  //   {
+  //     id: 2,
+  //     user: "Priya Sharma",
+  //     userId: "priya_tech_analyst",
+  //     avatar: "PS",
+  //     time: "3 hours ago",
+  //     text: "The blockchain initiatives mentioned here are game-changing. Great breakdown of the policy implications.",
+  //     likes: 189,
+  //     replies: 8,
+  //     isLiked: true,
+  //     isPinned: false,
+  //     isVerified: true
+  //   },
+  //   {
+  //     id: 3,
+  //     user: "Tech Enthusiast",
+  //     userId: "tech_enthusiast_2024",
+  //     avatar: "TE",
+  //     time: "4 hours ago",
+  //     text: "Finally someone explaining these policies in simple terms. Keep up the great work BharatWatch! 👏",
+  //     likes: 156,
+  //     replies: 5,
+  //     isLiked: false,
+  //     isPinned: false,
+  //     isVerified: false
+  //   },
+  //   {
+  //     id: 4,
+  //     user: "Mumbai Investor",
+  //     userId: "mumbai_investor_pro",
+  //     avatar: "MI",
+  //     time: "5 hours ago",
+  //     text: "This is why I follow this channel. In-depth analysis with real insights. 🔥",
+  //     likes: 98,
+  //     replies: 3,
+  //     isLiked: false,
+  //     isPinned: false,
+  //     isVerified: false
+  //   }
+  // ];
 
-  const mockRecommendedVideos = [
-    {
-      id: 2,
-      title: "Supreme Court Article 370 Verdict: Complete Analysis",
-      thumbnail: adt1,
-      duration: "18:45",
-      views: "12.4M",
-      uploadedAt: "4 hours ago",
-      channel: "Republic TV",
-      channelAvatar: "RT",
-      verified: true
-    },
-    {
-      id: 3,
-      title: "India vs Australia Cricket World Cup Final 2024",
-      thumbnail: adt2,
-      duration: "LIVE",
-      views: "8.7M",
-      uploadedAt: "streaming now",
-      channel: "Star Sports",
-      channelAvatar: "SS",
-      verified: true
-    },
-    {
-      id: 4,
-      title: "Shah Rukh Khan's New Movie Trailer Breaks Internet",
-      thumbnail: adt3,
-      duration: "15:20",
-      views: "9.8M",
-      uploadedAt: "6 hours ago",
-      channel: "Bollywood Hungama",
-      channelAvatar: "BH",
-      verified: false
-    },
-    {
-      id: 5,
-      title: "iPhone 16 vs Samsung Galaxy S24: Indian Price War",
-      thumbnail: adt4,
-      duration: "22:15",
-      views: "5.6M",
-      uploadedAt: "8 hours ago",
-      channel: "Technical Guruji",
-      channelAvatar: "TG",
-      verified: true
-    },
-    {
-      id: 6,
-      title: "Budget 2024: Key Highlights That Will Impact You",
-      thumbnail: ad2,
-      duration: "12:30",
-      views: "3.2M",
-      uploadedAt: "12 hours ago",
-      channel: "Economic Times",
-      channelAvatar: "ET",
-      verified: true
-    },
-    {
-      id: 7,
-      title: "How to be a software developer in 2026",
-      thumbnail: ad1,
-      duration: "10:7",
-      views: "69k",
-      uploadedAt: "12 hours ago",
-      channel: "Techie Anant",
-      channelAvatar: "TA",
-      verified: false
-    }
-  ];
+  // const mockRecommendedVideos = [
+  //   {
+  //     id: 2,
+  //     title: "Supreme Court Article 370 Verdict: Complete Analysis",
+  //     thumbnail: adt1,
+  //     duration: "18:45",
+  //     views: "12.4M",
+  //     uploadedAt: "4 hours ago",
+  //     channel: "Republic TV",
+  //     channelAvatar: "RT",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "India vs Australia Cricket World Cup Final 2024",
+  //     thumbnail: adt2,
+  //     duration: "LIVE",
+  //     views: "8.7M",
+  //     uploadedAt: "streaming now",
+  //     channel: "Star Sports",
+  //     channelAvatar: "SS",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Shah Rukh Khan's New Movie Trailer Breaks Internet",
+  //     thumbnail: adt3,
+  //     duration: "15:20",
+  //     views: "9.8M",
+  //     uploadedAt: "6 hours ago",
+  //     channel: "Bollywood Hungama",
+  //     channelAvatar: "BH",
+  //     verified: false
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "iPhone 16 vs Samsung Galaxy S24: Indian Price War",
+  //     thumbnail: adt4,
+  //     duration: "22:15",
+  //     views: "5.6M",
+  //     uploadedAt: "8 hours ago",
+  //     channel: "Technical Guruji",
+  //     channelAvatar: "TG",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Budget 2024: Key Highlights That Will Impact You",
+  //     thumbnail: ad2,
+  //     duration: "12:30",
+  //     views: "3.2M",
+  //     uploadedAt: "12 hours ago",
+  //     channel: "Economic Times",
+  //     channelAvatar: "ET",
+  //     verified: true
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "How to be a software developer in 2026",
+  //     thumbnail: ad1,
+  //     duration: "10:7",
+  //     views: "69k",
+  //     uploadedAt: "12 hours ago",
+  //     channel: "Techie Anant",
+  //     channelAvatar: "TA",
+  //     verified: false
+  //   }
+  // ];
+
+
 
   // Video player functions
   const handlePlayPause = useCallback(() => {
@@ -389,28 +431,54 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   }, [isPlaying]);
 
   // User interaction functions
-  const handleLike = useCallback(() => {
-    setIsLiked(!isLiked);
-    // Update like count in videoData
-    if (videoData) {
-      const newLikes = isLiked 
-        ? parseInt(videoData.likes.replace(/[^0-9]/g, '')) - 1
-        : parseInt(videoData.likes.replace(/[^0-9]/g, '')) + 1;
-      setVideoData({...videoData, likes: `${newLikes}K`});
+  const handleLike = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/videos/${id}/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      
+      if (response.ok) {
+        setIsLiked(!isLiked);
+        if (videoData) {
+          const newLikes = isLiked 
+            ? parseInt(videoData.likes.replace(/[^0-9]/g, '')) - 1
+            : parseInt(videoData.likes.replace(/[^0-9]/g, '')) + 1;
+          setVideoData({...videoData, likes: `${newLikes}K`});
+        }
+      }
+    } catch (err) {
+      console.error('Failed to like video:', err);
+      // Fallback to local state update
+      setIsLiked(!isLiked);
     }
-    // TODO: Add API call when backend is ready
-    // fetch(`/api/videos/${id}/like`, { method: 'POST', ... })
-  }, [isLiked, videoData]);
+  }, [id, isLiked, videoData]);
 
-  const handleSave = useCallback(() => {
-    setIsSaved(!isSaved);
-    // TODO: Add API call when backend is ready
-    // fetch(`/api/videos/${id}/save`, { method: 'POST', ... })
-  }, [isSaved]);
+  const handleSave = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/v1/videos/${id}/watchlater`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      
+      if (response.ok) {
+        setIsSaved(!isSaved);
+      }
+    } catch (err) {
+      console.error('Failed to save video:', err);
+      setIsSaved(!isSaved);
+    }
+  }, [id, isSaved]);
 
   const handleSubscribe = useCallback(async () => {
     try {
-      const response = await fetch(`/api/channels/${videoData?.channelId}/subscribe`, {
+      const response = await fetch(`http://localhost:4000/api/v1/channels/${videoData?.channelId}/subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: isSubscribed ? 'unsubscribe' : 'subscribe' })
@@ -429,7 +497,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
     if (!newComment.trim()) return;
     
     try {
-      const response = await fetch(`/api/videos/${id}/comments`, {
+      const response = await fetch(`http://localhost:4000/api/v1/videos/${id}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: newComment })
@@ -447,7 +515,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   const handleCommentLike = useCallback(async (commentId, isLiked) => {
     try {
-      const response = await fetch(`/api/comments/${commentId}/like`, {
+      const response = await fetch(`http://localhost:4000/api/v1/comments/${commentId}/like`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: isLiked ? 'unlike' : 'like' })
@@ -485,20 +553,11 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   // Effects
   useEffect(() => {
     if (id) {
-      // Use mock data for now, replace with fetchVideoData(id) when backend is ready
-      setVideoData(mockVideoData);
-      setComments(mockComments);
-      setRecommendedVideos(mockRecommendedVideos);
-      setAds(mockAds);
-      setClips(mockClips);
-      setLoading(false);
-      
-      // Uncomment when backend is ready:
-      // fetchVideoData(id);
-      // fetchComments(id);
-      // fetchRecommendations(id);
+      fetchVideoData(id);
+      fetchComments(id);
+      fetchRecommendations(id);
     }
-  }, [id]);
+  }, [id, fetchVideoData, fetchComments, fetchRecommendations]);
 
 
 
@@ -546,9 +605,9 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   useEffect(() => {
     if (sortBy && id) {
-      // fetchComments(id); // Uncomment when backend is ready
+      fetchComments(id);
     }
-  }, [sortBy, id]);
+  }, [sortBy, id, fetchComments]);
 
   // Loading state
   if (loading) {
@@ -608,9 +667,9 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                   onPause={() => setIsPlaying(false)}
                   preload="metadata"
                 >
-                  <source src={videoData.videoUrl} type="video/mp4" />
+                  {videoData.videoUrl && <source src={videoData.videoUrl} type="video/mp4" />}
                   {videoData.captions && (
-                    <track kind="captions" src={`/api/videos/${videoData.id}/captions`} srcLang="en" label="English" />
+                    <track kind="captions" src={`http://localhost:4000/api/v1/videos/${videoData.id}/captions`} srcLang="en" label="English" />
                   )}
                   Your browser does not support the video tag.
                 </video>

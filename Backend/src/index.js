@@ -7,6 +7,7 @@ import { app } from "./app.js";
 dotenv.config({
   path: "./.env",
 });
+import "./services/cloudinary.js"; // Initialize Cloudinary configuration
 import { transporter } from "./services/emailTransporter.js";
 
 
