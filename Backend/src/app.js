@@ -8,7 +8,6 @@ import errorHandler from "./middlewares/errors.middleware.js";
 import snipRoutes from "./routes/snips.routes.js";
 import userRouter from "./routes/user.routes.js";
 import videoRouter from "./routes/video.routes.js";
-import userRouter from "./routes/user.routes.js";
 
 const app = express();
 
