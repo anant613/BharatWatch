@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecommendedVideos.css";
+import { api } from '../../api';
 import sundar from './sundar pichayi.jpeg';
-// import thum1 from './thum1.png';
 import thum2 from './thum2.png';
 import thum3 from './thum3.png';
 import thum4 from './thum4.png';
-import profile1 from './profile9.jpeg'; // Alag alag ya ek hi photo bhi chalega
+import profile1 from './profile9.jpeg';
 
 const demoImages = [
   {
@@ -111,7 +111,34 @@ const demoImages = [
 
 const RecommendedVideos = ({ videos = [] }) => {
   const navigate = useNavigate();
-  const itemsToShow = videos.length > 0 ? videos : demoImages;
+  const [realVideos, setRealVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await api.getAllVideos();
+        if (response.data) {
+          setRealVideos(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch videos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchVideos();
+  }, []);
+
+  const itemsToShow = realVideos.length > 0 ? realVideos.map(video => ({
+    id: video._id,
+    url: video.thumbnail || thum2,
+    title: video.title,
+    author: video.owner?.fullName || 'Unknown',
+    profile: profile1,
+    views: `${video.views} Views`,
+    time: new Date(video.createdAt).toLocaleDateString()
+  })) : demoImages;
 
   return (
     
@@ -125,7 +152,7 @@ const RecommendedVideos = ({ videos = [] }) => {
           <div
             className="yt-rec-card"
             key={index}
-            onClick={() => navigate(`/videoplayer/${index}`)}
+            onClick={() => navigate(`/videoplayer/${item.id || index}`)}
             tabIndex={0}
           >
             <div className="yt-rec-thumb-wrap">

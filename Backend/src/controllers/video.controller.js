@@ -1,4 +1,4 @@
-import { ApiError, ApiResponse } from "../utils/utils.js";
+import { ApiError, ApiResponse, asyncHandler } from "../utils/utils.js";
 import { Video } from "../models/video.model.js";
 import { User } from "../models/user.model.js";
 import { Liked } from "../models/videoLike.model.js";
@@ -24,7 +24,7 @@ const uploadOnCloudinary = async (localFilePath) => {
 };
 
 // Upload video
-const uploadVideo = async (req, res) => {
+const uploadVideo = asyncHandler(async (req, res) => {
     try {
         const { title, description, visibility = "public" } = req.body;
         
@@ -52,7 +52,7 @@ const uploadVideo = async (req, res) => {
             videoFile: videoFile.url,
             thumbnail: thumbnail?.url || "",
             duration: videoFile.duration || 0,
-            owner: req.user._id,
+            owner: req.user?._id || new mongoose.Types.ObjectId(), // Default owner for testing
             visibility
         });
 
@@ -62,10 +62,10 @@ const uploadVideo = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to upload video");
     }
-};
+});
 
 // Get all videos
-const getAllVideos = async (req, res) => {
+const getAllVideos = asyncHandler(async (req, res) => {
     try {
         const { page = 1, limit = 10, query } = req.query;
 
@@ -105,10 +105,10 @@ const getAllVideos = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to fetch videos");
     }
-};
+});
 
 // Get video by ID
-const getVideoById = async (req, res) => {
+const getVideoById = asyncHandler(async (req, res) => {
     try {
         const { videoId } = req.params;
 
@@ -142,10 +142,10 @@ const getVideoById = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to fetch video");
     }
-};
+});
 
 // Toggle like video
-const toggleVideoLike = async (req, res) => {
+const toggleVideoLike = asyncHandler(async (req, res) => {
     try {
         const { videoId } = req.params;
 
@@ -183,10 +183,10 @@ const toggleVideoLike = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to toggle like");
     }
-};
+});
 
 // Add to watch later
-const addToWatchLater = async (req, res) => {
+const addToWatchLater = asyncHandler(async (req, res) => {
     try {
         const { videoId } = req.params;
 
@@ -220,10 +220,10 @@ const addToWatchLater = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to add to watch later");
     }
-};
+});
 
 // Get trending videos
-const getTrendingVideos = async (req, res) => {
+const getTrendingVideos = asyncHandler(async (req, res) => {
     try {
         const { page = 1, limit = 10 } = req.query;
 
@@ -257,7 +257,7 @@ const getTrendingVideos = async (req, res) => {
     } catch (error) {
         throw new ApiError(500, error.message || "Failed to fetch trending videos");
     }
-};
+});
 
 export {
     uploadVideo,

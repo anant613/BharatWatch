@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './uploadVideo.css';
 import Navbar from '../../components/Navbar/navbar';
+import { api } from '../../api';
 
 const UploadVideo = () => {
   
@@ -95,26 +96,79 @@ const UploadVideo = () => {
     setVideoDetails(prev => ({ ...prev, [name]: value }));
   };
 
-  const simulateUpload = () => {
+  const uploadToCloudinary = async () => {
     setIsUploading(true);
     setUploadProgress(0);
     
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsUploading(false);
-          return 100;
-        }
-        return prev + Math.random() * 15;
+    try {
+      const formData = new FormData();
+      formData.append('videoFile', selectedFile);
+      formData.append('title', videoDetails.title);
+      formData.append('description', videoDetails.description);
+      formData.append('visibility', videoDetails.visibility);
+      
+      if (videoDetails.thumbnail) {
+        formData.append('thumbnail', videoDetails.thumbnail);
+      }
+
+      // Simulate progress for better UX
+      const progressInterval = setInterval(() => {
+        setUploadProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + Math.random() * 10;
+        });
+      }, 500);
+
+      const response = await fetch('http://localhost:4000/api/v1/videos/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: formData
       });
-    }, 200);
+
+      clearInterval(progressInterval);
+      
+      if (response.ok) {
+        const result = await response.json();
+        setUploadProgress(100);
+        
+        // Show success message
+        setTimeout(() => {
+          alert('Video uploaded successfully to Cloudinary!');
+          // Reset form
+          setSelectedFile(null);
+          setPreviewUrl(null);
+          setVideoDetails({
+            title: '',
+            description: '',
+            tags: '',
+            category: 'Education',
+            visibility: 'public',
+            thumbnail: null
+          });
+          setIsUploading(false);
+          setUploadProgress(0);
+        }, 1000);
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert(`Upload failed: ${error.message}`);
+      setIsUploading(false);
+      setUploadProgress(0);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedFile && videoDetails.title) {
-      simulateUpload();
+      uploadToCloudinary();
     }
   };
   
