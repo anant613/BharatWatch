@@ -1,68 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Snips.css";
-import img1 from './images/image.png';
-import img2 from './images/profile2.png';
-import img3 from './images/profile1.png';
-import img4 from './images/profile3.jpeg';
-import img5 from './images/profile4.jpeg';
-import img6 from './images/profile5.jpeg';
-import img7 from './images/profile6.jpeg';
-import img8 from './images/profile7.jpeg';
-import img9 from './images/profile8.jpeg';
-import img10 from './images/profile9.jpeg';
-import img11 from './images/profile10.jpeg';
-import img12 from './images/profile11.png';
-import img13 from './images/profile12.jpeg';
-import img14 from './images/profile13.jpeg';
 
+// API URL: use Vite env var `VITE_API_URL` (prefix required). Falls back to localhost.
+// Note: in Vite use `import.meta.env` instead of `process.env` (process is undefined in browser).
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
-const demoSnips = [
-  { url: img4, title: "Demo 2" },
-  { url: img5, title: "Demo 1" },
-  { url: img6, title: "Demo 2" },
-  { url: img3, title: "Demo 2" },
-  { url: img8, title: "Demo 2" },
-  { url: img9, title: "Demo 1" },
-  { url: img10, title: "Demo 2" },
-  { url: img14, title: "Demo 1" },
-  { url: img12, title: "Demo 2" },
-  { url: img13, title: "Demo 2" },
-  { url: img7, title: "Demo 2" },
-  { url: img9, title: "Demo 1" },
-  { url: img10, title: "Demo 2" },
-  { url: img3, title: "Demo 2" },
-  { url: img7, title: "Demo 2" },
-  { url: img3, title: "Demo 1" },
-  { url: img2, title: "Demo 2" },
-  { url: img3, title: "Demo 2" },
-  { url: img2, title: "Demo 2" },
-  // ...more
-];
-
-const Snips = ({ Snips = [] }) => {
-  const SnipsToShow = Snips.length > 0 ? Snips : demoSnips;
+const Snips = () => {
+  const [snips, setSnips] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch all snips from backend
+    fetch(`${API_URL}/snips`)
+      .then(res => res.json())
+      .then(data => setSnips(data))
+      .catch(() => setSnips([]));
+  }, []);
 
   return (
     <section className="Snips-section">
       <div className="Snips-header">
         <h1 className="Snips-title">Snips</h1>
-        {/* <button className="see-more-btn">See More →</button> */}
       </div>
       <div className="Snips-stories">
-        {SnipsToShow.length > 0 ? (
-          SnipsToShow.map((reel, index) => (
+        {snips.length > 0 ? (
+          snips.map((snip, index) => (
             <div
               className="snip-item"
-              key={index}
-              onClick={() => navigate(`/snips`)}
-              // onClick={() => navigate(`/reel/${index}`)} yai tab use hoga jab backend se reel aane lgega
+              key={snip._id || index}
+              onClick={() => navigate(`/snips/${snip._id}`)}
               style={{ cursor: 'pointer' }}
             >
               <img
-                src={reel.url}
-                alt={reel.title}
+                src={snip.videoUrl || snip.imageUrl || "/default-thumbnail.png"}
+                alt={snip.title}
                 className="snip-video"
                 draggable={false}
               />

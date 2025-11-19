@@ -5,6 +5,8 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import errorHandler from "./middlewares/errors.middleware.js";
+import snipRoutes from "./routes/snips.routes.js";
+import userRouter from "./routes/user.routes.js";
 import videoRouter from "./routes/video.routes.js";
 import userRouter from "./routes/user.routes.js";
 
@@ -70,6 +72,23 @@ app.get("/health", (req, res) => {
 });
 
 // API routes
+
+///    origin: [
+   //     "http://localhost:3000",
+     //   "http://localhost:5173",
+     //   "http://localhost:5174"
+   // ,
+ //   credentials: true,
+ //   methods: ["GET", "POST", "PUT", "DELETE"],
+ //   allowedHeaders: ["Content-Type", "Authorization"]
+//}));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieparser());
+
+
+app.use("/api/snips", snipRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/videos", videoRouter);
 

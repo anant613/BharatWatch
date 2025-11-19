@@ -31,9 +31,9 @@ const App = () => {
 
   return (
     <Router>
-      {/* ---- YAHAN AISE ---- */}
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
+        {/* Home page */}
         <Route path="/" element={
           <div className="app-container">
             <div className="main-content">
@@ -43,9 +43,15 @@ const App = () => {
             </div>
           </div>
         } />
-        <Route path="/snips" element={<SnipsPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        {/* Show all snips small/preview */}
+        <Route path="/snips" element={<Snips />} />
+        {/* Show single snip page, arrows, backend connect */}
+        <Route path="/snips/:id" element={<SnipsPage />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Optional: repeat home on /home */}
         <Route path="/home" element={
           <div className="app-container">
             <div className="main-content">
