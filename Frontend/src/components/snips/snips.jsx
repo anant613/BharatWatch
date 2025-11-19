@@ -32,7 +32,7 @@ const Snips = () => {
               onClick={() => navigate(`/snips/${snip._id}`)}
               style={{ cursor: 'pointer' }}
             >
-              <img
+              <video
                 src={snip.videoUrl || snip.imageUrl || "/default-thumbnail.png"}
                 alt={snip.title}
                 className="snip-video"
