@@ -9,6 +9,7 @@ const UploadVideo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadType , setUploadType] = useState(null); // Video or Snip
   const [videoDetails, setVideoDetails] = useState({
     title: '',
     description: '',
@@ -122,7 +123,13 @@ const UploadVideo = () => {
         });
       }, 500);
 
-      const response = await fetch('http://localhost:4000/api/v1/videos/upload', {
+      const endpoint = uploadType === 'video'
+      ?
+      'http://localhost:4000/api/v1/videos/upload'
+      :
+      'http://localhost:4000/api/v1/snips/upload';
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -171,6 +178,12 @@ const UploadVideo = () => {
       uploadToCloudinary();
     }
   };
+
+  const resetUploadType = () => {
+    setUploadType(null);
+    setSelectedFile(null);
+    setPreviewUrl(null);
+  }
   
 
   return (
