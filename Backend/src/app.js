@@ -37,19 +37,19 @@ app.use(limiter);
 // Compression
 app.use(compression());
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:5174",
-    ],
+// CORS configuration
+const allowedOrigins = process.env.NODE_ENV === "production" 
+    ? process.env.ALLOWED_ORIGINS?.split(',') || []
+    : ["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"];
+
+app.use(cors({
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    maxAge: 86400, // 24 hours
-  })
-);
+    maxAge: 86400 // 24 hours
+}));
+
 // Body parsing middleware
 app.use(express.json({ 
     limit: "10mb",
@@ -58,6 +58,31 @@ app.use(express.json({
     }
 }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.static("public"));
+app.use(cookieparser());
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "OK",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+    });
+});
+
+// API routes
+
+///    origin: [
+   //     "http://localhost:3000",
+     //   "http://localhost:5173",
+     //   "http://localhost:5174"
+   // ,
+ //   credentials: true,
+ //   methods: ["GET", "POST", "PUT", "DELETE"],
+ //   allowedHeaders: ["Content-Type", "Authorization"]
+//}));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieparser());
 
@@ -91,13 +116,7 @@ app.use("*", (req, res) => {
     });
 });
 
-
-
-// const PORT = process.env.PORT || 8000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running at http://localhost:${PORT}`);
-// });
-
 // Error handling middleware (must be last)
 app.use(errorHandler);
+
 export { app };

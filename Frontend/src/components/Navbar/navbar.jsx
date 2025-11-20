@@ -61,7 +61,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
     setShowAccountDropdown(false);
     navigate("/home");
   };
-  // Media Query - detect mobile, moves nav buttons to sidebar
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
 
   return (

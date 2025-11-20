@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecommendedVideos.css";
-import { api } from "../../api";
-import sundar from "./sundar pichayi.jpeg";
-import thum2 from "./thum2.png";
-import thum3 from "./thum3.png";
-import thum4 from "./thum4.png";
-import profile1 from "./profile9.jpeg";
+import { api } from '../../api';
+import sundar from './sundar pichayi.jpeg';
+import thum2 from './thum2.png';
+import thum3 from './thum3.png';
+import thum4 from './thum4.png';
+import profile1 from './profile9.jpeg';
 
 const demoImages = [
   {
@@ -121,7 +121,7 @@ const RecommendedVideos = ({ videos = [] }) => {
           setRealVideos(response.data);
         }
       } catch (error) {
-        console.error("Failed to fetch videos:", error);
+        console.error('Failed to fetch videos:', error);
       } finally {
         setLoading(false);
       }
@@ -129,34 +129,40 @@ const RecommendedVideos = ({ videos = [] }) => {
     fetchVideos();
   }, []);
 
-  const itemsToShow =
-    realVideos.length > 0
-      ? realVideos.map((video) => ({
-          id: video._id,
-          url: video.thumbnail || thum2,
-          title: video.title,
-          author: video.owner?.fullName || "Unknown",
-          profile: profile1,
-          views: `${video.views} Views`,
-          time: new Date(video.createdAt).toLocaleDateString(),
-        }))
-      : demoImages;
+  const itemsToShow = realVideos.length > 0 ? realVideos.map(video => ({
+    id: video._id,
+    url: video.thumbnail || thum2,
+    title: video.title,
+    author: video.owner?.fullName || 'Unknown',
+    profile: profile1,
+    views: `${video.views} Views`,
+    time: new Date(video.createdAt).toLocaleDateString()
+  })) : demoImages;
 
   return (
     <section className="yt-section">
-      <div className="yt-recommended-section">
-        <div className="yt-recommended-header">
-          <h2 className="yt-recommended-title">Recommended Videos</h2>
-        </div>
-        <div className="yt-recommended-grid">
-          {itemsToShow.map((item, index) => (
-            <div
-              className="yt-rec-card"
-              key={index}
-              onClick={() => navigate(`/videoplayer/${item.id || index}`)}
-              tabIndex={0}
-            >
-              <div className="yt-rec-thumb-wrap">
+      <div  className="yt-recommended-section">
+      <div className="yt-recommended-header">
+        <h2 className="yt-recommended-title">Recommended Videos</h2>
+      </div>
+      <div className="yt-recommended-grid">
+        {itemsToShow.map((item, index) => (
+          <div
+            className="yt-rec-card"
+            key={index}
+            onClick={() => navigate(`/videoplayer/${item.id || index}`)}
+            tabIndex={0}
+          >
+            <div className="yt-rec-thumb-wrap">
+              <img
+                className="yt-rec-thumb"
+                src={item.url}
+                alt={item.title || "Demo thumbnail"}
+              />
+            </div>
+            <div className="yt-rec-info">
+              <div className="yt-rec-title">{item.title || "Untitled Video"}</div>
+              <div className="yt-rec-metarow">
                 <img
                   className="yt-rec-thumb"
                   src={item.url}
@@ -181,8 +187,10 @@ const RecommendedVideos = ({ videos = [] }) => {
                 </div>
               </div>
             </div>
-          ))}
+          
         </div>
+        ))}
+      </div>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema(
@@ -7,8 +7,7 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       default: "",
-      // required: true,
-      unique: true,
+      sparse: true,
       trim: true,
       lowercase: true,
       index: true,

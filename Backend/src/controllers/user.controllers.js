@@ -5,8 +5,8 @@ import { genrateOtp } from "../services/generateOtp.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { sendVerificationMail } from "../services/sendMail.js";
-import { generateToken } from "../services/generateTokens.js";
+import {sendVerificationMail} from "../services/sendMail.js"
+import {generateToken} from "../services/generateTokens.js"
 
 const options = {
   httpOnly: true,
@@ -16,90 +16,82 @@ const options = {
 
 //register user
 const registerUser = asyncHandler(async (req, res) => {
-  console.log("Registration request received:", req.body);
-
+  console.log('Registration request received:', req.body);
+  
   try {
-    const { fullName, email, password, confirmpassword } = req.body;
-
+    const { fullName, email, password, confirmpassword } = req.body; 
+    
     // Basic validation
     if (password != confirmpassword) {
       throw new ApiError(400, "Passwords do not match");
     }
     if (
-      [fullName, email, password, confirmpassword].some(
-        (field) => field?.trim() === ""
-      )
-    ) {
-      throw new ApiError(400, "All fields are required");
+        [fullName, email, password, confirmpassword].some(
+          (field) => field?.trim() === ""
+        )
+      ) {
+        throw new ApiError(400, "All fields are required");
     }
 
     // Check if user exists
-    const existedUser = await User.findOne({ email });
-    if (existedUser) {
+    const existedUser = await User.findOne({email});
+    if(existedUser){
       throw new ApiError(409, "User already exists");
     }
-
+    
     // Generate OTP
     const otp = genrateOtp();
-    console.log("Generated OTP:", otp);
+    console.log('Generated OTP:', otp);
 
     // Create user
     const newUser = await User.create({
       fullName,
       email,
       password,
-      username: email.split("@")[0] + Math.floor(Math.random() * 1000),
+      username: email.split('@')[0] + Math.floor(Math.random() * 1000)
     });
-
-    console.log("User created:", newUser._id);
-
+    
+    console.log('User created:', newUser._id);
+    
     if (!newUser) {
-      throw new ApiError(
-        500,
-        "User registration failed. Please try again later."
-      );
+      throw new ApiError(500, "User registration failed. Please try again later.");
     }
 
     // Try to send email (don't fail if this fails)
     try {
       await sendVerificationMail(otp, newUser);
-      console.log("Verification email sent successfully");
+      console.log('Verification email sent successfully');
     } catch (error) {
-      console.log("Email sending failed (continuing anyway):", error.message);
+      console.log('Email sending failed (continuing anyway):', error.message);
     }
 
     // Update user with OTP
-    const createduser = await User.findByIdAndUpdate(
-      newUser._id,
-      {
-        $set: {
-          emailVerificationOtp: otp,
-          emailOtpExpiry: Date.now() + 30 * 60 * 1000,
-        },
+    const createduser = await User.findByIdAndUpdate(newUser._id, {
+      $set: {
+        emailVerificationOtp: otp,
+        emailOtpExpiry: Date.now() + 30 * 60 * 1000,
       },
-      { new: true }
-    ).select("-password -emailVerificationOtp");
+    }, { new: true }).select("-password -emailVerificationOtp");
 
     if (!createduser) {
-      throw new ApiError(
-        500,
-        "Something went wrong while registering the user"
-      );
+      throw new ApiError(500, "Something went wrong while registering the user");
     }
-
+    
     console.log("User successfully created", createduser._id);
-
+    
     return res
       .status(201)
       .json(new ApiResponse(201, createduser, "User registered successfully"));
+      
   } catch (error) {
-    console.error("Registration error:", error);
+    console.error('Registration error:', error);
     if (error instanceof ApiError) {
       throw error;
     }
     throw new ApiError(500, "Registration failed: " + error.message);
   }
-});
+})
+
 
 //login user
 

@@ -26,7 +26,8 @@ export const getSnipById = async (req, res) => {
 // POST new snip (image/video URL, title, caption etc.)
 export const createSnip = async (req, res) => {
   try {
-    const { videoUrl, title, caption, songTitle, artist, comments, likeCount } = req.body;
+    const { videoUrl, title, caption, songTitle, artist, comments, likeCount } =
+      req.body;
     const snip = new Snip({
       videoUrl,
       title,
@@ -34,7 +35,7 @@ export const createSnip = async (req, res) => {
       songTitle,
       artist,
       comments: comments || [],
-      likeCount
+      likeCount,
     });
     const savedSnip = await snip.save();
     res.status(201).json(savedSnip);
@@ -43,7 +44,6 @@ export const createSnip = async (req, res) => {
     res.status(400).json({ message: "Error creating snip", error: err });
   }
 };
-
 
 // POST comment
 export const addComment = async (req, res) => {
