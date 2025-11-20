@@ -49,7 +49,7 @@ body, html {
   position: absolute;
   left: 18px;
   bottom: 90px;
-  background: rgba(20,20,20,0.91);
+  background: rgb(6 6 6 / 14%);
   border-radius: 23px;
   box-shadow: 0 4px 16px #0001;
   padding: 7px 21px 7px 11px;
@@ -521,7 +521,7 @@ gap: 20px;
 [data-theme="dark"] {
   --reel-bg: #101013;
   --reel-img-box: #181927;
-  --reel-overlay-bar: rgba(32,32,39,0.94);
+  --reel-overlay-bar: rgb(6 6 6 / 14%);
   --reel-song-bar-bg: rgba(27,27,37,0.99);
   --reel-caption-bg: rgba(32,32,39,0.67);
   --reel-caption-overlay: linear-gradient(0deg, #18192c 90%, transparent 100%);
@@ -560,9 +560,6 @@ gap: 20px;
 
 [data-theme="dark"] .reel-img-box {
   background: var(--reel-img-box, #232546);
-}
-[data-theme="dark"] .reel-overlay-bar {
-  background: var(--reel-song-bar-bg, rgba(27,27,37,0.99));
 }
 [data-theme="dark"] .song-title {
   color: var(--reel-song-title, #fff);
