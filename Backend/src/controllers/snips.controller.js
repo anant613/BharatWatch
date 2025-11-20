@@ -1,5 +1,3 @@
-// controllers/snips.controller.js
-
 import Snip from "../models/snip.model.js";
 
 // GET all snips
@@ -23,11 +21,10 @@ export const getSnipById = async (req, res) => {
   }
 };
 
-// POST new snip (image/video URL, title, caption etc.)
+// POST new snip
 export const createSnip = async (req, res) => {
   try {
-    const { videoUrl, title, caption, songTitle, artist, comments, likeCount } =
-      req.body;
+    const { videoUrl, title, caption, songTitle, artist, comments, likeCount } = req.body;
     const snip = new Snip({
       videoUrl,
       title,
@@ -40,7 +37,7 @@ export const createSnip = async (req, res) => {
     const savedSnip = await snip.save();
     res.status(201).json(savedSnip);
   } catch (err) {
-    console.log("Snip Create Error ----", err); // Add this to see actual error in terminal
+    console.log("Snip Create Error ----", err);
     res.status(400).json({ message: "Error creating snip", error: err });
   }
 };
@@ -61,11 +58,24 @@ export const addComment = async (req, res) => {
   }
 };
 
-// LIKE Snip (increment likeCount)
+// LIKE/UNLIKE Snip (toggle)
 export const likeSnip = async (req, res) => {
   try {
     const snip = await Snip.findById(req.params.id);
     if (!snip) return res.status(404).json({ message: "Snip not found" });
+
+    // New: Toggle logic using payload
+    if ("like" in req.body) {
+      if (req.body.like) {
+        snip.likeCount = (snip.likeCount || 0) + 1;
+      } else {
+        snip.likeCount = Math.max(0, (snip.likeCount || 0) - 1);
+      }
+      await snip.save();
+      return res.status(200).json({ likeCount: snip.likeCount, isLiked: req.body.like });
+    }
+
+    // Fallback for legacy requests (always increment)
     snip.likeCount = (snip.likeCount || 0) + 1;
     await snip.save();
     res.status(200).json({ likeCount: snip.likeCount });

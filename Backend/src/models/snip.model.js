@@ -12,8 +12,8 @@ const snipSchema = new mongoose.Schema({
   videoUrl: String,   // reel/video url
   title: String,
   caption: String,
-  // songTitle: String,
-  // artist: String,
+  songTitle: String,
+  artist: String,
   comments: [commentSchema],
   likeCount: { type: Number, default: 0 },
 }, { timestamps: true });

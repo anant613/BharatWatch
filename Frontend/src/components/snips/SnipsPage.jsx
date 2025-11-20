@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./SnipsPage.css";
 import carImg from "./images/myprof.png";
 import car from "./images/profile2.png";
@@ -13,6 +14,7 @@ import Navbar from "../../components/Navbar/navbar";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 const SnipsPage = () => {
+  const { id } = useParams();
   const [reelsList, setReelsList] = useState([]);
   const [reelIndex, setReelIndex] = useState(0);
   const reelRefs = useRef([]);
@@ -46,6 +48,17 @@ const SnipsPage = () => {
         setReelComments((data[0] && data[0].comments) || []);
       });
   }, []);
+
+  useEffect(() => {
+  // check id in param and update reelIndex accordingly (if id present)
+  if (id && reelsList.length > 0) {
+    const idx = reelsList.findIndex(item => String(item._id) === String(id));
+    if (idx !== -1 && idx !== reelIndex) {
+      setReelIndex(idx);
+    }
+  }
+  // eslint-disable-next-line
+}, [id, reelsList]);
 
   useEffect(() => {
     if (reelRefs.current[reelIndex]) {
@@ -91,30 +104,30 @@ const SnipsPage = () => {
   }, [showMore]);
 
   // Like
-  const handleLike = () => {
-    if (!reelsList[reelIndex]) return;
-    fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/like`, {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLikedArr((arr) =>
-          arr.map((item, i) => (i === reelIndex ? !item : item))
-        );
-        setCounts((cs) =>
-          cs.map((c, i) =>
-            i === reelIndex
-              ? {
-                  ...c,
-                  likeCount: isLikedArr[reelIndex]
-                    ? c.likeCount - 1
-                    : data.likeCount || c.likeCount + 1,
-                }
-              : c
-          )
-        );
-      });
-  };
+const handleLike = () => {
+  if (!reelsList[reelIndex]) return;
+  fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/like`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ like: !isLikedArr[reelIndex] }), // Yeh line important hai!
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setIsLikedArr((arr) =>
+        arr.map((item, i) => (i === reelIndex ? !item : item))
+      );
+      setCounts((cs) =>
+        cs.map((c, i) =>
+          i === reelIndex
+            ? {
+                ...c,
+                likeCount: data.likeCount || c.likeCount,
+              }
+            : c
+        )
+      );
+    });
+};
 
   // Save (UI only)
   const handleSave = () =>
@@ -598,3 +611,6 @@ const SnipsPage = () => {
 };
 
 export default SnipsPage;
+
+
+
