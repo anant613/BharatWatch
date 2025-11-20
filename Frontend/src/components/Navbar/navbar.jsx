@@ -61,7 +61,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
     setShowAccountDropdown(false);
     navigate("/home");
   };
-
   const isMobile = window.matchMedia("(max-width: 700px)").matches;
 
   return (

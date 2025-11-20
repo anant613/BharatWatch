@@ -4,21 +4,20 @@ import Navbar from '../../components/Navbar/navbar';
 import { api } from '../../api';
 
 const UploadVideo = () => {
-  
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadType , setUploadType] = useState(null); // Video or Snip
   const [videoDetails, setVideoDetails] = useState({
-    title: '',
-    description: '',
-    tags: '',
-    category: 'Education',
-    visibility: 'public',
+    title: "",
+    description: "",
+    tags: "",
+    category: "Education",
+    visibility: "public",
     thumbnail: null,
-    language: 'en',
-    license: 'standard',
+    language: "en",
+    license: "standard",
     allowComments: true,
     allowRatings: true,
     monetization: false,
@@ -29,23 +28,23 @@ const UploadVideo = () => {
     hideLikes: false,
     trimVideo: false,
     trimStart: 0,
-    trimEnd: 0
+    trimEnd: 0,
   });
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
-  
+
   const fileInputRef = useRef(null);
   const thumbnailInputRef = useRef(null);
 
   // Add scroll lock while on upload page
   useEffect(() => {
     // Scroll disable
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
       // Scroll enable on unmount
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
@@ -63,7 +62,7 @@ const UploadVideo = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     const files = e.dataTransfer.files;
     if (files && files[0]) {
       handleFileSelect(files[0]);
@@ -71,7 +70,7 @@ const UploadVideo = () => {
   };
 
   const handleFileSelect = (file) => {
-    if (file && file.type.startsWith('video/')) {
+    if (file && file.type.startsWith("video/")) {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -87,14 +86,14 @@ const UploadVideo = () => {
 
   const handleThumbnailSelect = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setVideoDetails(prev => ({ ...prev, thumbnail: file }));
+    if (file && file.type.startsWith("image/")) {
+      setVideoDetails((prev) => ({ ...prev, thumbnail: file }));
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setVideoDetails(prev => ({ ...prev, [name]: value }));
+    setVideoDetails((prev) => ({ ...prev, [name]: value }));
   };
 
   const uploadToCloudinary = async () => {
@@ -207,7 +206,7 @@ const UploadVideo = () => {
           <form onSubmit={handleSubmit} className="upload-form">
             {!selectedFile ? (
               <div
-                className={`upload-dropzone ${dragActive ? 'drag-active' : ''}`}
+                className={`upload-dropzone ${dragActive ? "drag-active" : ""}`}
                 onDragEnter={handleDrag}
                 onDragLeave={handleDrag}
                 onDragOver={handleDrag}
@@ -217,17 +216,50 @@ const UploadVideo = () => {
                 <div className="dropzone-content">
                   <div className="upload-animation">
                     <div className="upload-circle">
-                      <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2"/>
-                        <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="2"/>
-                        <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" strokeWidth="2"/>
-                        <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" strokeWidth="2"/>
-                        <polyline points="10,9 9,9 8,9" stroke="currentColor" strokeWidth="2"/>
+                      <svg
+                        width="60"
+                        height="60"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
+                        <polyline
+                          points="14,2 14,8 20,8"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
+                        <line
+                          x1="16"
+                          y1="13"
+                          x2="8"
+                          y2="13"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
+                        <line
+                          x1="16"
+                          y1="17"
+                          x2="8"
+                          y2="17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
+                        <polyline
+                          points="10,9 9,9 8,9"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
                       </svg>
                     </div>
                   </div>
                   <h3>Drag & Drop Your Video</h3>
-                  <p>or <span className="browse-text">browse files</span></p>
+                  <p>
+                    or <span className="browse-text">browse files</span>
+                  </p>
                   <div className="supported-formats">
                     <span>MP4, MOV, AVI, MKV up to 2GB</span>
                   </div>
@@ -244,10 +276,16 @@ const UploadVideo = () => {
               <div className="upload-content">
                 <div className="video-preview-section">
                   <div className="video-preview">
-                    <video src={previewUrl} controls className="preview-video" />
+                    <video
+                      src={previewUrl}
+                      controls
+                      className="preview-video"
+                    />
                     <div className="file-info">
                       <span className="file-name">{selectedFile.name}</span>
-                      <span className="file-size">{(selectedFile.size / (1024 * 1024)).toFixed(2)} MB</span>
+                      <span className="file-size">
+                        {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -346,14 +384,18 @@ const UploadVideo = () => {
                   </div>
 
                   <div className="advanced-options">
-                    <div 
+                    <div
                       className="advanced-header"
                       onClick={() => setShowAdvanced(!showAdvanced)}
                     >
                       <h3 className="advanced-title">Advanced Options</h3>
-                      <span className={`toggle-icon ${showAdvanced ? 'open' : ''}`}>▼</span>
+                      <span
+                        className={`toggle-icon ${showAdvanced ? "open" : ""}`}
+                      >
+                        ▼
+                      </span>
                     </div>
-                    
+
                     {showAdvanced && (
                       <div className="advanced-content">
                         <div className="form-group">
@@ -362,7 +404,12 @@ const UploadVideo = () => {
                               type="checkbox"
                               name="noComments"
                               checked={videoDetails.noComments}
-                              onChange={(e) => setVideoDetails(prev => ({ ...prev, noComments: e.target.checked }))}
+                              onChange={(e) =>
+                                setVideoDetails((prev) => ({
+                                  ...prev,
+                                  noComments: e.target.checked,
+                                }))
+                              }
                             />
                             Disable Comments
                           </label>
@@ -374,9 +421,14 @@ const UploadVideo = () => {
                               type="checkbox"
                               name="hideLikes"
                               checked={videoDetails.hideLikes}
-                              onChange={(e) => setVideoDetails(prev => ({ ...prev, hideLikes: e.target.checked }))}
+                              onChange={(e) =>
+                                setVideoDetails((prev) => ({
+                                  ...prev,
+                                  hideLikes: e.target.checked,
+                                }))
+                              }
                             />
-                             Hide Like Count
+                            Hide Like Count
                           </label>
                         </div>
 
@@ -386,9 +438,14 @@ const UploadVideo = () => {
                               type="checkbox"
                               name="trimVideo"
                               checked={videoDetails.trimVideo}
-                              onChange={(e) => setVideoDetails(prev => ({ ...prev, trimVideo: e.target.checked }))}
+                              onChange={(e) =>
+                                setVideoDetails((prev) => ({
+                                  ...prev,
+                                  trimVideo: e.target.checked,
+                                }))
+                              }
                             />
-                             Trim Video
+                            Trim Video
                           </label>
                         </div>
 
@@ -396,7 +453,9 @@ const UploadVideo = () => {
                           <div className="trim-controls">
                             <div className="form-row">
                               <div className="form-group">
-                                <label className="form-label">Start Time (seconds)</label>
+                                <label className="form-label">
+                                  Start Time (seconds)
+                                </label>
                                 <input
                                   type="number"
                                   name="trimStart"
@@ -408,7 +467,9 @@ const UploadVideo = () => {
                                 />
                               </div>
                               <div className="form-group">
-                                <label className="form-label">End Time (seconds)</label>
+                                <label className="form-label">
+                                  End Time (seconds)
+                                </label>
                                 <input
                                   type="number"
                                   name="trimEnd"
@@ -421,7 +482,7 @@ const UploadVideo = () => {
                               </div>
                             </div>
                           </div>
-                        )}  
+                        )}
                       </div>
                     )}
                   </div>
@@ -435,11 +496,13 @@ const UploadVideo = () => {
                   <div className="upload-progress">
                     <div className="progress-info">
                       <span>Uploading... {Math.round(uploadProgress)}%</span>
-                      <span className="progress-time">Processing your video</span>
+                      <span className="progress-time">
+                        Processing your video
+                      </span>
                     </div>
                     <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
+                      <div
+                        className="progress-fill"
                         style={{ width: `${uploadProgress}%` }}
                       />
                     </div>
@@ -452,12 +515,12 @@ const UploadVideo = () => {
                         setSelectedFile(null);
                         setPreviewUrl(null);
                         setVideoDetails({
-                          title: '',
-                          description: '',
-                          tags: '',
-                          category: 'Education',
-                          visibility: 'public',
-                          thumbnail: null
+                          title: "",
+                          description: "",
+                          tags: "",
+                          category: "Education",
+                          visibility: "public",
+                          thumbnail: null,
                         });
                       }}
                       className="btn-secondary"

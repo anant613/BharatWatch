@@ -10,8 +10,6 @@ dotenv.config({
 import "./services/cloudinary.js"; // Initialize Cloudinary configuration
 import { transporter } from "./services/emailTransporter.js";
 
-
-
 connectDB()
   .then(() => {
     app.listen(process.env.PORT || 8000, () => {
@@ -22,9 +20,7 @@ connectDB()
     console.log("MongoDB connection failed !!!", error);
   });
 
-
-  
-  transporter.verify((err, success) => {
-    if (err) console.error("SMTP connection failed:", err);
-    else console.log("SMTP ready to send emails");
-  });
+transporter.verify((err, success) => {
+  if (err) console.error("SMTP connection failed:", err);
+  else console.log("SMTP ready to send emails");
+});

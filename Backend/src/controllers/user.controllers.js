@@ -1,6 +1,6 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
-import { User } from "../models/user.model.js"
+import { User } from "../models/user.model.js";
 import { genrateOtp } from "../services/generateOtp.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -13,7 +13,6 @@ const options = {
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
 };
-
 
 //register user
 const registerUser = asyncHandler(async (req, res) => {
@@ -98,24 +97,25 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email });
   if (!user) {
     throw new ApiError(404, "Account does not exist. Please sign up first.");
   }
-  const isPasswordcorrect = await user.isPasswordCorrect(password)
+  const isPasswordcorrect = await user.isPasswordCorrect(password);
   if (!isPasswordcorrect) {
     throw new ApiError(401, "Invalid user credentials");
   }
-  const { accessToken, refreshToken, accessTokenExpiry,
-    refreshTokenExpiry, } = await generateToken(user._id);
+  const { accessToken, refreshToken, accessTokenExpiry, refreshTokenExpiry } =
+    await generateToken(user._id);
 
-  const loggedinUser = await User.findById(user._id).select("-password -refreshToken");
+  const loggedinUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
 
   if (!loggedinUser) {
     throw new ApiError(500, "Unable to log in. Please try again later.");
   }
 
-  
   return res
     .status(200)
     .cookie("accessToken", accessToken, {
@@ -133,16 +133,12 @@ const loginUser = asyncHandler(async (req, res) => {
         "User logged in sucessfully"
       )
     );
-
-  
-
-})
+});
 
 //logout user
 const logoutUser = asyncHandler(async (req, res) => {
   const user = req.user;
-  console.log("user log ",user._id);
-  
+  console.log("user log ", user._id);
 
   const loggesoutUser = await User.findByIdAndUpdate(
     user._id,
@@ -154,15 +150,14 @@ const logoutUser = asyncHandler(async (req, res) => {
     }
   );
   if (!loggesoutUser) {
-    throw new ApiError(401, "Anauthorized request")
- }
+    throw new ApiError(401, "Anauthorized request");
+  }
   res
-  .status(200)
-  .clearCookie("accessToken", options)
-  .clearCookie("refreshToken", options)
-  .json(new ApiResponse(200,{}, "User logged out sucessfully"))
-
-})
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "User logged out sucessfully"));
+});
 
 //edit user details, add description,
 const editUserdetails = asyncHandler(async (req, res) => {
@@ -180,26 +175,25 @@ const editUserdetails = asyncHandler(async (req, res) => {
     new: true,
   }).select("-password -refreshToken");
   if (!editedUser) {
-    throw new ApiError(404,"Username not found")
+    throw new ApiError(404, "Username not found");
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, editedUser, "user created successfully"));  
+    .json(new ApiResponse(200, editedUser, "user created successfully"));
 });
 
 //get user details
 
-
 const getUserDetails = asyncHandler(async (req, res) => {
   const user = req.user;
   if (!user) {
-    throw new ApiError(400,"Anauthorized request")
+    throw new ApiError(400, "Anauthorized request");
   }
 
-  const getUser=await User.findById(user._id).select("-password -refreshToken")
-  res.status(200).json(new ApiResponse(200,  getUser ,"User details sent"));
-
-
+  const getUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
+  res.status(200).json(new ApiResponse(200, getUser, "User details sent"));
 });
 
 export { registerUser, loginUser, logoutUser, editUserdetails, getUserDetails };
