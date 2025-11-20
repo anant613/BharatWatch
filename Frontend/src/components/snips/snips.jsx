@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Snips.css";
 
-// API URL: use Vite env var `VITE_API_URL` (prefix required). Falls back to localhost.
-// Note: in Vite use `import.meta.env` instead of `process.env` (process is undefined in browser).
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api/v1";
 
 const Snips = () => {
   const [snips, setSnips] = useState([]);
@@ -13,8 +11,8 @@ const Snips = () => {
   useEffect(() => {
     // Fetch all snips from backend
     fetch(`${API_URL}/snips`)
-      .then(res => res.json())
-      .then(data => setSnips(data))
+      .then((res) => res.json())
+      .then((data) => setSnips(data))
       .catch(() => setSnips([]));
   }, []);
 
@@ -30,9 +28,9 @@ const Snips = () => {
               className="snip-item"
               key={snip._id || index}
               onClick={() => navigate(`/snips/${snip._id}`)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
-              <img
+              <video
                 src={snip.videoUrl || snip.imageUrl || "/default-thumbnail.png"}
                 alt={snip.title}
                 className="snip-video"
