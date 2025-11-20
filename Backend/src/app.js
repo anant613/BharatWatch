@@ -86,6 +86,14 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieparser());
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "OK",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+    });
+});
 
 app.use("/api/snips", snipRoutes);
 app.use("/api/v1/users", userRouter);

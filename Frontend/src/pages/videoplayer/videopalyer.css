@@ -70,7 +70,7 @@ body {
 
 .video-player-container {
   display: grid;
-  grid-template-columns: 1fr min(500px , 35vw);
+  grid-template-columns: 1fr min(500px, 35vw);
   gap: 2vw;
   max-width: 95vw;
   margin: 0 auto;
@@ -89,7 +89,7 @@ body {
   overflow: hidden;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.08),
     0 8px 24px rgba(255, 107, 53, 0.06);
   margin-bottom: 24px;
@@ -97,7 +97,7 @@ body {
 }
 
 .video-player-wrapper:hover {
-  box-shadow: 
+  box-shadow:
     0 30px 80px rgba(0, 0, 0, 0.12),
     0 12px 32px rgba(255, 107, 53, 0.1),
     0 0 0 1px rgba(255, 107, 53, 0.1);
@@ -122,12 +122,10 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.1) 20%,
-    rgba(0, 0, 0, 0.9) 100%
-  );
+  background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.1) 20%,
+      rgba(0, 0, 0, 0.9) 100%);
   padding: 32px 24px 20px;
   opacity: 0;
   transform: translateY(20px);
@@ -161,16 +159,21 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 100%);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%);
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 .progress-buffered {
@@ -197,18 +200,21 @@ body {
   height: 16px;
   background: white;
   border-radius: 50%;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px var(--primary-orange),
     0 4px 12px rgba(0, 0, 0, 0.3);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { 
+
+  0%,
+  100% {
     transform: translateY(-50%) scale(1);
     box-shadow: 0 0 0 3px var(--primary-orange), 0 4px 12px rgba(0, 0, 0, 0.3);
   }
-  50% { 
+
+  50% {
     transform: translateY(-50%) scale(1.2);
     box-shadow: 0 0 0 6px rgba(255, 107, 53, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
   }
@@ -220,7 +226,8 @@ body {
   align-items: center;
 }
 
-.controls-left, .controls-right {
+.controls-left,
+.controls-right {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -271,7 +278,7 @@ body {
   transform: translateY(-2px) scale(1.1);
   background: rgba(255, 107, 53, 0.15);
   border-color: var(--primary-orange);
-  box-shadow: 
+  box-shadow:
     0 8px 24px rgba(255, 107, 53, 0.3),
     0 0 0 2px rgba(255, 107, 53, 0.2);
 }
@@ -303,7 +310,7 @@ body {
   background: var(--primary-gradient);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(255, 255, 255, 0.3),
     0 4px 15px rgba(255, 107, 53, 0.4);
   transition: all 0.3s ease;
@@ -311,7 +318,7 @@ body {
 
 .volume-slider::-webkit-slider-thumb:hover {
   transform: scale(1.3);
-  box-shadow: 
+  box-shadow:
     0 0 0 6px rgba(255, 255, 255, 0.2),
     0 6px 25px rgba(255, 107, 53, 0.6);
 }
@@ -323,7 +330,7 @@ body {
   background: transparent;
   padding: 10px 18px;
   border-radius: 25px;
-  border:none;
+  border: none;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -354,6 +361,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -380,12 +388,16 @@ body {
 }
 
 /* 🚀 SPEED & QUALITY OPTIONS */
-.speed-options, .quality-options, .caption-options {
+.speed-options,
+.quality-options,
+.caption-options {
   display: flex;
   flex-direction: column;
 }
 
-.speed-btn, .quality-btn, .caption-btn {
+.speed-btn,
+.quality-btn,
+.caption-btn {
   background: transparent;
   border: none;
   color: white;
@@ -400,16 +412,22 @@ body {
   justify-content: space-between;
 }
 
-.speed-btn:hover, .quality-btn:hover, .caption-btn:hover {
+.speed-btn:hover,
+.quality-btn:hover,
+.caption-btn:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.speed-btn.active, .quality-btn.active, .caption-btn.active {
+.speed-btn.active,
+.quality-btn.active,
+.caption-btn.active {
   background: rgba(255, 255, 255, 0.15);
   color: #3ea6ff;
 }
 
-.speed-btn.active::after, .quality-btn.active::after, .caption-btn.active::after {
+.speed-btn.active::after,
+.quality-btn.active::after,
+.caption-btn.active::after {
   content: '✓';
   font-size: 16px;
   font-weight: 700;
@@ -497,7 +515,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -538,7 +556,7 @@ body {
 /* 📝 STUNNING VIDEO INFO */
 .video-content-info {
   padding: 0;
-  margin:0;
+  margin: 0;
 }
 
 .video-headline {
@@ -651,13 +669,33 @@ body {
 }
 
 @keyframes likeHeartbeat {
-  0% { transform: scale(1) rotate(0deg); }
-  15% { transform: scale(1.4) rotate(-8deg); }
-  30% { transform: scale(1.1) rotate(5deg); }
-  45% { transform: scale(1.3) rotate(-3deg); }
-  60% { transform: scale(1.05) rotate(2deg); }
-  75% { transform: scale(1.2) rotate(-1deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  15% {
+    transform: scale(1.4) rotate(-8deg);
+  }
+
+  30% {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  45% {
+    transform: scale(1.3) rotate(-3deg);
+  }
+
+  60% {
+    transform: scale(1.05) rotate(2deg);
+  }
+
+  75% {
+    transform: scale(1.2) rotate(-1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 /* 💾 SAVE BUTTON - MATCH OTHER BUTTONS */
@@ -727,12 +765,13 @@ body {
 
 @keyframes channelGlow {
   from {
-    box-shadow: 
+    box-shadow:
       0 8px 25px rgba(255, 107, 53, 0.4),
       0 0 0 3px rgba(255, 255, 255, 0.2);
   }
+
   to {
-    box-shadow: 
+    box-shadow:
       0 12px 35px rgba(255, 107, 53, 0.6),
       0 0 0 4px rgba(255, 255, 255, 0.4);
   }
@@ -766,7 +805,7 @@ body {
 }
 
 /* 🔔 SPECTACULAR FOLLOW BUTTON */
-.subscribe-btn{
+.subscribe-btn {
   background: var(--primary-gradient);
   color: white;
   border: none;
@@ -789,10 +828,10 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%);
   transition: left 0.6s ease;
 }
 
@@ -828,7 +867,7 @@ body {
   margin-bottom: 12px;
 }
 
-.Description-title{
+.Description-title {
   padding-bottom: 10px;
 }
 
@@ -1173,7 +1212,7 @@ body {
 
 /* 🎯 PREMIUM SIDEBAR */
 .video-recommendations-panel {
-  width: min(500px , 35vw);
+  width: min(500px, 35vw);
   flex-shrink: 0;
   align-self: start;
   position: sticky;
@@ -1396,8 +1435,15 @@ body {
 }
 
 @keyframes livePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .vp-video-rec-overlay,
@@ -1600,13 +1646,13 @@ body {
     max-width: 100%;
     padding: 1rem;
   }
-  
+
   .video-recommendations-panel {
     width: 100%;
     position: static;
     height: auto;
   }
-  
+
   .video-headline {
     font-size: 20px !important;
   }
@@ -1617,57 +1663,58 @@ body {
     padding: 12px;
     gap: 15px;
   }
-  
+
   .video-player-wrapper {
     margin-bottom: 16px;
   }
-  
+
   .video-headline {
     font-size: 18px !important;
     padding: 8px;
   }
-  
+
   .video-stats {
     font-size: 13px;
     padding: 8px;
     flex-wrap: wrap;
   }
-  
+
   .video-meta-actions {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
-  
+
   .video-actions-container {
     flex-wrap: wrap;
     gap: 6px;
   }
-  
+
   .action-btn {
     padding: 8px 12px;
     font-size: 13px;
     margin: 2px;
   }
-  
+
   .channel-section {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
     padding: 16px 0;
   }
-  
+
   .channel-avatar {
     width: 48px;
     height: 48px;
     font-size: 18px;
   }
-  
+
   .channel-name {
     font-size: 18px;
   }
-  
-  .subscribe-btn, .follow-btn {
+
+  .subscribe-btn,
+  .follow-btn {
     padding: 12px 24px;
     font-size: 14px;
     margin-right: 0;
@@ -1678,38 +1725,38 @@ body {
   .video-player-container {
     padding: 8px;
   }
-  
+
   .video-headline {
     font-size: 16px !important;
     padding: 6px;
   }
-  
+
   .video-stats {
     font-size: 12px;
     padding: 6px;
   }
-  
+
   .action-btn {
     padding: 6px 10px;
     font-size: 12px;
     margin: 1px;
   }
-  
+
   .channel-avatar {
     width: 40px;
     height: 40px;
     font-size: 16px;
   }
-  
+
   .channel-name {
     font-size: 16px;
   }
-  
+
   .video-rec-thumbnail {
     width: 140px;
     height: 78px;
   }
-  
+
   .video-rec-title {
     font-size: 13px;
   }
@@ -1719,33 +1766,33 @@ body {
   .video-player-container {
     padding: 5px;
   }
-  
+
   .video-headline {
     font-size: 14px !important;
     padding: 4px;
   }
-  
+
   .video-stats {
     font-size: 11px;
     padding: 4px;
   }
-  
+
   .action-btn {
     padding: 5px 8px;
     font-size: 11px;
   }
-  
+
   .channel-avatar {
     width: 36px;
     height: 36px;
     font-size: 14px;
   }
-  
+
   .video-rec-thumbnail {
     width: 120px;
     height: 67px;
   }
-  
+
   .tab-btn {
     padding: 10px 8px;
     font-size: 12px;
@@ -2065,6 +2112,7 @@ body.dark-mode {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -2082,9 +2130,17 @@ body.dark-mode {
 
 /* 🌈 GRADIENT ANIMATIONS */
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .video-title,

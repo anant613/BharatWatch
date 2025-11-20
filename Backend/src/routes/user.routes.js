@@ -40,4 +40,3 @@ router.route("/getuser").get(authMiddleware, getUserDetails);
 router.route("/edituser").post(authMiddleware, editUserdetails);
 
 export default router;
-

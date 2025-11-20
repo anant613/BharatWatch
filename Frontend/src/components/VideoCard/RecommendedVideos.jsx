@@ -12,7 +12,7 @@ const demoImages = [
   {
     url: sundar,
     title: "Google deemed exposed | Sundar",
-    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi
     profile: profile1,
     views: "2.1K Views",
     time: "2 Days Ago",
@@ -28,7 +28,7 @@ const demoImages = [
   {
     url: thum3,
     title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
-    author: "Shushant Upadhyay",  
+    author: "Shushant Upadhyay",
     profile: profile1,
     views: "110k Views",
     time: "2 Days Ago",
@@ -44,7 +44,7 @@ const demoImages = [
   {
     url: sundar,
     title: "Google deemed exposed | Sundar",
-    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi
     profile: profile1,
     views: "2.1K Views",
     time: "2 Days Ago",
@@ -60,7 +60,7 @@ const demoImages = [
   {
     url: thum3,
     title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
-    author: "Shushant Upadhyay",  
+    author: "Shushant Upadhyay",
     profile: profile1,
     views: "110k Views",
     time: "2 Days Ago",
@@ -76,7 +76,7 @@ const demoImages = [
   {
     url: sundar,
     title: "Google deemed exposed | Sundar",
-    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi 
+    author: "Demo Creator", // chanel name ka limit 17 characters ka hoga isse jada nhi
     profile: profile1,
     views: "2.1K Views",
     time: "2 Days Ago",
@@ -92,7 +92,7 @@ const demoImages = [
   {
     url: thum3,
     title: "Biggest Lie | How to Know if it's Fake or Lie | Shushant Upadhyay",
-    author: "Shushant Upadhyay",  
+    author: "Shushant Upadhyay",
     profile: profile1,
     views: "110k Views",
     time: "2 Days Ago",
@@ -107,7 +107,6 @@ const demoImages = [
   },
   // ...rest
 ];
-
 
 const RecommendedVideos = ({ videos = [] }) => {
   const navigate = useNavigate();
@@ -141,7 +140,6 @@ const RecommendedVideos = ({ videos = [] }) => {
   })) : demoImages;
 
   return (
-    
     <section className="yt-section">
       <div  className="yt-recommended-section">
       <div className="yt-recommended-header">
@@ -166,18 +164,31 @@ const RecommendedVideos = ({ videos = [] }) => {
               <div className="yt-rec-title">{item.title || "Untitled Video"}</div>
               <div className="yt-rec-metarow">
                 <img
-                  src={item.profile}
-                  alt={item.author}
-                  className="yt-rec-profile"
+                  className="yt-rec-thumb"
+                  src={item.url}
+                  alt={item.title || "Demo thumbnail"}
                 />
-                <span className="yt-rec-channel">{item.author}</span>
-                <span className="yt-rec-dot">•</span>
-                <span>{item.views}</span>
-                <span className="yt-rec-dot">•</span>
-                <span>{item.time}</span>
+              </div>
+              <div className="yt-rec-info">
+                <div className="yt-rec-title">
+                  {item.title || "Untitled Video"}
+                </div>
+                <div className="yt-rec-metarow">
+                  <img
+                    src={item.profile}
+                    alt={item.author}
+                    className="yt-rec-profile"
+                  />
+                  <span className="yt-rec-channel">{item.author}</span>
+                  <span className="yt-rec-dot">•</span>
+                  <span>{item.views}</span>
+                  <span className="yt-rec-dot">•</span>
+                  <span>{item.time}</span>
+                </div>
               </div>
             </div>
-          </div>
+          
+        </div>
         ))}
       </div>
       </div>

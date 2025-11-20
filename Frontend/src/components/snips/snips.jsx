@@ -12,8 +12,8 @@ const Snips = () => {
   useEffect(() => {
     // Fetch all snips from backend
     fetch(`${API_URL}/snips`)
-      .then(res => res.json())
-      .then(data => setSnips(data))
+      .then((res) => res.json())
+      .then((data) => setSnips(data))
       .catch(() => setSnips([]));
   }, []);
 
@@ -29,7 +29,7 @@ const Snips = () => {
               className="snip-item"
               key={snip._id || index}
               onClick={() => navigate(`/snips/${snip._id}`)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <video
                 src={snip.videoUrl || snip.imageUrl || "/default-thumbnail.png"}

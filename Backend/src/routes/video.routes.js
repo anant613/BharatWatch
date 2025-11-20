@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { 
-    uploadVideo, 
-    getAllVideos, 
-    getVideoById, 
-    toggleVideoLike, 
-    addToWatchLater, 
-    getTrendingVideos 
+import {
+  uploadVideo,
+  getAllVideos,
+  getVideoById,
+  toggleVideoLike,
+  addToWatchLater,
+  getTrendingVideos,
 } from "../controllers/video.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";

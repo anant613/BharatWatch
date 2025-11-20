@@ -18,7 +18,7 @@ const Signup = () => {
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
     setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
@@ -157,7 +157,9 @@ const Signup = () => {
           <div className="auth-footer">
             <p>
               Already have an account?{" "}
-              <Link to="/login" className="link-btn">Sign in</Link>
+              <Link to="/login" className="link-btn">
+                Sign in
+              </Link>
             </p>
           </div>
         </div>
