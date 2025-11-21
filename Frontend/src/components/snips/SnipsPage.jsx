@@ -352,7 +352,6 @@ const SnipsPage = () => {
                 <div className="more-popup-box">
                   <button className="more-popup-btn">Report</button>
                   <button className="more-popup-btn">Block</button>
-                  <button className="more-popup-btn">Copy Link</button>
                 </div>
               )}
             </div>

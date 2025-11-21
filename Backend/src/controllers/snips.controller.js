@@ -111,6 +111,14 @@ export const deleteSnip = async (req, res) => {
     res.status(500).json({ message: "Error deleting snip", error: err });
   }
 };
+//update 
+export const updateSnip = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  const snip = await Snip.findByIdAndUpdate(id, updateData, { new: true });
+  if (!snip) return res.status(404).json({ message: 'Snip not found' });
+  res.status(200).json({ message: "Snip updated", snip });
+});
 
 // Upload Snip
 export const uploadSnip = asyncHandler(async (req, res) => {
