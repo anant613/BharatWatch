@@ -1,107 +1,140 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./DraftVideos.css";
-import sundar from '../../components/VideoCard/sundar pichayi.jpeg';
-import thum2 from '../../components/VideoCard/thum2.png';
-import thum3 from '../../components/VideoCard/thum3.png';
-import thum4 from '../../components/VideoCard/thum4.png';
 
-const demoDrafts = [
-  {
-    id: 1,
-    url: sundar,
-    title: "Google deemed exposed | Sundar",
-    duration: "12:45",
-    savedDate: "3 hours ago",
-    progress: 75,
-    status: "In Progress"
-  },
-  {
-    id: 2,
-    url: thum2,
-    title: "The Rise and Fall of Mughal Empire | Animated India",
-    duration: "45:30",
-    savedDate: "1 day ago",
-    progress: 50,
-    status: "In Progress"
-  },
-  {
-    id: 3,
-    url: thum3,
-    title: "Biggest Lie | How to Know if it's Fake or Lie",
-    duration: "8:20",
-    savedDate: "2 days ago",
-    progress: 100,
-    status: "Ready to Publish"
-  },
-  {
-    id: 4,
-    url: thum4,
-    title: "1500 ELO Chess Game | How To Be in Top 10%",
-    duration: "22:15",
-    savedDate: "5 days ago",
-    progress: 25,
-    status: "In Progress"
-  },
-  {
-    id: 5,
-    url: sundar,
-    title: "Tech Review 2024 | Latest Gadgets",
-    duration: "18:50",
-    savedDate: "1 week ago",
-    progress: 90,
-    status: "Almost Done"
-  },
-  {
-    id: 6,
-    url: thum2,
-    title: "Documentary: Hidden Histories",
-    duration: "55:00",
-    savedDate: "2 weeks ago",
-    progress: 40,
-    status: "In Progress"
-  }
-];
+// Snackbar/Toast component
+const Toast = ({ message, onClose }) =>
+  message ? (
+    <div className="dv-toast">
+      {message}
+      <button
+        onClick={onClose}
+        style={{
+          marginLeft: 4,
+          background: "none",
+          border: 0,
+          cursor: "pointer",
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  ) : null;
 
-const DraftVideos = ({ drafts = [] }) => {
+const DraftVideos = () => {
   const navigate = useNavigate();
-  const [draftList, setDraftList] = useState(drafts.length > 0 ? drafts : demoDrafts);
-  const [sortBy, setSortBy] = useState('recent');
-  const [filterStatus, setFilterStatus] = useState('all');
+  const [draftList, setDraftList] = useState([]);
+  const [sortBy, setSortBy] = useState("recent");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState("");
 
-  const handleDeleteDraft = (draftId) => {
-    setDraftList(draftList.filter(draft => draft.id !== draftId));
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(""), 2200);
   };
 
+  // Fetch Drafts
+  useEffect(() => {
+    const fetchDrafts = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("http://localhost:4000/api/snips?drafts=true");
+        const data = await res.json();
+        setDraftList(
+          data.map((item) => ({
+            id: item._id,
+            url: item.videoFile,
+            title: item.title,
+            duration: item.duration || "-",
+            savedDate: new Date(item.createdAt).toLocaleDateString("en-IN", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            }),
+            progress: 100,
+            status: "Ready to Publish",
+          }))
+        );
+      } catch (err) {
+        setDraftList([]);
+        showToast("Failed to fetch drafts");
+      }
+      setLoading(false);
+    };
+
+    fetchDrafts();
+  }, []);
+
+  // Delete handler (API)
+  const handleDeleteDraft = async (draftId) => {
+    try {
+      const res = await fetch(`http://localhost:4000/api/snips/${draftId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setDraftList(draftList.filter((draft) => draft.id !== draftId));
+        showToast("Draft deleted");
+      } else {
+        showToast("Delete failed");
+      }
+    } catch (e) {
+      showToast("Delete error");
+    }
+  };
+
+  // Publish handler (API)
+  const handlePublishDraft = async (draftId) => {
+    try {
+      const res = await fetch(
+        `http://localhost:4000/api/snips/${draftId}/publish`,
+        { method: "PATCH" }
+      );
+      if (res.ok) {
+        setDraftList(draftList.filter((draft) => draft.id !== draftId));
+        showToast("Draft published!");
+      } else {
+        showToast("Publish failed");
+      }
+    } catch (e) {
+      showToast("Publish error");
+    }
+  };
+
+  // Status badge color logic
   const getStatusColor = (status) => {
-    if (status === 'Ready to Publish') return 'ready';
-    if (status === 'Almost Done') return 'almost';
-    return 'progress';
+    if (status === "Ready to Publish") return "ready";
+    if (status === "Almost Done") return "almost";
+    return "progress";
   };
 
-  const filteredDrafts = filterStatus === 'all' 
-    ? draftList 
-    : draftList.filter(d => d.status === filterStatus);
+  const filteredDrafts =
+    filterStatus === "all"
+      ? draftList
+      : draftList.filter((d) => d.status === filterStatus);
 
   const sortedDrafts = [...filteredDrafts].sort((a, b) => {
-    if (sortBy === 'progress') return b.progress - a.progress;
+    if (sortBy === "progress") return b.progress - a.progress;
     return 0;
   });
 
   return (
     <section className="dv-section">
+      <Toast message={toast} onClose={() => setToast("")} />
+
       <div className="dv-hero">
         <div className="dv-hero-content">
           <h1 className="dv-hero-title">Your Drafts</h1>
-          <p className="dv-hero-subtitle">Keep your creative work safe and organized</p>
+          <p className="dv-hero-subtitle">
+            Keep your creative work safe and organized
+          </p>
         </div>
       </div>
-
       <div className="dv-container">
         <div className="dv-controls">
           <div className="dv-filter-group">
-            <select 
-              className="dv-filter-select" 
+            <select
+              className="dv-filter-select"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
             >
@@ -110,8 +143,8 @@ const DraftVideos = ({ drafts = [] }) => {
               <option value="Almost Done">Almost Done</option>
               <option value="Ready to Publish">Ready to Publish</option>
             </select>
-            <select 
-              className="dv-sort-select" 
+            <select
+              className="dv-sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -121,20 +154,58 @@ const DraftVideos = ({ drafts = [] }) => {
           </div>
           <span className="dv-count-badge">{sortedDrafts.length}</span>
         </div>
-
-        {sortedDrafts.length === 0 ? (
+        {loading ? (
+          <div className="dv-empty">
+            <div className="dv-empty-icon">⏳</div>
+            <p className="dv-empty-text">Loading drafts...</p>
+          </div>
+        ) : sortedDrafts.length === 0 ? (
           <div className="dv-empty">
             <div className="dv-empty-icon">🎬</div>
             <p className="dv-empty-text">No drafts found</p>
-            <p className="dv-empty-subtext">Start creating your next masterpiece</p>
+            <p className="dv-empty-subtext">
+              Start creating your next masterpiece
+            </p>
           </div>
         ) : (
           <div className="dv-list">
             {sortedDrafts.map((draft) => (
               <div key={draft.id} className="dv-list-item">
                 <div className="dv-item-thumb">
-                  <img src={draft.url} alt={draft.title} />
-                  <div className={`dv-status-badge ${getStatusColor(draft.status)}`}>
+                  {draft.url && draft.url.match(/\.(mp4|mov|webm)$/i) ? (
+                    <video
+                      src={draft.url}
+                      controls
+                      className="dv-thumb-video"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                        background: "#000", // optional, for perfect coverage and rounded corners!
+                        display: "block",
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={draft.url}
+                      alt={draft.title}
+                      className="dv-thumb-img"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                        background: "#000",
+                      }}
+                    />
+                  )}
+
+                  <div
+                    className={`dv-status-badge ${getStatusColor(
+                      draft.status
+                    )}`}
+                  >
                     {draft.status}
                   </div>
                   <div className="dv-duration-badge">{draft.duration}</div>
@@ -143,8 +214,8 @@ const DraftVideos = ({ drafts = [] }) => {
                   <h3 className="dv-item-title">{draft.title}</h3>
                   <div className="dv-progress-container">
                     <div className="dv-progress-track">
-                      <div 
-                        className="dv-progress-bar" 
+                      <div
+                        className="dv-progress-bar"
                         style={{ width: `${draft.progress}%` }}
                       />
                     </div>
@@ -153,13 +224,24 @@ const DraftVideos = ({ drafts = [] }) => {
                   <p className="dv-item-meta">Saved {draft.savedDate}</p>
                 </div>
                 <div className="dv-item-actions">
-                  <button 
+                  <button
                     className="dv-action-btn dv-edit-btn"
                     onClick={() => navigate(`/videoplayer/${draft.id}`)}
                   >
                     ✏️ Edit
                   </button>
-                  <button 
+                  <button
+                    className="dv-action-btn dv-publish-btn"
+                    onClick={() => handlePublishDraft(draft.id)}
+                    style={{
+                      background: "#0ea34d",
+                      color: "#fff",
+                      marginLeft: 8,
+                    }}
+                  >
+                    🚀 Publish
+                  </button>
+                  <button
                     className="dv-action-btn dv-delete-btn"
                     onClick={() => handleDeleteDraft(draft.id)}
                   >

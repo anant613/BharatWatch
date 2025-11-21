@@ -9,13 +9,14 @@ const commentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const snipSchema = new mongoose.Schema({
-  videoFile: String,   // reel/video url
+  videoFile: String,
   title: String,
   caption: String,
   songTitle: String,
   artist: String,
   comments: [commentSchema],
   likeCount: { type: Number, default: 0 },
+  isDraft: { type: Boolean, default: false },   // ADD THIS LINE
 }, { timestamps: true });
 
 export default mongoose.model("Snip", snipSchema);
