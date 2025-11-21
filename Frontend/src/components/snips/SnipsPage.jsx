@@ -50,15 +50,17 @@ const SnipsPage = () => {
   }, []);
 
   useEffect(() => {
-  // check id in param and update reelIndex accordingly (if id present)
-  if (id && reelsList.length > 0) {
-    const idx = reelsList.findIndex(item => String(item._id) === String(id));
-    if (idx !== -1 && idx !== reelIndex) {
-      setReelIndex(idx);
+    // check id in param and update reelIndex accordingly (if id present)
+    if (id && reelsList.length > 0) {
+      const idx = reelsList.findIndex(
+        (item) => String(item._id) === String(id)
+      );
+      if (idx !== -1 && idx !== reelIndex) {
+        setReelIndex(idx);
+      }
     }
-  }
-  // eslint-disable-next-line
-}, [id, reelsList]);
+    // eslint-disable-next-line
+  }, [id, reelsList]);
 
   useEffect(() => {
     if (reelRefs.current[reelIndex]) {
@@ -104,29 +106,45 @@ const SnipsPage = () => {
   }, [showMore]);
 
   // Like
-const handleLike = () => {
-  if (!reelsList[reelIndex]) return;
-  fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/like`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ like: !isLikedArr[reelIndex] }), // Yeh line important hai!
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setIsLikedArr((arr) =>
-        arr.map((item, i) => (i === reelIndex ? !item : item))
-      );
-      setCounts((cs) =>
-        cs.map((c, i) =>
-          i === reelIndex
-            ? {
-                ...c,
-                likeCount: data.likeCount || c.likeCount,
-              }
-            : c
-        )
-      );
+  const handleLike = () => {
+    if (!reelsList[reelIndex]) return;
+    fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/like`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ like: !isLikedArr[reelIndex] }), // Yeh line important hai!
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLikedArr((arr) =>
+          arr.map((item, i) => (i === reelIndex ? !item : item))
+        );
+        setCounts((cs) =>
+          cs.map((c, i) =>
+            i === reelIndex
+              ? {
+                  ...c,
+                  likeCount: data.likeCount || c.likeCount,
+                }
+              : c
+          )
+        );
+      });
+  };
+
+  const handleShare = () => {
+  const url = window.location.href;
+  const title = reel && (reel.title || "Watch this snip on Bharatwatch");
+  // Modern devices: Web Share API
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      url: url,
     });
+  } else {
+    // Fallback: Copy URL to clipboard
+    navigator.clipboard.writeText(url);
+    alert("Link copied to clipboard!");
+  }
 };
 
   // Save (UI only)
@@ -266,14 +284,8 @@ const handleLike = () => {
             {/* Share Button */}
             <button
               className="circle-action-btn"
-              onClick={() =>
-                setCounts((cs) =>
-                  cs.map((c, i) =>
-                    i === reelIndex ? { ...c, shareCount: c.shareCount + 1 } : c
-                  )
-                )
-              }
               aria-label="Share"
+              onClick={handleShare}
             >
               <img
                 src={share}
@@ -286,9 +298,10 @@ const handleLike = () => {
                 }}
               />
               <span className="circle-count">
-                {(counts[reelIndex] && counts[reelIndex].shareCount) || 0} Share
+                Share
               </span>
             </button>
+
             {/* Save Button */}
             <button
               className="circle-action-btn"
@@ -611,6 +624,3 @@ const handleLike = () => {
 };
 
 export default SnipsPage;
-
-
-
