@@ -107,7 +107,7 @@ const UploadVideo = () => {
       const endpoint =
         uploadType === 'video'
           ? 'http://localhost:4000/api/v1/videos/upload'
-          : 'http://localhost:4000/api/v1/snips/upload';
+          : 'http://localhost:4000/api/snips/upload';
 
       const response = await fetch(endpoint, {
         method: 'POST',

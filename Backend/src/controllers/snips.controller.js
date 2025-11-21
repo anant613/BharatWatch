@@ -1,4 +1,10 @@
 import Snip from "../models/snip.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import {v2 as cloudinary} from "cloudinary";
+import fs from "fs";
+import { uploadOnCloudinary } from "../utils/uploadoncloudinary.js";
 
 // GET all snips
 export const getAllSnips = async (req, res) => {
@@ -22,25 +28,25 @@ export const getSnipById = async (req, res) => {
 };
 
 // POST new snip
-export const createSnip = async (req, res) => {
-  try {
-    const { videoUrl, title, caption, songTitle, artist, comments, likeCount } = req.body;
-    const snip = new Snip({
-      videoUrl,
-      title,
-      caption,
-      songTitle,
-      artist,
-      comments: comments || [],
-      likeCount,
-    });
-    const savedSnip = await snip.save();
-    res.status(201).json(savedSnip);
-  } catch (err) {
-    console.log("Snip Create Error ----", err);
-    res.status(400).json({ message: "Error creating snip", error: err });
-  }
-};
+// export const createSnip = async (req, res) => {
+//   try {
+//     const { videoUrl, title, caption, songTitle, artist, comments, likeCount } = req.body;
+//     const snip = new Snip({
+//       videoUrl,
+//       title,
+//       caption,
+//       songTitle,
+//       artist,
+//       comments: comments || [],
+//       likeCount,
+//     });
+//     const savedSnip = await snip.save();
+//     res.status(201).json(savedSnip);
+//   } catch (err) {
+//     console.log("Snip Create Error ----", err);
+//     res.status(400).json({ message: "Error creating snip", error: err });
+//   }
+// };
 
 // POST comment
 export const addComment = async (req, res) => {
@@ -94,3 +100,32 @@ export const deleteSnip = async (req, res) => {
     res.status(500).json({ message: "Error deleting snip", error: err });
   }
 };
+
+// Upload Snip
+export const uploadSnip = asyncHandler(async (req, res) => {
+  const { title, description, visibility } = req.body;
+  
+  if (!title || !req.files?.videoFile?.[0]) {
+    throw new ApiError(400, "Title and video file are required");
+  }
+
+  const videoLocalPath = req.files?.videoFile?.[0]?.path;
+  if (!videoLocalPath) {
+    throw new ApiError(400, "Video file upload failed");
+  }
+
+  const videoFile = await uploadOnCloudinary(videoLocalPath);
+  if(!videoFile){
+    throw new ApiError(400, "Video file upload failed");
+  };
+
+  const snip = await Snip.create({
+    title,
+    description,
+    visibility : visibility || "public",
+    videoFile: videoFile.url,
+    owner: req.user?._id || null,
+  });
+
+  res.status(201).json(new ApiResponse(201, "Snip uploaded successfully", snip));
+});
