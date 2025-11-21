@@ -276,6 +276,9 @@ const Navbar = ({ darkMode, setDarkMode }) => {
             <img src={Feedbacklogo} className="icon" alt="Feedback" />
             <span>Feedback</span>
           </li>
+          <li className="sidebar-item" onClick={() => navigate("/drafts")}>
+            <span>Draft</span>
+          </li>
           <li className="sidebar-item" onClick={() => navigate("/help")}>
             <img src={help} className="icon" alt="Help" />
             <span>Help</span>
