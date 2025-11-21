@@ -820,7 +820,7 @@ body {
   margin-right: 20px;
 }
 
-.subscribe-btn::before,
+/* .subscribe-btn::before,
 .follow-btn::before {
   content: '';
   position: absolute;
@@ -833,8 +833,8 @@ body {
       rgba(255, 255, 255, 0.3) 50%,
       transparent 100%);
   transition: left 0.6s ease;
-}
-
+} */
+/* 
 .subscribe-btn:hover::before,
 .follow-btn:hover::before {
   left: 100%;
@@ -843,7 +843,8 @@ body {
 .subscribe-btn:hover,
 .follow-btn:hover {
   transform: translateY(-4px) scale(1.08);
-}
+}*/
+
 
 .subscribe-btn.subscribed,
 .follow-btn.following {
