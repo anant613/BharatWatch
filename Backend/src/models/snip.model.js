@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const snipSchema = new mongoose.Schema({
-  videoUrl: String,   // reel/video url
+  videoFile: String,   // reel/video url
   title: String,
   caption: String,
   songTitle: String,
