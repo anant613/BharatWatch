@@ -133,7 +133,10 @@ const RecommendedVideos = ({ videos = [] }) => {
     realVideos.length > 0
       ? realVideos.map((video) => ({
           id: video._id,
-          url: video.thumbnail || thum2,
+          url: video.thumbnail || (video.videoFile ? video.videoFile.replace(
+            '/\/upload/w_320,h_180,c_fill/,q_auto/')
+            .replace(/\.[^/.]+$/, '.jpg'
+          ): thum2),
           title: video.title,
           author: video.owner?.fullName || "Unknown",
           profile: profile1,
