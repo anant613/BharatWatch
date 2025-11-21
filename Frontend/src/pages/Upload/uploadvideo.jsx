@@ -1,20 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './uploadVideo.css';
-import Navbar from '../../components/Navbar/navbar';
-import { api } from '../../api';
+import React, { useState, useRef, useEffect } from "react";
+import "./uploadVideo.css";
+import Navbar from "../../components/Navbar/navbar";
+import { api } from "../../api";
 
 const UploadVideo = () => {
+  const [isDraft, setIsDraft] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadType, setUploadType] = useState(null);
   const [videoDetails, setVideoDetails] = useState({
-    title: '',
-    description: '',
-    tags: '',
-    category: 'Education',
-    visibility: 'public',
+    title: "",
+    description: "",
+    tags: "",
+    category: "Education",
+    visibility: "public",
     thumbnail: null,
   });
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -24,20 +25,20 @@ const UploadVideo = () => {
   const thumbnailInputRef = useRef(null);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
+    if (e.type === "dragenter" || e.type === "dragover") {
       setDragActive(true);
-    } else if (e.type === 'dragleave') {
+    } else if (e.type === "dragleave") {
       setDragActive(false);
     }
   };
@@ -53,7 +54,7 @@ const UploadVideo = () => {
   };
 
   const handleFileSelect = (file) => {
-    if (file && file.type.startsWith('video/')) {
+    if (file && file.type.startsWith("video/")) {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
@@ -69,7 +70,7 @@ const UploadVideo = () => {
 
   const handleThumbnailSelect = (e) => {
     const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
+    if (file && file.type.startsWith("image/")) {
       setVideoDetails((prev) => ({ ...prev, thumbnail: file }));
     }
   };
@@ -79,19 +80,19 @@ const UploadVideo = () => {
     setVideoDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  const uploadToCloudinary = async () => {
+  const uploadToCloudinary = async (draft = false) => {
     setIsUploading(true);
     setUploadProgress(0);
-
     try {
       const formData = new FormData();
-      formData.append('videoFile', selectedFile);
-      formData.append('title', videoDetails.title);
-      formData.append('description', videoDetails.description);
-      formData.append('visibility', videoDetails.visibility);
+      formData.append("videoFile", selectedFile);
+      formData.append("title", videoDetails.title);
+      formData.append("description", videoDetails.description);
+      formData.append("visibility", videoDetails.visibility);
+      formData.append("isDraft", draft); // ☚ Draft status
 
       if (videoDetails.thumbnail) {
-        formData.append('thumbnail', videoDetails.thumbnail);
+        formData.append("thumbnail", videoDetails.thumbnail);
       }
 
       const progressInterval = setInterval(() => {
@@ -105,17 +106,17 @@ const UploadVideo = () => {
       }, 500);
 
       const endpoint =
-        uploadType === 'video'
-          ? 'http://localhost:4000/api/v1/videos/upload'
-          : 'http://localhost:4000/api/snips/upload';
+      uploadType === 'video'
+        ? 'http://localhost:4000/api/v1/videos/upload'
+        : 'http://localhost:4000/api/snips/upload';
 
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-        body: formData,
-      });
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: formData,
+    });
 
       clearInterval(progressInterval);
 
@@ -124,16 +125,20 @@ const UploadVideo = () => {
         setUploadProgress(100);
 
         setTimeout(() => {
-          alert(`${uploadType === 'video' ? 'Video' : 'Snip'} uploaded successfully!`);
+          alert(
+            `${
+              uploadType === "video" ? "Video" : "Snip"
+            } uploaded successfully!`
+          );
           setSelectedFile(null);
           setPreviewUrl(null);
           setUploadType(null);
           setVideoDetails({
-            title: '',
-            description: '',
-            tags: '',
-            category: 'Education',
-            visibility: 'public',
+            title: "",
+            description: "",
+            tags: "",
+            category: "Education",
+            visibility: "public",
             thumbnail: null,
           });
           setIsUploading(false);
@@ -141,22 +146,28 @@ const UploadVideo = () => {
         }, 1000);
       } else {
         const error = await response.json();
-        throw new Error(error.message || 'Upload failed');
+        throw new Error(error.message || "Upload failed");
       }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error("Upload error:", error);
       alert(`Upload failed: ${error.message}`);
       setIsUploading(false);
       setUploadProgress(0);
     }
   };
 
+  const handleUploadWithDraft = (draft) => {
+  setIsDraft(draft);
+  uploadToCloudinary(draft);
+};
+
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (selectedFile && videoDetails.title) {
-      uploadToCloudinary();
-    }
-  };
+  e.preventDefault();
+  if (selectedFile && videoDetails.title) {
+    uploadToCloudinary(false);
+  }
+};
 
   const resetUploadType = () => {
     setUploadType(null);
@@ -186,7 +197,7 @@ const UploadVideo = () => {
               <div className="type-options">
                 <div
                   className="type-card video-card"
-                  onClick={() => setUploadType('video')}
+                  onClick={() => setUploadType("video")}
                 >
                   <div className="type-icon">🎥</div>
                   <h3>Upload Video</h3>
@@ -194,7 +205,7 @@ const UploadVideo = () => {
                 </div>
                 <div
                   className="type-card snip-card"
-                  onClick={() => setUploadType('snip')}
+                  onClick={() => setUploadType("snip")}
                 >
                   <div className="type-icon">⚡</div>
                   <h3>Upload Snip</h3>
@@ -206,7 +217,9 @@ const UploadVideo = () => {
             <form onSubmit={handleSubmit} className="upload-form">
               {!selectedFile ? (
                 <div
-                  className={`upload-dropzone ${dragActive ? 'drag-active' : ''}`}
+                  className={`upload-dropzone ${
+                    dragActive ? "drag-active" : ""
+                  }`}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
@@ -216,7 +229,12 @@ const UploadVideo = () => {
                   <div className="dropzone-content">
                     <div className="upload-animation">
                       <div className="upload-circle">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+                        <svg
+                          width="60"
+                          height="60"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
                           <path
                             d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
                             stroke="currentColor"
@@ -252,16 +270,17 @@ const UploadVideo = () => {
                       </div>
                     </div>
                     <h3>
-                      Drag & Drop Your {uploadType === 'video' ? 'Video' : 'Snip'}
+                      Drag & Drop Your{" "}
+                      {uploadType === "video" ? "Video" : "Snip"}
                     </h3>
                     <p>
                       or <span className="browse-text">browse files</span>
                     </p>
                     <div className="supported-formats">
                       <span>
-                        {uploadType === 'video'
-                          ? 'MP4, MOV, AVI, MKV up to 2GB'
-                          : 'MP4, MOV up to 500MB'}
+                        {uploadType === "video"
+                          ? "MP4, MOV, AVI, MKV up to 2GB"
+                          : "MP4, MOV up to 500MB"}
                       </span>
                     </div>
                   </div>
@@ -277,7 +296,11 @@ const UploadVideo = () => {
                 <div className="upload-content">
                   <div className="video-preview-section">
                     <div className="video-preview">
-                      <video src={previewUrl} controls className="preview-video" />
+                      <video
+                        src={previewUrl}
+                        controls
+                        className="preview-video"
+                      />
                       <div className="file-info">
                         <span className="file-name">{selectedFile.name}</span>
                         <span className="file-size">
@@ -360,7 +383,7 @@ const UploadVideo = () => {
                       />
                     </div>
 
-                    {uploadType === 'video' && (
+                    {uploadType === "video" && (
                       <div className="thumbnail-section">
                         <label className="form-label">Custom Thumbnail</label>
                         <div className="thumbnail-upload">
@@ -410,11 +433,11 @@ const UploadVideo = () => {
                           setSelectedFile(null);
                           setPreviewUrl(null);
                           setVideoDetails({
-                            title: '',
-                            description: '',
-                            tags: '',
-                            category: 'Education',
-                            visibility: 'public',
+                            title: "",
+                            description: "",
+                            tags: "",
+                            category: "Education",
+                            visibility: "public",
                             thumbnail: null,
                           });
                         }}
@@ -422,12 +445,23 @@ const UploadVideo = () => {
                       >
                         Cancel
                       </button>
+                      {/* DRAFT BUTTON */}
+                      <button
+                        type="button"
+                        className="btn-tertiary"
+                        onClick={() => handleUploadWithDraft(true)}
+                        disabled={!videoDetails.title}
+                        style={{ marginRight: "12px" }}
+                      >
+                        💾 Save as Draft
+                      </button>
+                      {/* PUBLISH BUTTON */}
                       <button
                         type="submit"
                         className="btn-primary"
                         disabled={!videoDetails.title}
                       >
-                        🚀 Publish {uploadType === 'video' ? 'Video' : 'Snip'}
+                        🚀 Publish {uploadType === "video" ? "Video" : "Snip"}
                       </button>
                     </div>
                   )}

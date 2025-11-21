@@ -132,20 +132,20 @@ const SnipsPage = () => {
   };
 
   const handleShare = () => {
-  const url = window.location.href;
-  const title = reel && (reel.title || "Watch this snip on Bharatwatch");
-  // Modern devices: Web Share API
-  if (navigator.share) {
-    navigator.share({
-      title: title,
-      url: url,
-    });
-  } else {
-    // Fallback: Copy URL to clipboard
-    navigator.clipboard.writeText(url);
-    alert("Link copied to clipboard!");
-  }
-};
+    const url = window.location.href;
+    const title = reel && (reel.title || "Watch this snip on Bharatwatch");
+    // Modern devices: Web Share API
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        url: url,
+      });
+    } else {
+      // Fallback: Copy URL to clipboard
+      navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard!");
+    }
+  };
 
   // Save (UI only)
   const handleSave = () =>
@@ -176,9 +176,9 @@ const SnipsPage = () => {
             className="reel-img-box"
             ref={(el) => (reelRefs.current[reelIndex] = el)}
           >
-            {reel.videoUrl ? (
+            {reel.videoFile && reel.videoFile.match(/\.(mp4|mov|webm)$/i) ? (
               <video
-                src={reel.videoUrl}
+                src={reel.videoFile}
                 className="reel-img-main"
                 controls
                 autoPlay
@@ -297,9 +297,7 @@ const SnipsPage = () => {
                   boxShadow: "0 6px 24px #0001",
                 }}
               />
-              <span className="circle-count">
-                Share
-              </span>
+              <span className="circle-count">Share</span>
             </button>
 
             {/* Save Button */}

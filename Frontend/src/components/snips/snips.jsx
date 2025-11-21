@@ -32,7 +32,7 @@ const Snips = () => {
               style={{ cursor: "pointer" }}
             >
               <video
-                src={snip.videoUrl || snip.imageUrl || "/default-thumbnail.png"}
+                src={snip.videoFile || snip.imageUrl || "/default-thumbnail.png"}
                 alt={snip.title}
                 className="snip-video"
                 draggable={false}

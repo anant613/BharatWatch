@@ -142,18 +142,20 @@
   position: relative;
   width: 180px;
   height: 100px;
-  flex-shrink: 0;
+  overflow: hidden;      /* MUST */
   border-radius: 8px;
-  overflow: hidden;
   background: #000;
 }
-
-.dv-item-thumb img {
+.dv-thumb-video,
+.dv-thumb-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  border-radius: 8px;
+  display: block;
+  background: #000;
 }
+
 
 .dv-list-item:hover .dv-item-thumb img {
   transform: scale(1.08);
@@ -255,6 +257,21 @@
   display: flex;
   gap: 8px;
   flex-shrink: 0;
+}
+
+.dv-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #212b36;
+  color: #f2f2f2;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  z-index: 9999;
+  box-shadow: 0 4px 24px #0001;
+  display: flex;
+  align-items: center;
 }
 
 .dv-action-btn {
