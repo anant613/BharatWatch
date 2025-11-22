@@ -12,8 +12,7 @@ const commentSchema = new mongoose.Schema(
       ref: "Video",
     },
     likes: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"commentLike",
+      type: Number,
       default: 0,
     },
     owner: {
@@ -35,4 +34,4 @@ const commentSchema = new mongoose.Schema(
 
 commentSchema.plugin(mongooseAggregatePaginate)
 
-export const Comment = mongoose.model("Comment",commentSchema)
+export const Comment = mongoose.model("Comment",commentSchema);

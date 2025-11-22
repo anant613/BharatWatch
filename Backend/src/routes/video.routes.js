@@ -11,6 +11,7 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { validateVideoUpload } from "../middlewares/validation.middleware.js";
 import { uploadLimiter, apiLimiter } from "../middlewares/security.middleware.js";
+import { addComment,getComments } from "../controllers/comment.controller.js";
 
 const router = Router();
 
@@ -29,10 +30,15 @@ router.route("/upload").post(
 // Public video routes
 router.route("/").get(apiLimiter, getAllVideos);
 router.route("/trending").get(apiLimiter, getTrendingVideos);
-router.route("/:videoId").get(apiLimiter, getVideoById);
+
+//Comments routes
+router.route("/:videoId/comments").post(addComment);
+router.route("/:videoId/comments").get(getComments);
 
 // Authenticated video routes
 router.route("/:videoId/like").post(authMiddleware, toggleVideoLike);
 router.route("/:videoId/watchlater").post(authMiddleware, addToWatchLater);
+
+router.route("/:videoId").get(apiLimiter, getVideoById);
 
 export default router;

@@ -131,8 +131,8 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
         );
         if (!response.ok) throw new Error("Failed to fetch comments");
         const data = await response.json();
-        console.log("Comments data:", data.comments);
-        setComments(data.comments || []);
+        console.log("Comments data:", data.data);
+        setComments(data.data || []);
       } catch (err) {
         console.error("Failed to fetch comments:", err);
         setComments([]);
@@ -533,8 +533,9 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
         );
 
         if (response.ok) {
-          const newCommentData = await response.json();
-          setComments([newCommentData, ...comments]);
+          const responsedata = await response.json();
+          const newCommentData = responsedata.data;
+          setComments([responsedata.data, ...comments]);
           setNewComment("");
         }
       } catch (err) {
