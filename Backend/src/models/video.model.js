@@ -41,7 +41,7 @@ const videoSchema = new mongoose.Schema(
     },
     comments: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"Comment",
+      ref: "Comment",
     },
     allowComments: {
       type: Boolean,
@@ -54,7 +54,7 @@ const videoSchema = new mongoose.Schema(
     category: {
       type: String,
       default: "General",
-      index: true
+      index: true,
     },
     isPublished: {
       type: Boolean,
@@ -70,6 +70,10 @@ const videoSchema = new mongoose.Schema(
       enum: ["public", "private"],
       default: "public",
     },
+    isDraft: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -77,6 +81,6 @@ videoSchema.index({ title: "text", description: "text", tags: "text" });
 videoSchema.index({ views: -1 });
 videoSchema.index({ createdAt: -1 });
 videoSchema.index({ owner: 1 });
-videoSchema.plugin(mongooseAggregatePaginate)
+videoSchema.plugin(mongooseAggregatePaginate);
 
-export const Video = mongoose.model("Video",videoSchema)
+export const Video = mongoose.model("Video", videoSchema);

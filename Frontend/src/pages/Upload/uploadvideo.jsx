@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./uploadVideo.css";
-import Navbar from "../../components/Navbar/navbar";
-import { api } from "../../api";
 
 const UploadVideo = () => {
   const [isDraft, setIsDraft] = useState(false);
@@ -9,7 +7,7 @@ const UploadVideo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadType, setUploadType] = useState(null);
+  const [uploadType, setUploadType] = useState(null); // "video" or "snip"
   const [videoDetails, setVideoDetails] = useState({
     title: "",
     description: "",
@@ -80,6 +78,7 @@ const UploadVideo = () => {
     setVideoDetails((prev) => ({ ...prev, [name]: value }));
   };
 
+  // --------- FIXED UPLOAD FUNCTION ---------
   const uploadToCloudinary = async (draft = false) => {
     setIsUploading(true);
     setUploadProgress(0);
@@ -89,10 +88,16 @@ const UploadVideo = () => {
       formData.append("title", videoDetails.title);
       formData.append("description", videoDetails.description);
       formData.append("visibility", videoDetails.visibility);
-      formData.append("isDraft", draft); // ☚ Draft status
+      formData.append("isDraft", draft ? "true" : "false"); // must be "true"/"false" string
 
       if (videoDetails.thumbnail) {
         formData.append("thumbnail", videoDetails.thumbnail);
+      }
+      if (videoDetails.tags) {
+        formData.append("tags", videoDetails.tags);
+      }
+      if (videoDetails.category) {
+        formData.append("category", videoDetails.category);
       }
 
       const progressInterval = setInterval(() => {
@@ -106,29 +111,23 @@ const UploadVideo = () => {
       }, 500);
 
       const endpoint =
-      uploadType === 'video'
-        ? 'http://localhost:4000/api/v1/videos/upload'
-        : 'http://localhost:4000/api/snips/upload';
-
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: formData,
-    });
+        uploadType === "video"
+          ? "http://localhost:4000/api/v1/videos/upload"
+          : "http://localhost:4000/api/snips/upload";
+      
+      // REMOVE Authorization header (no auth needed now)
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData,
+      });
 
       clearInterval(progressInterval);
 
       if (response.ok) {
-        const result = await response.json();
         setUploadProgress(100);
-
         setTimeout(() => {
           alert(
-            `${
-              uploadType === "video" ? "Video" : "Snip"
-            } uploaded successfully!`
+            `${uploadType === "video" ? "Video" : "Snip"} uploaded successfully!`
           );
           setSelectedFile(null);
           setPreviewUrl(null);
@@ -156,18 +155,18 @@ const UploadVideo = () => {
     }
   };
 
+  // Draft/Publish button handlers
   const handleUploadWithDraft = (draft) => {
-  setIsDraft(draft);
-  uploadToCloudinary(draft);
-};
-
+    setIsDraft(draft);
+    uploadToCloudinary(draft);
+  };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  if (selectedFile && videoDetails.title) {
-    uploadToCloudinary(false);
-  }
-};
+    e.preventDefault();
+    if (selectedFile && videoDetails.title) {
+      uploadToCloudinary(false); // publish by default
+    }
+  };
 
   const resetUploadType = () => {
     setUploadType(null);
@@ -175,6 +174,7 @@ const UploadVideo = () => {
     setPreviewUrl(null);
   };
 
+  // ---------- RENDER ----------
   return (
     <>
       <div className="upload-container">
@@ -217,9 +217,7 @@ const UploadVideo = () => {
             <form onSubmit={handleSubmit} className="upload-form">
               {!selectedFile ? (
                 <div
-                  className={`upload-dropzone ${
-                    dragActive ? "drag-active" : ""
-                  }`}
+                  className={`upload-dropzone ${dragActive ? "drag-active" : ""}`}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
@@ -229,43 +227,18 @@ const UploadVideo = () => {
                   <div className="dropzone-content">
                     <div className="upload-animation">
                       <div className="upload-circle">
-                        <svg
-                          width="60"
-                          height="60"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
-                          <polyline
-                            points="14,2 14,8 20,8"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
-                          <line
-                            x1="16"
-                            y1="13"
-                            x2="8"
-                            y2="13"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
-                          <line
-                            x1="16"
-                            y1="17"
-                            x2="8"
-                            y2="17"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
-                          <polyline
-                            points="10,9 9,9 8,9"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          />
+                        {/* upload icon */}
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                                stroke="currentColor" strokeWidth="2" />
+                          <polyline points="14,2 14,8 20,8"
+                                 stroke="currentColor" strokeWidth="2" />
+                          <line x1="16" y1="13" x2="8" y2="13"
+                                stroke="currentColor" strokeWidth="2" />
+                          <line x1="16" y1="17" x2="8" y2="17"
+                                stroke="currentColor" strokeWidth="2" />
+                          <polyline points="10,9 9,9 8,9"
+                                 stroke="currentColor" strokeWidth="2" />
                         </svg>
                       </div>
                     </div>
@@ -323,7 +296,6 @@ const UploadVideo = () => {
                         required
                       />
                     </div>
-
                     <div className="form-group">
                       <label className="form-label">Description</label>
                       <textarea
@@ -335,7 +307,6 @@ const UploadVideo = () => {
                         rows="4"
                       />
                     </div>
-
                     <div className="form-row">
                       <div className="form-group">
                         <label className="form-label">Category</label>
@@ -355,7 +326,6 @@ const UploadVideo = () => {
                           <option value="Travel">Travel & Events</option>
                         </select>
                       </div>
-
                       <div className="form-group">
                         <label className="form-label">Visibility</label>
                         <select
@@ -370,7 +340,6 @@ const UploadVideo = () => {
                         </select>
                       </div>
                     </div>
-
                     <div className="form-group">
                       <label className="form-label">Tags</label>
                       <input
@@ -382,7 +351,6 @@ const UploadVideo = () => {
                         className="form-input"
                       />
                     </div>
-
                     {uploadType === "video" && (
                       <div className="thumbnail-section">
                         <label className="form-label">Custom Thumbnail</label>
