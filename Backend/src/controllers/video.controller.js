@@ -12,7 +12,13 @@ import { uploadOnCloudinary } from "../utils/uploadoncloudinary.js";
 // Upload video
 const uploadVideo = asyncHandler(async (req, res) => {
   try {
-    const { title, description, visibility = "public" } = req.body;
+    const {
+      title,
+      description,
+      visibility = "public",
+      isDraft = false,
+      videoUrl, // <-    JSON body se link bhi aayega
+    } = req.body;
 
     if (!title?.trim() || !description?.trim()) {
       throw new ApiError(400, "Title and description are required");
@@ -21,27 +27,44 @@ const uploadVideo = asyncHandler(async (req, res) => {
     const videoLocalPath = req.files?.videoFile?.[0]?.path;
     const thumbnailLocalPath = req.files?.thumbnail?.[0]?.path;
 
-    if (!videoLocalPath) {
-      throw new ApiError(400, "Video file is required");
+    // Pehle yeh check karo: ya file ya URL mandatory hai
+    if (!videoLocalPath && !videoUrl) {
+      throw new ApiError(
+        400,
+        "Video file (upload) ya videoUrl (link) required"
+      );
     }
 
-    const videoFile = await uploadOnCloudinary(videoLocalPath);
+    let videoFileURL = "";
+    let videoDuration = 0;
+
+    if (videoLocalPath) {
+      // Agar file bheji hai toh — upload to Cloudinary
+      const videoFile = await uploadOnCloudinary(videoLocalPath);
+      if (!videoFile) throw new ApiError(400, "Failed to upload video");
+      videoFileURL = videoFile.url;
+      videoDuration = videoFile.duration || 0;
+    } else if (videoUrl) {
+      // Agar direct link di hai toh (bina file ke)
+      videoFileURL = videoUrl.trim();
+      // duration ke liye parse kar sakte ho (custom logic), ya 0 by default.
+    }
+
+    // Thumbnail logic same rakho
     const thumbnail = thumbnailLocalPath
       ? await uploadOnCloudinary(thumbnailLocalPath)
       : null;
 
-    if (!videoFile) {
-      throw new ApiError(400, "Failed to upload video");
-    }
-
     const video = await Video.create({
       title,
       description,
-      videoFile: videoFile.url,
+      videoFile: videoFileURL,
       thumbnail: thumbnail?.url || "",
-      duration: videoFile.duration || 0,
-      owner: req.user?._id || new mongoose.Types.ObjectId(), // Default owner for testing
+      duration: videoDuration,
+      owner: req.user?._id || new mongoose.Types.ObjectId(),
       visibility,
+      isDraft: isDraft === "true" || isDraft === true,
+      isPublished: !isDraft,
     });
 
     return res
@@ -70,7 +93,26 @@ const getAllVideos = asyncHandler(async (req, res) => {
       });
     }
 
-    pipeline.push({ $match: { isPublished: true, visibility: "public" } });
+    const { drafts = "false" } = req.query;
+    const isDraftOnly = drafts === "true";
+
+    pipeline.push({
+      $match: isDraftOnly
+        ? { isDraft: true }
+        : {
+            $and: [
+              {
+                $or: [
+                  { isPublished: true },
+                  { isPublished: { $exists: false } },
+                ],
+              },
+              { $or: [{ isDraft: false }, { isDraft: { $exists: false } }] },
+              { visibility: "public" },
+            ],
+          },
+    });
+
     pipeline.push({
       $lookup: {
         from: "users",
@@ -263,6 +305,18 @@ const getTrendingVideos = asyncHandler(async (req, res) => {
   }
 });
 
+const updateVideo = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
+  const updateData = req.body;
+  const video = await Video.findByIdAndUpdate(videoId, updateData, {
+    new: true,
+  });
+  if (!video) {
+    throw new ApiError(404, "Video not found");
+  }
+  res.status(200).json(new ApiResponse(200, video, "Video updated"));
+});
+
 export {
   uploadVideo,
   getAllVideos,
@@ -270,4 +324,5 @@ export {
   toggleVideoLike,
   addToWatchLater,
   getTrendingVideos,
+  updateVideo,
 };

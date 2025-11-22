@@ -6,6 +6,7 @@ import {
   toggleVideoLike,
   addToWatchLater,
   getTrendingVideos,
+  updateVideo,
 } from "../controllers/video.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -34,5 +35,12 @@ router.route("/:videoId").get(apiLimiter, getVideoById);
 // Authenticated video routes
 router.route("/:videoId/like").post(authMiddleware, toggleVideoLike);
 router.route("/:videoId/watchlater").post(authMiddleware, addToWatchLater);
+
+router.route("/drafts").get(authMiddleware, getAllVideos); // Fetch user's draft videos
+// Yeh original tha:
+// router.route("/:videoId").patch(authMiddleware, updateVideo);
+
+// Yeh 100% testing ke liye:
+router.route("/:videoId").patch(updateVideo);
 
 export default router;
