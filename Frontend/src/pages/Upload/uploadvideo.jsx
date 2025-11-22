@@ -111,15 +111,11 @@ const UploadVideo = () => {
       formData.append("visibility", videoDetails.visibility);
       formData.append("isDraft", draft ? "true" : "false"); // must be "true"/"false" string
 
-      if (videoDetails.thumbnail) {
-        formData.append("thumbnail", videoDetails.thumbnail);
+      if (uploadType === "video") {
+      if (videoDetails.thumbnail) formData.append("thumbnail", videoDetails.thumbnail);
+      if (videoDetails.category) formData.append("category", videoDetails.category);     
       }
-      if (videoDetails.tags) {
-        formData.append("tags", videoDetails.tags);
-      }
-      if (videoDetails.category) {
-        formData.append("category", videoDetails.category);
-      }
+      if (videoDetails.tags) formData.append("tags", videoDetails.tags);
 
       const progressInterval = setInterval(() => {
         setUploadProgress((prev) => {

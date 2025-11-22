@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose from "mongoose";
+import { Video } from "../models/video.model.js"
 
 export const addComment = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
@@ -17,6 +18,9 @@ export const addComment = asyncHandler(async (req, res) => {
     video: videoId,
     owner: req.user?._id || new mongoose.Types.ObjectId(),
   });
+
+  await Video.findByIdAndUpdate(videoId, { $inc: { commentsCount: 1 } });
+
 
   const populatedComment = await comment.populate("owner", "fullName");
 
