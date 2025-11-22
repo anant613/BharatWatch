@@ -304,7 +304,13 @@ const DraftVideos = () => {
                   <button
                     className="dv-action-btn dv-edit-btn"
                     onClick={() =>
-                      navigate(`/videoplayer/${draft.id}?type=${draft.modelType}`)
+                      navigate(`/upload/${draft.id}` , {
+                        state: {
+                          editDraft: draft,
+                          draftId: draft.id,
+                          draftType: draft.modelType
+                        }
+                      })
                     }
                   >
                     ✏️ Edit

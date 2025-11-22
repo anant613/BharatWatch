@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./uploadVideo.css";
+import { useLocation } from "react-router-dom";
 
 const UploadVideo = () => {
+  const location = useLocation();
+  const editDraft = location.state?.editDraft; 
+  const draftId = location.state?.draftId;
+  const draftType = location.state?.draftType;
   const [isDraft, setIsDraft] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -21,6 +26,22 @@ const UploadVideo = () => {
 
   const fileInputRef = useRef(null);
   const thumbnailInputRef = useRef(null);
+
+  useEffect(() => {
+  if (editDraft && draftType) {
+    setUploadType(draftType);
+    setVideoDetails({
+      title: editDraft.title || "",
+      description: editDraft.description || "",
+      tags: editDraft.tags || "",
+      category: editDraft.category || "Education",
+      visibility: editDraft.visibility || "public",
+      thumbnail: null,
+    });
+    setPreviewUrl(editDraft.url);
+  }
+}, [editDraft, draftType]);
+
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
