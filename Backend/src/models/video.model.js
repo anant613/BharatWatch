@@ -40,8 +40,8 @@ const videoSchema = new mongoose.Schema(
       default: 0,
     },
     comments: {
-      type: Number,
-      default: 0,
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Comment",
     },
     allowComments: {
       type: Boolean,
@@ -69,11 +69,6 @@ const videoSchema = new mongoose.Schema(
       type: String,
       enum: ["public", "private"],
       default: "public",
-    },
-    processingStatus: {
-      type: String,
-      enum: ["pending", "processing", "ready", "failed"],
-      default: "pending",
     },
   },
   { timestamps: true }
