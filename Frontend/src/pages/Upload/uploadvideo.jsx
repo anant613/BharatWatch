@@ -12,7 +12,7 @@ const UploadVideo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadType, setUploadType] = useState(null); // "video" or "snip"
+  const [uploadType, setUploadType] = useState(draftType || null); // "video" or "snip"
   const [videoDetails, setVideoDetails] = useState({
     title: "",
     description: "",
@@ -21,9 +21,9 @@ const UploadVideo = () => {
     visibility: "public",
     thumbnail: null,
   });
-  const [showAdvanced, setShowAdvanced] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
 
+  const [isEditingVideo, setIsEditingVideo] = useState(false)
   const fileInputRef = useRef(null);
   const thumbnailInputRef = useRef(null);
 
@@ -39,6 +39,7 @@ const UploadVideo = () => {
       thumbnail: null,
     });
     setPreviewUrl(editDraft.url);
+    setSelectedFile({ name: editDraft.title, size: 0 });
   }
 }, [editDraft, draftType]);
 
@@ -77,6 +78,7 @@ const UploadVideo = () => {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
+      setIsEditingVideo(false);
     }
   };
 
@@ -105,7 +107,9 @@ const UploadVideo = () => {
     setUploadProgress(0);
     try {
       const formData = new FormData();
-      formData.append("videoFile", selectedFile);
+      if(selectedFile && selectedFile.type){
+         formData.append("videoFile", selectedFile);
+      }
       formData.append("title", videoDetails.title);
       formData.append("description", videoDetails.description);
       formData.append("visibility", videoDetails.visibility);
@@ -292,10 +296,14 @@ const UploadVideo = () => {
                         className="preview-video"
                       />
                       <div className="file-info">
-                        <span className="file-name">{selectedFile.name}</span>
-                        <span className="file-size">
-                          {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
-                        </span>
+                        {selectedFile.size > 0 && (
+                          <>
+                            <span className="file-name">{selectedFile.name}</span>
+                            <span className="file-size">
+                              {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
