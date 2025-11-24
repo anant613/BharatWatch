@@ -379,7 +379,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   const handleSeek = useCallback(
     (e) => {
-      const rect = e.target.getBoundingClientRect();
+      const rect = e.currentTarget.getBoundingClientRect();
       const pos = (e.clientX - rect.left) / rect.width;
       const time = pos * duration;
       if (videoRef.current) {
@@ -738,16 +738,11 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                   className={`custom-controls ${showControls ? "visible" : ""}`}
                 >
                   <div className="progress-container">
-                    <div className="progress-bar" onClick={handleSeek}>
+                    <div className="video-progress-bar" onClick={handleSeek}>
                       <div
-                        className="progress-buffered"
-                        style={{ width: `${buffered}%` }}
-                      ></div>
-                      <div
-                        className="progress-filled"
+                        className="video-progress-fill"
                         style={{ width: `${(currentTime / duration) * 100}%` }}
-                      ></div>
-                      <div className="progress-thumb"></div>
+                      />
                     </div>
                   </div>
 

@@ -287,13 +287,13 @@ const UploadVideo = () => {
                   />
                 </div>
               ) : (
-                <div className="upload-content">
+                <div className={`upload-content ${uploadType === "snip" ? "snip-layout" : ""}`}>
                   <div className="video-preview-section">
-                    <div className="video-preview">
+                    <div className={`video-preview ${uploadType === "snip" ? "snip-preview" : ""}`}>
                       <video
                         src={previewUrl}
                         controls
-                        className="preview-video"
+                        className={`preview-video ${uploadType === "snip" ? "snip-video" : ""}`}
                       />
                       <div className="file-info">
                         {selectedFile.size > 0 && (
