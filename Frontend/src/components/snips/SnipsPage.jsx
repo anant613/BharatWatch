@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./SnipsPage.css";
 import carImg from "./images/myprof.png";
 import car from "./images/profile2.png";
@@ -23,6 +23,7 @@ function formatLikeCount(num) {
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 const SnipsPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [reelsList, setReelsList] = useState([]);
   const [reelIndex, setReelIndex] = useState(0);
@@ -38,6 +39,13 @@ const SnipsPage = () => {
   const [counts, setCounts] = useState([]);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [sortType, setSortType] = useState("new"); // "new" or "old"
+
+  const updateUrlWithIndex = (newIdx) => {
+  const newId = reelsList[newIdx]?._id;
+  if (newId) {
+    navigate(`/snips/${newId}`, { replace: false }); // yeh URL replace nahi karta, history maintain karta hai
+  }
+};
 
   // Backend snips load
   useEffect(() => {
@@ -57,6 +65,28 @@ const SnipsPage = () => {
         setReelComments((data[0] && data[0].comments) || []);
       });
   }, []);
+
+   // === Arrow Key Navigation for Reels ===
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      setReelIndex(idx => {
+        const newIdx = idx < reelsList.length - 1 ? idx + 1 : idx;
+        updateUrlWithIndex(newIdx); // <--- insert
+        return newIdx;
+      });
+    } else if (e.key === "ArrowUp") {
+      setReelIndex(idx => {
+        const newIdx = idx > 0 ? idx - 1 : idx;
+        updateUrlWithIndex(newIdx); // <--- insert
+        return newIdx;
+      });
+    }
+  };
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
+}, [reelsList.length, reelsList]);
+
 
   useEffect(() => {
     // check id in param and update reelIndex accordingly (if id present)
@@ -604,23 +634,32 @@ const SnipsPage = () => {
         {/* --- ARROW BUTTONS --- */}
         <div className="scroll-arrows-fixed">
           <button
-            className="arrow-btn up"
-            onClick={() => setReelIndex((i) => (i > 0 ? i - 1 : i))}
-            aria-label="Previous Reel"
-            disabled={reelIndex === 0}
-          >
+  className="arrow-btn up"
+  onClick={() => {
+    if (reelIndex > 0) {
+      updateUrlWithIndex(reelIndex - 1);
+      setReelIndex(i => i > 0 ? i - 1 : i);
+    }
+  }}
+  aria-label="Previous Reel"
+  disabled={reelIndex === 0}
+>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-              <path d="M12 8l-7 7h14z" fill="#222" />
-            </svg>
+  <path d="M12 16l7-7H5z" fill="#222" />
+</svg>
+
           </button>
           <button
-            className="arrow-btn down"
-            onClick={() =>
-              setReelIndex((i) => (i < reelsList.length - 1 ? i + 1 : i))
-            }
-            aria-label="Next Reel"
-            disabled={reelIndex === reelsList.length - 1}
-          >
+  className="arrow-btn down"
+  onClick={() => {
+    if (reelIndex < reelsList.length - 1) {
+      updateUrlWithIndex(reelIndex + 1);
+      setReelIndex(i => i < reelsList.length - 1 ? i + 1 : i);
+    }
+  }}
+  aria-label="Next Reel"
+  disabled={reelIndex === reelsList.length - 1}
+>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
               <path d="M12 16l7-7H5z" fill="#222" />
             </svg>
