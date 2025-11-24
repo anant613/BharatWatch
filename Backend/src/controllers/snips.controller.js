@@ -143,6 +143,9 @@ export const uploadSnip = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Video file or URL required");
   }
 
+
+
+
   // DB Me Save Karo
   const snip = await Snip.create({
     title,
@@ -151,6 +154,7 @@ export const uploadSnip = asyncHandler(async (req, res) => {
     videoFile: finalVideoUrl,
     owner: req.user?._id || null,
     isDraft: isDraft === "true" || isDraft === true,
+    setLikeCount,
   });
 
   res.status(201).json(new ApiResponse(201, "Snip uploaded successfully", snip));
