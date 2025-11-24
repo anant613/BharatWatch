@@ -10,6 +10,15 @@ import share from "./images/shareicon.png";
 import savedark from "./images/savedark.png";
 import unsaved from "./images/unsaved.png";
 import Navbar from "../../components/Navbar/navbar";
+// import SnipReelPlayer from "./SnipReelPlayer";
+
+function formatLikeCount(num) {
+  if (num >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
+  if (num >= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+  if (num >= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "k";
+  return num?.toString() || "0";
+}
+
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
@@ -105,13 +114,14 @@ const SnipsPage = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showMore]);
 
+  
   // Like
   const handleLike = () => {
     if (!reelsList[reelIndex]) return;
     fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ like: !isLikedArr[reelIndex] }), // Yeh line important hai!
+      body: JSON.stringify({ like: !isLikedArr[reelIndex] }), // Yeh line important hai!  
     })
       .then((res) => res.json())
       .then((data) => {
@@ -130,6 +140,7 @@ const SnipsPage = () => {
         );
       });
   };
+
 
   const handleShare = () => {
     const url = window.location.href;
@@ -278,8 +289,8 @@ const SnipsPage = () => {
                 />
               )}
               <span className="circle-count">
-                {(counts[reelIndex] && counts[reelIndex].likeCount) || 0} Like
-              </span>
+  {formatLikeCount(counts[reelIndex]?.likeCount)} Like
+</span>
             </button>
             {/* Share Button */}
             <button
