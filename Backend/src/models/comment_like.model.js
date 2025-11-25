@@ -7,7 +7,7 @@ const CommentlikeSchema = new mongoose.Schema(
             ref: "User"
         },
         video: {
-            trype: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Video"
         },
         comment: {

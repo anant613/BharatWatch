@@ -8,6 +8,7 @@ import errorHandler from "./middlewares/errors.middleware.js";
 import snipRoutes from "./routes/snips.routes.js";
 import userRouter from "./routes/user.routes.js";
 import videoRouter from "./routes/video.routes.js";
+import commentRouter from "./routes/comment.routes.js";
 
 const app = express();
 
@@ -98,6 +99,7 @@ app.get("/health", (req, res) => {
 app.use("/api/snips", snipRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/videos", videoRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // Root endpoint
 app.get("/", (req, res) => {

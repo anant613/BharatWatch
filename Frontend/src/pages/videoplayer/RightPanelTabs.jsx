@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const RightPanelTabs = ({
   comments,
@@ -15,6 +15,67 @@ const RightPanelTabs = ({
   formatViews,
 }) => {
   const [activeTab, setActiveTab] = useState("content");
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
+  const [expandedReplies, setExpandedReplies] = useState({});
+  const [replies, setReplies] = useState({});
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const handleReplySubmit = async (e, commentId) => {
+    e.preventDefault();
+    if (!replyText.trim()) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/comments/${commentId}/replies`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: replyText }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setReplies((prev) => ({
+          ...prev,
+          [commentId]: [...(prev[commentId] || []), data.data],
+        }));
+        setReplyText("");
+        setReplyingTo(null);
+      }
+    } catch (err) {
+      console.error("Failed to post reply:", err);
+    }
+  };
+
+  const fetchReplies = async (commentId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/v1/comments/${commentId}/replies`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setReplies((prev) => ({
+          ...prev,
+          [commentId]: data.data || [],
+        }));
+      }
+    } catch (err) {
+      console.error("Failed to fetch replies:", err);
+    }
+  };
+
+  const toggleReplies = (commentId) => {
+    setExpandedReplies((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId],
+    }));
+    if (!expandedReplies[commentId] && !replies[commentId]) {
+      fetchReplies(commentId);
+    }
+    setOpenMenu(null);
+  };
 
   return (
     <>
@@ -208,15 +269,105 @@ const RightPanelTabs = ({
                         >
                           👍 {comment.likes.toLocaleString()}
                         </button>
-                        <button className="comment-reply">Reply</button>
-                        {comment.replies > 0 && (
-                          <button className="comment-replies">
-                            ↳ {comment.replies}{" "}
-                            {comment.replies === 1 ? "reply" : "replies"}
+                        <button
+                          className="comment-reply"
+                          onClick={() => setReplyingTo(comment.id)}
+                        >
+                          Reply
+                        </button>
+                        <div className="comment-menu-container">
+                          <button
+                            className="comment-more"
+                            onClick={() =>
+                              setOpenMenu(
+                                openMenu === comment.id ? null : comment.id
+                              )
+                            }
+                          >
+                            ⋯
                           </button>
-                        )}
-                        <button className="comment-more">⋯</button>
+                          {openMenu === comment.id && comment.replies > 0 && (
+                            <div className="comment-menu">
+                              <button
+                                onClick={() => toggleReplies(comment.id)}
+                                className="menu-item"
+                              >
+                                {expandedReplies[comment.id]
+                                  ? "Hide replies"
+                                  : "Show all replies"}
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
+                      {replyingTo === comment.id && (
+                        <form
+                          onSubmit={(e) => handleReplySubmit(e, comment.id)}
+                          className="reply-form"
+                        >
+                          <input
+                            type="text"
+                            placeholder="Add a reply..."
+                            value={replyText}
+                            onChange={(e) => setReplyText(e.target.value)}
+                            className="reply-input"
+                            autoFocus
+                          />
+                          <div className="reply-actions">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setReplyingTo(null);
+                                setReplyText("");
+                              }}
+                            >
+                              Cancel
+                            </button>
+                            <button type="submit" disabled={!replyText.trim()}>
+                              Reply
+                            </button>
+                          </div>
+                        </form>
+                      )}
+                      {expandedReplies[comment.id] && replies[comment.id] && (
+                        <div className="replies-container">
+                          <div
+                            className="replies-header"
+                            onClick={() => toggleReplies(comment.id)}
+                          >
+                            ↳ Hide replies
+                          </div>
+                          <div className="replies-list">
+                            {replies[comment.id].map((reply) => (
+                              <div key={reply.id} className="reply-item">
+                                <div className="reply-avatar">
+                                  {reply.avatar || "U"}
+                                </div>
+                                <div className="reply-content">
+                                  <div className="reply-header">
+                                    <div className="reply-user-info">
+                                      <span className="reply-user">
+                                        {reply.user}
+                                      </span>
+                                    </div>
+                                    <span className="reply-time">
+                                      {reply.time}
+                                    </span>
+                                  </div>
+                                  <p className="reply-message">
+                                    {reply.message}
+                                  </p>
+                                  <div className="reply-actions-buttons">
+                                    <button className="reply-like">
+                                      👍 {reply.likes || 0}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}

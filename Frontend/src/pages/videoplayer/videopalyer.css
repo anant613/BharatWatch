@@ -2379,3 +2379,245 @@ body.dark-mode {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
 }
+
+
+/* 💬 REPLY FORM STYLING */
+.reply-form {
+  margin-top: 12px;
+  padding: 12px 0 12px 48px;
+  border-left: 2px solid rgba(255, 107, 53, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+.reply-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 8px 0;
+  font-size: 14px;
+  background: transparent;
+  outline: none;
+  color: var(--text-primary);
+  font-weight: 400;
+  transition: border-color 0.1s ease;
+}
+
+.reply-input:focus {
+  border-bottom-color: #065fd4;
+}
+
+.reply-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.reply-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reply-actions button[type="button"] {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.reply-actions button[type="button"]:hover {
+  background: #f2f2f2;
+}
+
+.reply-actions button[type="submit"] {
+  background: #065fd4;
+  color: white;
+}
+
+.reply-actions button[type="submit"]:hover {
+  background: #0553ba;
+}
+
+.reply-actions button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Dark mode reply form */
+.dark .reply-form {
+  border-left: 2px solid rgba(255, 107, 53, 0.5);
+}
+
+.dark .reply-input {
+  border-bottom: 1px solid #444;
+  color: #ffffff;
+  background: #1a1a1a;
+}
+
+.dark .reply-input:focus {
+  border-bottom-color: #ff6b35;
+}
+
+.dark .reply-actions button[type="button"] {
+  color: #ccc;
+}
+
+.dark .reply-actions button[type="button"]:hover {
+  background: #333;
+}
+
+.dark .reply-actions button[type="submit"] {
+  background: #ff6b35;
+}
+
+.dark .reply-actions button[type="submit"]:hover {
+  background: #ff5722;
+}
+
+/* 📝 REPLIES DISPLAY STYLING */
+.replies-container {
+  margin-top: 16px;
+  padding-left: 48px;
+  border-left: 2px solid rgba(255, 107, 53, 0.2);
+}
+
+.replies-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #065fd4;
+  transition: all 0.3s ease;
+}
+
+.replies-header:hover {
+  color: #0553ba;
+}
+
+.replies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.reply-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.reply-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff6b35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.reply-content {
+  flex: 1;
+}
+
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.reply-user-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reply-user {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.reply-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.reply-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.reply-actions-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.reply-actions-buttons button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.reply-actions-buttons button:hover {
+  background: #f2f2f2;
+  color: var(--text-primary);
+}
+
+.reply-like.liked {
+  color: #0f0f0f;
+  font-weight: 600;
+}
+
+/* Dark mode replies */
+.dark .replies-container {
+  border-left: 2px solid rgba(255, 107, 53, 0.3);
+}
+
+.dark .replies-header {
+  color: #ff6b35;
+}
+
+.dark .replies-header:hover {
+  color: #ff5722;
+}
+
+.dark .reply-user {
+  color: #ffffff;
+}
+
+.dark .reply-message {
+  color: #ffffff;
+}
+
+.dark .reply-actions-buttons button:hover {
+  background: #333;
+  color: #ffffff;
+}
+
+.dark .reply-avatar {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+}
