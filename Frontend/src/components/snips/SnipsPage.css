@@ -443,7 +443,7 @@ body, html {
 .user { font-weight: 600;
         font-size: 12px; }
 .comment-actions-ui span { color: #000000;  font-size: 10px;
-  margin-right: 5px;
+  /* margin-right: 5px; */
 margin-bottom: 0;
 flex-direction: row;
 gap: 20px; 
@@ -515,6 +515,118 @@ gap: 20px;
 .arrow-btn svg {
   display: block;
 }
+.comment-actions-ui {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btnn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: #e5e5e5;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.action-btnn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-label {
+  min-width: 16px;
+}
+
+.reply-input-row {
+  margin-top: 6px;
+  margin-left: 32px;
+  display: inline-flex;   /* flex se inline-flex */
+  align-items: center;
+  gap: 6px;
+  max-width: 80%;         /* optional: width limit */
+}
+
+
+.reply-input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #444;
+  background: #111;
+  color: #f5f5f5;
+  /* font-size: 12px; */
+  outline: none;
+}
+
+.reply-send-btn,
+.reply-cancel-btn {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.reply-send-btn {
+  background: #1a1a1a87;
+  color: #fff;
+}
+
+.reply-cancel-btn {
+      background: #1a1a1a87;
+    color: #ffffff;
+}
+
+.replies-list {
+  margin-left: 32px;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reply-row-ui {
+  display: flex;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  /* background: #1a1a1a; */
+}
+
+.reply-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.reply-content {
+  flex: 1;
+}
+
+.reply-user {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f0f0f0;
+}
+
+.reply-text {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #000000;
+}
+
 
 
 /* Drak Mode Changes Added Below */
@@ -545,6 +657,14 @@ gap: 20px;
 .action-btnn {
   color: #191919;
 }
+.action-btnn svg { color: #0A0A0A; }
+[data-theme="dark"] .action-btnn svg { 
+  color: #e0e0e0ff;
+}
+[data-theme="dark"] .reply-text{
+  color: white;
+}
+
 [data-theme="dark"] .profile-username {
   color: #afafaf;
 }

@@ -56,14 +56,23 @@ export const addComment = async (req, res) => {
     const snip = await Snip.findById(req.params.id);
     if (!snip) return res.status(404).json({ message: "Snip not found" });
 
-    const comment = { user, text, profile, likes: 0, replies: 0 };
+    const comment = {
+      user,
+      text,
+      profile,
+      likes: 0,
+      replies: [],   // IMPORTANT: [] not 0
+    };
+
     snip.comments.unshift(comment);
     await snip.save();
+
     res.status(201).json(snip.comments[0]);
   } catch (err) {
     res.status(400).json({ message: "Error adding comment", error: err });
   }
 };
+
 
 // LIKE/UNLIKE Snip (toggle)
 export const likeSnip = async (req, res) => {
@@ -128,23 +137,19 @@ export const uploadSnip = asyncHandler(async (req, res) => {
 
   // Agar file bheji hai
   if (req.files && req.files.videoFile && req.files.videoFile[0]) {
-    // File ko Cloudinary pe upload karo
     const videoLocalPath = req.files.videoFile[0].path;
     const videoFileUploaded = await uploadOnCloudinary(videoLocalPath);
     if (!videoFileUploaded) throw new ApiError(400, "Video file upload failed");
     finalVideoUrl = videoFileUploaded.url;
   }
-  // Agar sirf URL diya hai form-data/JSON me
+  // Agar sirf URL diya hai
   else if (videoUrl && typeof videoUrl === "string") {
     finalVideoUrl = videoUrl;
   }
-  // Dono nahi hai, toh error
+  // Dono nahi hai
   else {
     throw new ApiError(400, "Video file or URL required");
   }
-
-
-
 
   // DB Me Save Karo
   const snip = await Snip.create({
@@ -154,8 +159,46 @@ export const uploadSnip = asyncHandler(async (req, res) => {
     videoFile: finalVideoUrl,
     owner: req.user?._id || null,
     isDraft: isDraft === "true" || isDraft === true,
-    setLikeCount,
   });
 
   res.status(201).json(new ApiResponse(201, "Snip uploaded successfully", snip));
 });
+
+// Add Reply
+export const addReply = async (req, res) => {
+  try {
+    const { id, commentId } = req.params;
+    const { user, text, profile } = req.body;
+
+    const snip = await Snip.findById(id);
+    if (!snip) return res.status(404).json({ message: "Snip not found" });
+
+    const comment = snip.comments.id(commentId);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    const reply = { user, text, profile, likes: 0 };
+    comment.replies.push(reply);
+    await snip.save();
+
+    res.status(201).json(comment.replies[comment.replies.length - 1]);
+  } catch (err) {
+    res.status(400).json({ message: "Error adding reply", error: err });
+  }
+};
+
+export const likeComment = async (req, res) => {
+  try {
+    const { id, commentId } = req.params;
+    const snip = await Snip.findById(id);
+    if (!snip) return res.status(404).json({ message: "Snip not found" });
+    const comment = snip.comments.id(commentId);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+    comment.likes = (comment.likes || 0) + 1;
+    await snip.save();
+
+    res.status(200).json({ likes: comment.likes });
+  } catch (err) {
+    res.status(400).json({ message: "Error liking comment", error: err });
+  }
+};
