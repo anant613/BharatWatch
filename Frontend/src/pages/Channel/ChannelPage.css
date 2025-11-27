@@ -448,72 +448,106 @@
 }
 
 /* Dark Mode */
-.dark .ch-page {
+[data-theme="dark"] .ch-page {
   background: #0a0a0a;
 }
 
-.dark .ch-name {
+[data-theme="dark"] .ch-name {
   color: #ffffff;
 }
 
-.dark .ch-description {
+[data-theme="dark"] .ch-stats {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-handle {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-dot {
+  color: #666;
+}
+
+[data-theme="dark"] .ch-description {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .ch-meta {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-video-title {
   color: #ffffff;
 }
 
-.dark .ch-video-title {
+[data-theme="dark"] .ch-video-meta {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-short-title {
   color: #ffffff;
 }
 
-.dark .ch-short-title {
+[data-theme="dark"] .ch-playlist-title {
   color: #ffffff;
 }
 
-.dark .ch-playlist-title {
+[data-theme="dark"] .ch-playlist-updated {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-section-header h2 {
   color: #ffffff;
 }
 
-.dark .ch-section-header h2 {
+[data-theme="dark"] .ch-about-content h2 {
   color: #ffffff;
 }
 
-.dark .ch-about-content h2 {
+[data-theme="dark"] .ch-about-description p {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .ch-stat-item {
+  color: #aaa;
+}
+
+[data-theme="dark"] .ch-stat-item strong {
   color: #ffffff;
 }
 
-.dark .ch-about-description p {
-  color: #ffffff;
-}
-
-.dark .ch-nav {
+[data-theme="dark"] .ch-nav {
   border-bottom-color: #333;
 }
 
-.dark .ch-nav-btn {
-  color: #ccc;
+[data-theme="dark"] .ch-nav-btn {
+  color: #aaa;
 }
 
-.dark .ch-nav-btn:hover {
+[data-theme="dark"] .ch-nav-btn:hover {
   color: #ffffff;
 }
 
-.dark .ch-nav-btn.active {
+[data-theme="dark"] .ch-nav-btn.active {
   color: #ffffff;
   border-bottom-color: #ffffff;
 }
 
-.dark .ch-action-btn {
+[data-theme="dark"] .ch-action-btn {
   background: #333;
   color: #ffffff;
+  border: 1px solid #555;
 }
 
-.dark .ch-action-btn:hover {
+[data-theme="dark"] .ch-action-btn:hover {
   background: #444;
+  border-color: #666;
 }
 
-.dark .ch-sort-select {
-  background: #333;
+[data-theme="dark"] .ch-sort-select {
+  background: #1a1a1a;
   color: #ffffff;
-  border-color: #555;
+  border-color: #444;
 }
 
 /* Responsive Design */

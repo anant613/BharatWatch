@@ -16,6 +16,7 @@ import Notifications from "./pages/Notifications/Notifications";
 import Feedback from "./pages/Feedback/Feedback";
 import Help from "./pages/Help/Help";
 import ChannelPage from "./pages/Channel/ChannelPage";
+import MyChannel from "./pages/myChannel/myChannel";
 import UploadVideo from "./pages/Upload/uploadvideo";
 import DraftVideos from "./pages/DraftVideos/DraftVideos";
 
@@ -71,6 +72,7 @@ const App = () => {
         <Route path="/feedback" element={<Feedback darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/help" element={<Help darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/channel" element={<ChannelPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/my-channel" element={<MyChannel darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/upload" element={<UploadVideo darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/upload/:draftId" element={<UploadVideo darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/drafts" element={<DraftVideos darkMode={darkMode} setDarkMode={setDarkMode} />} />
