@@ -36,6 +36,8 @@ const SnipsPage = () => {
   const [showFullCaption, setShowFullCaption] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [reelComments, setReelComments] = useState([]);
+  const [showReplyInput, setShowReplyInput] = useState({}); // { commentId: true/false }
+  const [replyText, setReplyText] = useState({});           // { commentId: "text" }
   const [counts, setCounts] = useState([]);
   const [showSortMenu, setShowSortMenu] = useState(false);
   const [sortType, setSortType] = useState("new"); // "new" or "old"
@@ -48,23 +50,37 @@ const SnipsPage = () => {
 };
 
   // Backend snips load
-  useEffect(() => {
-    fetch(`${API_URL}/snips`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReelsList(data || []);
-        setIsLikedArr((data || []).map(() => false));
-        setIsSavedArr((data || []).map(() => false));
-        setCounts(
-          (data || []).map((snip) => ({
-            likeCount: snip.likeCount || 0,
-            saveCount: 0,
-            shareCount: 0,
-          }))
-        );
-        setReelComments((data[0] && data[0].comments) || []);
-      });
-  }, []);
+useEffect(() => {
+  fetch(`${API_URL}/snips`)
+    .then((res) => res.json())
+    .then((data) => {
+      const list = data || [];
+      setReelsList(list);
+      setIsLikedArr(list.map(() => false));
+      setIsSavedArr(list.map(() => false));
+      setCounts(
+        list.map((snip) => ({
+          likeCount: snip.likeCount || 0,
+          saveCount: 0,
+          shareCount: 0,
+        }))
+      );
+
+      if (list.length) {
+        // URL id se reelIndex nikaalo
+        let idx = 0;
+        if (id) {
+          const found = list.findIndex(
+            (item) => String(item._id) === String(id)
+          );
+          idx = found === -1 ? 0 : found;
+        }
+        setReelIndex(idx);
+        setReelComments(list[idx].comments || []);
+      }
+    });
+}, [id]);
+
 
    // === Arrow Key Navigation for Reels ===
   useEffect(() => {
@@ -116,33 +132,35 @@ const SnipsPage = () => {
   }, [reelIndex, reelsList]);
 
   // Comment add (backend)
-  const handleInputKeyDown = (e) => {
-    if (e.key === "Enter" && inputValue.trim() && reelsList[reelIndex]) {
-      fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/comment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user: "@You",
-          text: inputValue,
-          profile: carImg,
-        }),
-      })
-        .then((res) => res.json())
-        .then((newComment) => setReelComments((prev) => [newComment, ...prev]));
-      setInputValue("");
-    }
-  };
+ const handleInputKeyDown = (e) => {
+  if (e.key === "Enter" && inputValue.trim() && reelsList[reelIndex]) {
+    fetch(`${API_URL}/snips/${reelsList[reelIndex]._id}/comment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "@You",
+        text: inputValue,
+        profile: carImg,
+      }),
+    })
+      .then((res) => res.json())
+      .then((newComment) => {
+        // local comments
+        setReelComments((prev) => [newComment, ...prev]);
 
-  React.useEffect(() => {
-    if (!showMore) return;
-    function handleClickOutside(e) {
-      if (moreBtnRef.current && !moreBtnRef.current.contains(e.target)) {
-        setShowMore(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showMore]);
+        // reelsList bhi update karo
+        setReelsList((prev) =>
+          prev.map((snip, i) =>
+            i === reelIndex
+              ? { ...snip, comments: [newComment, ...(snip.comments || [])] }
+              : snip
+          )
+        );
+      });
+    setInputValue("");
+  }
+};
+
 
   
   // Like
@@ -202,6 +220,74 @@ const SnipsPage = () => {
     if (idx < 0 || idx >= reelsList.length) return;
     setReelIndex(idx);
   };
+ 
+  // reply comment
+  const handleAddReply = (commentId) => {
+  if (!replyText[commentId]?.trim()) return;
+
+  fetch(
+    `${API_URL}/snips/${reelsList[reelIndex]._id}/comment/${commentId}/reply`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: "@You",
+        text: replyText[commentId],
+        profile: carImg,
+      }),
+    }
+  )
+    .then((res) => res.json())
+    .then((newReply) => {
+      // 1) local reelComments update
+      setReelComments((prev) =>
+        prev.map((c) =>
+          c._id === commentId
+            ? { ...c, replies: [...(c.replies || []), newReply] }
+            : c
+        )
+      );
+
+      // 2) reelsList bhi update
+      setReelsList((prev) =>
+        prev.map((snip, i) =>
+          i === reelIndex
+            ? {
+                ...snip,
+                comments: snip.comments.map((c) =>
+                  c._id === commentId
+                    ? { ...c, replies: [...(c.replies || []), newReply] }
+                    : c
+                ),
+              }
+            : snip
+        )
+      );
+
+      setReplyText((p) => ({ ...p, [commentId]: "" }));
+      setShowReplyInput((p) => ({ ...p, [commentId]: false }));
+    });
+};
+
+
+const handleCommentLike = (commentId) => {
+  fetch(
+    `${API_URL}/snips/${reelsList[reelIndex]._id}/comment/${commentId}/like`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      setReelComments((prev) =>
+        prev.map((c) =>
+          c._id === commentId ? { ...c, likes: data.likes } : c
+        )
+      );
+    });
+};
+
 
   // Comments list ko sort karo render ke time
   const sortedComments = [...reelComments];
@@ -595,37 +681,136 @@ const SnipsPage = () => {
                 </div>
 
                 <div className="comments-list-ui">
-                  {sortedComments.map((c, i) => (
-                    <div key={i} className="comment-row-ui">
-                      <img
-                        src={c.profile}
-                        alt={c.user}
-                        className="comment-userimg-ui"
-                      />
-                      <div>
-                        <span className="user">{c.user}</span>
-                        <p>{c.text}</p>
-                        <div className="comment-actions-ui">
-                          <style>{`.comment-actions-ui { margin-left: -4%;
-                                                          margin-top: 2%;
-                                                           display: flex;
-                                                            gap: 10px; 
-                                                            align-items: center; }`}</style>
-                          <button className="action-btnn">
-                            <span>{/* SVG or icon */}</span>
-                            <div className="action-label">1.1K</div>
-                            <div className="action-count"></div>
-                          </button>
-                          <button className="action-btnn">
-                            <span>{/* SVG or icon */}</span>
-                            <div className="action-label">1.5K</div>
-                            <div className="action-count"></div>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+  {sortedComments.map((c, i) => (
+    <div key={i} className="comment-row-ui">
+      <img
+        src={c.profile}
+        alt={c.user}
+        className="comment-userimg-ui"
+      />
+      <div>
+        <span className="user">{c.user}</span>
+        <p>{c.text}</p>
+
+        {/* Actions row */}
+       {/* Actions + reply section */}
+<div className="comment-actions-ui">
+  {/* Comment like button */}
+  <button
+    className="action-btnn"
+    onClick={() => handleCommentLike(c._id)}
+  >
+    <span className="action-icon">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 31 37"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M29.0439 29.519C29.609 29.5193 30.0671 29.9774 30.0674 30.5425V35.939C30.0674 36.5043 29.6092 36.9631 29.0439 36.9634H1.02441C0.459053 36.9632 0.000976562 36.5044 0.000976562 35.939V30.5425C0.00125069 29.9773 0.459227 29.5192 1.02441 29.519H29.0439Z
+             M13.0088 0.0141602C13.6367 -0.0805938 14.2407 0.313495 14.4072 0.92627L16.1445 11.8872L17.2637 13.6597L19.1582 12.9097V5.42139C19.1585 4.7277 19.7213 4.16475 20.415 4.16455H25.5166C26.2105 4.16455 26.7732 4.72757 26.7734 5.42139V19.2651L23.1807 28.0522C22.9845 28.5182 22.528 28.8208 22.0225 28.8208H8.04395L3.40723 19.7915L8.50488 13.3169L6.8457 2.80127C6.74545 2.16466 7.14348 1.5547 7.7666 1.39014L12.874 0.0424805Z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span className="action-label">
+      {formatLikeCount(c.likes || 0)}
+    </span>
+  </button>
+
+  {/* Reply toggle button */}
+  <button
+    className="action-btnn"
+    onClick={() =>
+      setShowReplyInput((prev) => ({
+        ...prev,
+        [c._id]: !prev[c._id],
+      }))
+    }
+  >
+    <span className="action-icon">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 22 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          opacity="0.3"
+          d="M18.3333 15.7392V3.66675H3.66663V14.6667H17.2608L18.3333 15.7392Z"
+          fill="currentColor"
+        />
+        <path
+          d="M3.66671 16.4999H16.5L20.1667 20.1666L20.1575 3.66659C20.1575 2.65825 19.3417 1.83325 18.3334 1.83325H3.66671C2.65837 1.83325 1.83337 2.65825 1.83337 3.66659V14.6666C1.83337 15.6749 2.65837 16.4999 3.66671 16.4999Z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span className="action-label">
+      {formatLikeCount(c.replies?.length || 0)}
+    </span>
+  </button>
+</div>
+
+{/* Reply input */}
+{showReplyInput[c._id] && (
+  <div className="reply-input-row">
+    <input
+      type="text"
+      placeholder="Write a reply..."
+      value={replyText[c._id] || ""}
+      onChange={(e) =>
+        setReplyText((prev) => ({
+          ...prev,
+          [c._id]: e.target.value,
+        }))
+      }
+      className="reply-input"
+    />
+    <button
+      className="reply-send-btn"
+      onClick={() => handleAddReply(c._id)}
+    >
+      Send
+    </button>
+    <button
+      className="reply-cancel-btn"
+      onClick={() => {
+        setShowReplyInput((prev) => ({ ...prev, [c._id]: false }));
+        setReplyText((prev) => ({ ...prev, [c._id]: "" }));
+      }}
+    >
+      Cancel
+    </button>
+  </div>
+)}
+
+{/* Replies list – sirf jab toggle ON ho */}
+{showReplyInput[c._id] && c.replies && c.replies.length > 0 && (
+  <div className="replies-list">
+    {c.replies.map((r, j) => (
+      <div key={j} className="reply-row-ui">
+        <img src={r.profile} alt={r.user} className="reply-avatar" />
+        <div className="reply-content">
+          <span className="reply-user">{r.user}</span>
+          <p className="reply-text">{r.text}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
+
+
+
+      </div>
+    </div>
+  ))}
+</div>
+
               </div>
             </div>
           </div>
