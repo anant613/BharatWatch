@@ -644,7 +644,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 5px 16px;
+  padding: 12px 16px;
   border: 1px solid var(--border-light);
   background: grey;
   cursor: pointer;
@@ -734,19 +734,15 @@ body {
   background: grey !important;
   border: 1px solid var(--border-light) !important;
   color: black !important;
-  box-shadow: none !important;
-  transform: scale(1) !important;
-  height: auto !important;
-  padding: 10px 16px !important;
-  line-height: normal !important;
-  min-height: unset !important;
-  max-height: unset !important;
+  padding: 12px 16px !important;
+  margin-left: 10px !important;
+  margin-top: 10px !important;
 }
 
 .save-btn:hover {
   background: none !important;
   border-color: var(--border-hover) !important;
-  transform: translateY(-1px) scale(1) !important;
+  transform: translateY(-1px) !important;
   box-shadow: none !important;
 }
 
@@ -754,13 +750,10 @@ body {
 .save-btn.saved .action-text {
   color: black !important;
   font-weight: 500 !important;
-  line-height: normal !important;
 }
 
 .save-btn .action-icon,
 .save-btn.saved .action-icon {
-  filter: none !important;
-  animation: none !important;
   width: 20px !important;
   height: 20px !important;
 }
