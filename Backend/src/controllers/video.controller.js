@@ -63,7 +63,7 @@ const uploadVideo = asyncHandler(async (req, res) => {
         const urlParts = videoFileURL.split("/upload/");
         if (urlParts.length === 2) {
           const publicId = urlParts[1].split(".")[0];
-          thumbnailURL = `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
+          thumbnailURL = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
         }
       } else {
         // For non-Cloudinary URLs, use the video file as fallback
@@ -331,7 +331,7 @@ const getTrendingVideos = asyncHandler(async (req, res) => {
         const urlParts = video.videoFile.split("/upload/");
         if (urlParts.length === 2) {
           const publicId = urlParts[1].split(".")[0];
-          video.thumbnail = `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
+          video.thumbnail = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
         }
       }
       return video;
