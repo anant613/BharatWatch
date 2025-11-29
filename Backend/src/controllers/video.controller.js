@@ -50,16 +50,32 @@ const uploadVideo = asyncHandler(async (req, res) => {
       // duration ke liye parse kar sakte ho (custom logic), ya 0 by default.
     }
 
-    // Thumbnail logic same rakho
-    const thumbnail = thumbnailLocalPath
-      ? await uploadOnCloudinary(thumbnailLocalPath)
-      : null;
+    // Thumbnail logic - use uploaded or generate from video
+    let thumbnailURL = "";
+    if (thumbnailLocalPath) {
+      const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+      thumbnailURL = thumbnail?.url || "";
+    }
+    
+    // If no thumbnail, generate from video using Cloudinary
+    if (!thumbnailURL && videoFileURL) {
+      if (videoFileURL.includes("cloudinary")) {
+        const urlParts = videoFileURL.split("/upload/");
+        if (urlParts.length === 2) {
+          const publicId = urlParts[1].split(".")[0];
+          thumbnailURL = `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
+        }
+      } else {
+        // For non-Cloudinary URLs, use the video file as fallback
+        thumbnailURL = videoFileURL;
+      }
+    }
 
     const video = await Video.create({
       title,
       description,
       videoFile: videoFileURL,
-      thumbnail: thumbnail?.url || "",
+      thumbnail: thumbnailURL,
       duration: videoDuration,
       owner: req.user?._id || new mongoose.Types.ObjectId(),
       visibility,
@@ -288,12 +304,38 @@ const getTrendingVideos = asyncHandler(async (req, res) => {
           },
         },
       },
+      {
+        $project: {
+          _id: 1,
+          title: 1,
+          description: 1,
+          thumbnail: 1,
+          videoFile: 1,
+          duration: 1,
+          views: 1,
+          likes: 1,
+          owner: 1,
+          createdAt: 1,
+          trendingScore: 1,
+        },
+      },
       { $sort: { trendingScore: -1, createdAt: -1 } },
       { $skip: (parseInt(page) - 1) * parseInt(limit) },
       { $limit: parseInt(limit) },
     ];
 
-    const videos = await Video.aggregate(pipeline);
+    let videos = await Video.aggregate(pipeline);
+
+    videos = videos.map(video => {
+      if (!video.thumbnail && video.videoFile?.includes("cloudinary")) {
+        const urlParts = video.videoFile.split("/upload/");
+        if (urlParts.length === 2) {
+          const publicId = urlParts[1].split(".")[0];
+          video.thumbnail = `https://res.cloudinary.com/${process.env.CLOUDINARY_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
+        }
+      }
+      return video;
+    });
 
     return res
       .status(200)

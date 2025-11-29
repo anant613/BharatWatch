@@ -185,6 +185,10 @@ const Navbar = ({ darkMode, setDarkMode }) => {
                   {showAccountDropdown && (
                     <div className="account-dropdown">
                       <div className="account-name">{userName}</div>
+                      <button onClick={() => navigate("/my-channel")}
+                       className="logout-btn">
+                        My profile
+                      </button>
                       <button onClick={handleLogout} className="logout-btn">
                         Logout
                       </button>
