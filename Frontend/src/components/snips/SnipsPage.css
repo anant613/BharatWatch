@@ -551,43 +551,62 @@ gap: 20px;
 
 .reply-input-row {
   margin-top: 6px;
-  margin-left: 32px;
-  display: inline-flex;   /* flex se inline-flex */
+  margin-left: 40px;         /* comment avatar se thoda andar */
+  display: flex;
   align-items: center;
-  gap: 6px;
-  max-width: 80%;         /* optional: width limit */
+  gap: 8px;
 }
 
 
 .reply-input {
+  margin-left: -40px;
   flex: 1;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid #444;
-  background: #111;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: transparent;
   color: #f5f5f5;
-  /* font-size: 12px; */
+  padding: 4px 0;
+  font-size: 13px;
   outline: none;
 }
 
-.reply-send-btn,
-.reply-cancel-btn {
-  padding: 5px 12px;
-  border-radius: 999px;
+.reply-input::placeholder {
+  color: #aaa;
+}
+
+.reply-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reply-cancel-btn,
+.reply-send-btn {
   border: none;
-  font-size: 11px;
+  background: transparent;
+  font-size: 12px;
   cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.reply-cancel-btn {
+  background: #444;
+  color: #bbb;
 }
 
 .reply-send-btn {
-  background: #1a1a1a87;
   color: #fff;
+  background: #555;
 }
 
-.reply-cancel-btn {
-      background: #1a1a1a87;
-    color: #ffffff;
-}
+.reply-send-btn:disabled {
+  background: #444;
+  color: #c5c3c3;
+  cursor: default;}
+
+
+
 
 .replies-list {
   margin-left: 32px;
@@ -598,6 +617,7 @@ gap: 20px;
 }
 
 .reply-row-ui {
+  margin-left: -20px;
   display: flex;
   gap: 6px;
   padding: 4px 6px;
