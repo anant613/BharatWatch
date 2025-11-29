@@ -879,7 +879,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                       <span className="video-ad-text">Ad</span>
                       <button
                         className="video-ad-dismiss"
-                        onClick={() => setAdVisible(false)}
+                        onClick={() => setAdVisible(True)}
                       >
                         ×
                       </button>
@@ -956,7 +956,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                       className="action-icon"
                     />
                     <span className="action-text">
-                      {formatViews(videoData.likes)}
+                      {formatViews(videoData.likes)} Likes
                     </span>
                   </button>
 
