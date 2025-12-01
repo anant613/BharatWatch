@@ -49,6 +49,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   // UI States
   const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
@@ -91,7 +92,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
         title: data.title,
         description: data.description,
         views: `${data.views}`,
-        likes: `${data.likes}K`,
+        likes: data.likes || 0,
         videoUrl: data.videoFile,
         thumbnail: data.thumbnail,
         duration: data.duration,
@@ -112,6 +113,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
       console.log("Video URL from backend:", data.videoFile);
       console.log("Thumbnail from backend:", data.thumbnail);
       setVideoData(transformedData);
+      setLikeCount(data.likes || 0);
       setError(null);
     } catch (err) {
       console.error("Backend fetch failed:", err);
@@ -446,6 +448,11 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
 
   // User interaction functions
   const handleLike = useCallback(async () => {
+    if (!localStorage.getItem("accessToken")) {
+      alert("Please login to like videos");
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://localhost:4000/api/v1/videos/${id}/like`,
@@ -459,20 +466,15 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
       );
 
       if (response.ok) {
-        setIsLiked(!isLiked);
-        if (videoData) {
-          const newLikes = isLiked
-            ? parseInt(videoData.likes.replace(/[^0-9]/g, "")) - 1
-            : parseInt(videoData.likes.replace(/[^0-9]/g, "")) + 1;
-          setVideoData({ ...videoData, likes: `${newLikes}K` });
-        }
+        const data = await response.json();
+        const newLiked = data.data?.isLiked || !isLiked;
+        setIsLiked(newLiked);
+        setLikeCount(prev => newLiked ? prev + 1 : prev - 1);
       }
     } catch (err) {
       console.error("Failed to like video:", err);
-      // Fallback to local state update
-      setIsLiked(!isLiked);
     }
-  }, [id, isLiked, videoData]);
+  }, [id, isLiked]);
 
   const handleSave = useCallback(async () => {
     try {
@@ -879,7 +881,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                       <span className="video-ad-text">Ad</span>
                       <button
                         className="video-ad-dismiss"
-                        onClick={() => setAdVisible(True)}
+                        onClick={() => setAdVisible(false)}
                       >
                         ×
                       </button>
@@ -956,7 +958,7 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
                       className="action-icon"
                     />
                     <span className="action-text">
-                      {formatViews(videoData.likes)} Likes
+                      {likeCount >= 1000 ? `${(likeCount / 1000).toFixed(1)}K` : likeCount} Likes
                     </span>
                   </button>
 
