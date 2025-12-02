@@ -1,0 +1,21 @@
+// In VideoPlayerPage.jsx or Home.jsx
+
+<div className="main-container">
+  <div className="snips-container" style={{ display: 'flex', overflowX: 'auto' }}>
+    {snips.map(snips => (
+      <Avatar key={snips.id} ... />
+    ))}
+  </div>
+
+  <div className="categories" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+    {categories.map(cat => (
+      <Button key={cat} ... />
+    ))}
+  </div>
+
+  <div className="recommended-videos" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+    {videos.map(video => (
+      <VideoCard key={video.id} ... />
+    ))}
+  </div>
+</div>
