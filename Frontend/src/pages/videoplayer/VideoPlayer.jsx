@@ -146,39 +146,30 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   );
 
   // Fetch recommendations and ads
-  const fetchRecommendations = useCallback(async (videoId) => {
-    try {
-      const [recsResponse, adsResponse, clipsResponse] = await Promise.all([
-        fetch(`http://localhost:4000/api/v1/videos/${videoId}/recommendations`),
-        fetch(`http://localhost:4000/api/v1/ads/video-page`),
-        fetch(`http://localhost:4000/api/v1/videos/${videoId}/clips`),
-      ]);
+const fetchRecommendations = useCallback(async (videoId) => {
+  try {
+    const recsResponse = await fetch(
+      `http://localhost:4000/api/v1/videos/${videoId}/recommendations`
+    );
 
-      if (!recsResponse.ok || !adsResponse.ok || !clipsResponse.ok) {
-        throw new Error("One or more recommendation endpoints failed");
-      }
-
-      const [recsData, adsData, clipsData] = await Promise.all([
-        recsResponse.json(),
-        adsResponse.json(),
-        clipsResponse.json(),
-      ]);
-
-      setRecommendedVideos(recsData.videos?.length > 0 ? recsData.videos : []);
-      setAds(adsData.ads?.length > 0 ? adsData.ads : []);
-      setClips(clipsData.clips?.length > 0 ? clipsData.clips : []);
-      console.log("Recommendations data:", {
-        videos: recsData.videos,
-        ads: adsData.ads,
-        clips: clipsData.clips,
-      });
-    } catch (err) {
-      console.error("Failed to fetch recommendations:", err);
-      setRecommendedVideos([]);
-      setAds([]);
-      setClips([]);
+    if (!recsResponse.ok) {
+      throw new Error("Failed to fetch recommendations");
     }
-  }, []);
+
+    const recsData = await recsResponse.json();
+    const videos = recsData.data?.videos || [];
+    setRecommendedVideos(videos.length > 0 ? videos : []);
+    setAds([]);
+    setClips([]);
+    console.log("Recommendations data:", videos);
+  } catch (err) {
+    console.error("Failed to fetch recommendations:", err);
+    setRecommendedVideos([]);
+    setAds([]);
+    setClips([]);
+  }
+}, []);
+
 
   // Mock data for development (fallback only)
   // const mockVideoData = {
@@ -593,7 +584,8 @@ const VideoPlayer = ({ darkMode, setDarkMode }) => {
   }, []);
 
   const formatViews = useCallback((views) => {
-    const num = parseInt(views.replace(/[^0-9]/g, ""));
+    if (!views) return "0";
+    const num = parseInt(String(views).replace(/[^0-9]/g, ""));
     if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
     if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     return num.toString();

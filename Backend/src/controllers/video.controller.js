@@ -8,6 +8,7 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/uploadoncloudinary.js";
+import { pipeline } from "stream";
 
 // Upload video
 const uploadVideo = asyncHandler(async (req, res) => {
@@ -359,6 +360,92 @@ const updateVideo = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, video, "Video updated"));
 });
 
+//Get recommended Videos 
+const getRecommendedVideos = asyncHandler(async(req , res) => {
+  try {
+    const { videoId } = req.params;
+    const { limit = 10 } = req.query;
+
+    if(!mongoose.isValidObjectId(videoId)){
+      throw new ApiError(400,"InValid Video Id")
+    }
+
+    const recommendations = await Video.aggregate([
+      {
+        $match: {
+          _id: { $ne: new mongoose.Types.ObjectId(videoId)},
+          isPublished: true,
+          visibility:"public"
+        },   
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "owner",
+          foreignField: "_id",
+          as:"owner",
+          pipeline: [{ $project: { username: 1, fullName:1 , avatar:1,verified:1}}],
+        },
+      },
+      {
+        $addFields: {
+          owner: { $first: "$owner" }
+        }
+      },
+      {
+        $sort: {
+          views: -1,
+          createdAt: -1
+        }
+      },
+      {
+        $limit: parseInt(limit)
+      },
+      {
+        $project:{
+          id: "$_id",
+          _id:1,
+          title:1,
+          description:1,
+          thumbnail:1,
+          duration:1,
+          views:1,
+          createdAt:1,
+          channel: "$owner.fullName",
+          channelAvatar: { $substr: ["$owner.fullName", 0, 1] },
+          verified: "$owner.verified",
+        },
+      },
+    ]);
+
+    const formattedRecommendations = recommendations.map(video => {
+      let thumbnail = video.thumbnail;
+      if(!thumbnail && video.videoFile?.includes("cloudinary")){
+        const urlParts = video.videoFile.split("/upload/");
+        if(urlParts.length === 2){
+          const publicId = urlParts[1].split(".")[0];
+          thumbnail = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
+        }
+      }
+      return {
+         ...video,
+         id: video._id,
+         thumbnail,
+         uploadedAt: new Date(video.createdAt).toLocaleDateString(),
+         views: `${video.views}`,
+      }
+    });
+
+    return res
+    .status(200)
+    .json(
+      new ApiResponse(200,{ videos : formattedRecommendations }, "Recommended videos fetched successfully")
+    );
+  } catch (error) {
+    throw new ApiError(500, error.message || "Failed to fetch recommended videos");
+  }
+});
+
 export {
   uploadVideo,
   getAllVideos,
@@ -367,4 +454,5 @@ export {
   addToWatchLater,
   getTrendingVideos,
   updateVideo,
+  getRecommendedVideos,
 };

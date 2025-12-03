@@ -4,7 +4,7 @@ import {
   logoutUser,
   editUserdetails,
   getUserDetails,
-} from "../controllers/user.controllers.js";
+} from "../controllers/user.controller.js";
 import { testRegister } from "../controllers/test.controller.js";
 import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
