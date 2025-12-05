@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../api";
+import { api } from "../../api.js";
 import "./navbar.css";
 import logo from "../../logo.png";
 import darklogo from "../../logodark.png";
@@ -19,20 +19,28 @@ const Navbar = ({ darkMode, setDarkMode }) => {
   const theme = darkMode ? "dark" : "light";
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(api.isAuthenticated());
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("User");
   const [showAccountDropdown, setShowAccountDropdown] = useState(false);
 
   const dropdownRef = useRef();
 
-  useEffect(() => {
-    if (api.isAuthenticated()) {
-      const user = api.getUser();
-      setUserName(user.fullName || user.email || "User");
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  }, []);
+ useEffect(() => {
+  if (!api.isAuthenticated()) {
+    setLoggedIn(false);
+    return;
+  }
+
+  const user = api.getUser();
+  if (!user) {
+    setUserName("User");
+    setLoggedIn(true);
+    return;
+  }
+
+  setUserName(user.fullName || user.email || "User");
+  setLoggedIn(true);
+}, []);
+
 
   useEffect(() => {
     if (isSidebarOpen) {

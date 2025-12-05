@@ -7,6 +7,7 @@ import {
   addToWatchLater,
   getTrendingVideos,
   updateVideo,
+  getRecommendedVideos,
 } from "../controllers/video.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -40,6 +41,9 @@ router.post("/:videoId/comments/:commentId/like", likeComment);
 router.post("/:videoId/comments/:commentId/reply", replyToComment);
 router.get("/:videoId/comments/:commentId/replies", getReplies);
 router.post("/:videoId/comments/:commentId/replies/:replyId/like", likeReply);
+
+//Recommendations 
+router.get("/:videoId/recommendations",apiLimiter,getRecommendedVideos);
 
 // Video likes and watch later
 router.post("/:videoId/like", authMiddleware, toggleVideoLike);
