@@ -71,7 +71,7 @@ const App = () => {
         <Route path="/notifications" element={<Notifications darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/feedback" element={<Feedback darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/help" element={<Help darkMode={darkMode} setDarkMode={setDarkMode} />} />
-        <Route path="/channel" element={<ChannelPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/channel/:username" element={<ChannelPage darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/my-channel" element={<MyChannel darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/upload" element={<UploadVideo darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/upload/:draftId" element={<UploadVideo darkMode={darkMode} setDarkMode={setDarkMode} />} />

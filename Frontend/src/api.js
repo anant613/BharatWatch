@@ -101,6 +101,24 @@ export const api = {
     headers: getHeaders()
   }).then(r => r.json()),
 
+  getChannelProfile: (username) => fetch(`${API_BASE}/channels/${username}`, {
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getChannelVideos: (username,page = 1, limit = 10) => fetch(`${API_BASE}/channels/${username}/videos?page=${page}&limit=${limit}`,{
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  subscribeChannel: (channelId) => fetch(`${API_BASE}/channels/${channelId}/subscribe`, {
+    method: 'POST',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  unsubscribeChannel: (channelId) => fetch(`${API_BASE}/channels/${channelId}/subscribe`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
   getUser: () => JSON.parse(localStorage.getItem('user') || '{}'),
   isAuthenticated: () => !!localStorage.getItem('accessToken')
 };

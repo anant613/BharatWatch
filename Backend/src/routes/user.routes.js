@@ -4,6 +4,9 @@ import {
   logoutUser,
   editUserdetails,
   getUserDetails,
+  getProfile,
+  updateProfilePhoto,
+  deleteProfilePhoto,
 } from "../controllers/user.controller.js";
 import { testRegister } from "../controllers/test.controller.js";
 import { Router } from "express";
@@ -34,6 +37,11 @@ router.route("/logout").post(authMiddleware, logoutUser);
 // User management routes
 router.route("/profile").get(authMiddleware, getUserDetails);
 router.route("/profile").patch(authMiddleware, editUserdetails);
+
+//Profile photo updates 
+router.route("/profile/photo").get(authMiddleware,getProfile);
+router.route("/profile/photo").put(authMiddleware,updateProfilePhoto);
+router.route("/profile/photo").delete(authMiddleware,deleteProfilePhoto)
 
 // Legacy routes for backward compatibility
 router.route("/getuser").get(authMiddleware, getUserDetails);

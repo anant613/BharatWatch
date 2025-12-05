@@ -92,9 +92,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 })
 
-
 //login user
-
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -196,6 +194,34 @@ const getUserDetails = asyncHandler(async (req, res) => {
   res.status(200).json(new ApiResponse(200, getUser, "User details sent"));
 });
 
-export { registerUser, loginUser, logoutUser, editUserdetails, getUserDetails };
 
-//deit details
+//Get profile pic 
+const getProfile = asyncHandler(async (req, res) => {
+  const profile = await User.findById(req.user._id).select("-password -refreshToken");
+  if (!profile) throw new ApiError(404, "Profile not found");
+  res.status(200).json(new ApiResponse(200, profile, "Profile retrieved"));
+});
+
+const updateProfilePhoto = asyncHandler(async (req, res) => {
+  const { avatar } = req.body;
+  if (!avatar) throw new ApiError(400, "Avatar URL is required");
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, { avatar }, { new: true }).select("-password -refreshToken");
+  res.status(200).json(new ApiResponse(200, updatedUser, "Profile photo updated"));
+});
+
+const deleteProfilePhoto = asyncHandler(async (req, res) => {
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, { $unset: { avatar: 1 } }, { new: true }).select("-password -refreshToken");
+  res.status(200).json(new ApiResponse(200, updatedUser, "Profile photo deleted"));
+});
+
+//Exporting all the controllers 
+export {
+  registerUser, 
+  loginUser, 
+  logoutUser, 
+  editUserdetails, 
+  getUserDetails ,
+  getProfile, 
+  updateProfilePhoto, 
+  deleteProfilePhoto
+};
