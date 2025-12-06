@@ -3,6 +3,7 @@ import {
   registerUser,
   loginUser,
   logoutUser,
+  zohoAuth, 
 } from "../controllers/auth.controller.js";
 import { refreshAccessToken } from "../controllers/token.controller.js";
 import { googleAuth } from "../controllers/google.controller.js";
@@ -17,5 +18,6 @@ router.post("/logout", authMiddleware, logoutUser);
 
 // NEW
 router.post("/google", googleAuth);
+router.post("/zoho/callback", zohoAuth);
 
 export default router;
