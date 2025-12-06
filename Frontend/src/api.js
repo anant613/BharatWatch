@@ -126,6 +126,7 @@ export const api = {
     return !!localStorage.getItem(ACCESS_TOKEN_KEY);
   },
 
+// <<<<<<< HEAD
   getUser: () => {
     return getSavedUser();
   },
@@ -133,4 +134,49 @@ export const api = {
   const data = await request("/api/v1/videos", { method: "GET" });
   return data; // yahi array hoga
 },
+
+  saveVideo: (videoId) => fetch(`${API_BASE}/videos/${videoId}/watchlater`, {
+    method: 'POST',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  // Recommendations
+  getRecommendations: (videoId) => fetch(`${API_BASE}/videos/${videoId}/recommendations`, {
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getAds: () => fetch(`${API_BASE}/ads/video-page`, {
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getClips: (videoId) => fetch(`${API_BASE}/videos/${videoId}/clips`, {
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  // Channel
+  subscribe: (channelId) => fetch(`${API_BASE}/channels/${channelId}/subscribe`, {
+    method: 'POST',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getChannelProfile: (username) => fetch(`${API_BASE}/channels/${username}`, {
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getChannelVideos: (username,page = 1, limit = 10) => fetch(`${API_BASE}/channels/${username}/videos?page=${page}&limit=${limit}`,{
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  subscribeChannel: (channelId) => fetch(`${API_BASE}/channels/${channelId}/subscribe`, {
+    method: 'POST',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  unsubscribeChannel: (channelId) => fetch(`${API_BASE}/channels/${channelId}/subscribe`, {
+    method: 'DELETE',
+    headers: getHeaders()
+  }).then(r => r.json()),
+
+  getUser: () => JSON.parse(localStorage.getItem('user') || '{}'),
+  isAuthenticated: () => !!localStorage.getItem('accessToken')
 };

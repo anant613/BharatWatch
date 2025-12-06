@@ -572,7 +572,7 @@ const fetchRecommendations = useCallback(async (videoId) => {
 
   const navigateToVideo = useCallback(
     (videoId) => {
-      navigate(`/video/${videoId}`);
+      navigate(`/videoplayer/${videoId}`);
     },
     [navigate]
   );

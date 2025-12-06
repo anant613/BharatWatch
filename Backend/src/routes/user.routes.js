@@ -5,6 +5,9 @@ import {
   logoutUser,
   editUserdetails,
   getUserDetails,
+  getProfile,
+  updateProfilePhoto,
+  deleteProfilePhoto,
 } from "../controllers/user.controller.js";
 import { testRegister } from "../controllers/test.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
@@ -44,7 +47,13 @@ router.route("/logout").post(authMiddleware, logoutUser);
 router.route("/profile").get(authMiddleware, getUserDetails);
 router.route("/profile").patch(authMiddleware, editUserdetails);
 
-// legacy
+
+//Profile photo updates 
+router.route("/profile/photo").get(authMiddleware,getProfile);
+router.route("/profile/photo").put(authMiddleware,updateProfilePhoto);
+router.route("/profile/photo").delete(authMiddleware,deleteProfilePhoto)
+
+// Legacy routes for backward compatibility
 router.route("/getuser").get(authMiddleware, getUserDetails);
 router.route("/edituser").post(authMiddleware, editUserdetails);
 

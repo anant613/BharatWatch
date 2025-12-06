@@ -18,7 +18,7 @@ const uploadVideo = asyncHandler(async (req, res) => {
       description,
       visibility = "public",
       isDraft = false,
-      videoUrl, // <-    JSON body se link bhi aayega
+      videoUrl,
     } = req.body;
 
     if (!title?.trim() || !description?.trim()) {
@@ -28,7 +28,6 @@ const uploadVideo = asyncHandler(async (req, res) => {
     const videoLocalPath = req.files?.videoFile?.[0]?.path;
     const thumbnailLocalPath = req.files?.thumbnail?.[0]?.path;
 
-    // Pehle yeh check karo: ya file ya URL mandatory hai
     if (!videoLocalPath && !videoUrl) {
       throw new ApiError(
         400,
@@ -40,35 +39,25 @@ const uploadVideo = asyncHandler(async (req, res) => {
     let videoDuration = 0;
 
     if (videoLocalPath) {
-      // Agar file bheji hai toh — upload to Cloudinary
       const videoFile = await uploadOnCloudinary(videoLocalPath);
       if (!videoFile) throw new ApiError(400, "Failed to upload video");
       videoFileURL = videoFile.url;
       videoDuration = videoFile.duration || 0;
     } else if (videoUrl) {
-      // Agar direct link di hai toh (bina file ke)
       videoFileURL = videoUrl.trim();
-      // duration ke liye parse kar sakte ho (custom logic), ya 0 by default.
     }
 
-    // Thumbnail logic - use uploaded or generate from video
     let thumbnailURL = "";
     if (thumbnailLocalPath) {
       const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
       thumbnailURL = thumbnail?.url || "";
     }
     
-    // If no thumbnail, generate from video using Cloudinary
-    if (!thumbnailURL && videoFileURL) {
-      if (videoFileURL.includes("cloudinary")) {
-        const urlParts = videoFileURL.split("/upload/");
-        if (urlParts.length === 2) {
-          const publicId = urlParts[1].split(".")[0];
-          thumbnailURL = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
-        }
-      } else {
-        // For non-Cloudinary URLs, use the video file as fallback
-        thumbnailURL = videoFileURL;
+    if (!thumbnailURL && videoFileURL?.includes("cloudinary")) {
+      const urlParts = videoFileURL.split("/upload/");
+      if (urlParts.length === 2) {
+        const publicId = urlParts[1].split(".")[0];
+        thumbnailURL = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
       }
     }
 
@@ -140,6 +129,20 @@ const getAllVideos = asyncHandler(async (req, res) => {
       },
     });
     pipeline.push({ $addFields: { owner: { $first: "$owner" } } });
+    pipeline.push({
+      $project: {
+        _id: 1,
+        title: 1,
+        description: 1,
+        thumbnail: 1,
+        videoFile: 1,
+        duration: 1,
+        views: 1,
+        likes: 1,
+        owner: 1,
+        createdAt: 1,
+      },
+    });
     pipeline.push({ $sort: { createdAt: -1 } });
     pipeline.push({ $skip: (parseInt(page) - 1) * parseInt(limit) });
     pipeline.push({ $limit: parseInt(limit) });
@@ -325,18 +328,7 @@ const getTrendingVideos = asyncHandler(async (req, res) => {
       { $limit: parseInt(limit) },
     ];
 
-    let videos = await Video.aggregate(pipeline);
-
-    videos = videos.map(video => {
-      if (!video.thumbnail && video.videoFile?.includes("cloudinary")) {
-        const urlParts = video.videoFile.split("/upload/");
-        if (urlParts.length === 2) {
-          const publicId = urlParts[1].split(".")[0];
-          video.thumbnail = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
-        }
-      }
-      return video;
-    });
+    const videos = await Video.aggregate(pipeline);
 
     return res
       .status(200)
@@ -348,6 +340,7 @@ const getTrendingVideos = asyncHandler(async (req, res) => {
   }
 });
 
+// Get update Video 
 const updateVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
   const updateData = req.body;
@@ -408,6 +401,7 @@ const getRecommendedVideos = asyncHandler(async(req , res) => {
           title:1,
           description:1,
           thumbnail:1,
+          videoFile:1,
           duration:1,
           views:1,
           createdAt:1,
@@ -420,20 +414,20 @@ const getRecommendedVideos = asyncHandler(async(req , res) => {
 
     const formattedRecommendations = recommendations.map(video => {
       let thumbnail = video.thumbnail;
-      if(!thumbnail && video.videoFile?.includes("cloudinary")){
+      if (!thumbnail && video.videoFile?.includes("cloudinary")) {
         const urlParts = video.videoFile.split("/upload/");
-        if(urlParts.length === 2){
+        if (urlParts.length === 2) {
           const publicId = urlParts[1].split(".")[0];
           thumbnail = `https://res.cloudinary.com/${process.env.CLOUD_NAME}/video/upload/so_0,w_320,h_180,c_fill,q_auto/${publicId}.jpg`;
         }
       }
       return {
-         ...video,
-         id: video._id,
-         thumbnail,
-         uploadedAt: new Date(video.createdAt).toLocaleDateString(),
-         views: `${video.views}`,
-      }
+        ...video,
+        id: video._id,
+        thumbnail,
+        uploadedAt: new Date(video.createdAt).toLocaleDateString(),
+        views: `${video.views}`,
+      };
     });
 
     return res

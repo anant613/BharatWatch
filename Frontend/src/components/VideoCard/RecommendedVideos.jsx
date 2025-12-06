@@ -176,7 +176,16 @@ const RecommendedVideos = ({ videos = [] }) => {
                     alt={item.author}
                     className="yt-rec-profile"
                   />
-                  <span className="yt-rec-channel">{item.author}</span>
+                  <span 
+                    className="yt-rec-channel"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/channel/${item.author?.toLowerCase().replace(/\s+/g, '')}`);
+                    }}
+                    style={{cursor: 'pointer'}}
+                  >
+                    {item.author}
+                  </span>
                   <span className="yt-rec-dot">•</span>
                   <span>{item.views}</span>
                   <span className="yt-rec-dot">•</span>
