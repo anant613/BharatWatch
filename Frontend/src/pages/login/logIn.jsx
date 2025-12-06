@@ -5,6 +5,15 @@ import "./Auth.css";
 import { useGoogleLogin } from "@react-oauth/google";
 
 
+const ZOHO_CLIENT_ID = import.meta.env.VITE_ZOHO_CLIENT_ID;
+const ZOHO_REDIRECT_URI = import.meta.env.VITE_ZOHO_REDIRECT_URI;
+const ZOHO_ACCOUNTS_URL =
+  import.meta.env.VITE_ZOHO_ACCOUNTS_URL || "https://accounts.zoho.in";
+
+// Zoho profile read scope
+const ZOHO_SCOPE = encodeURIComponent("AaaServer.profile.Read");
+
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -79,6 +88,17 @@ const Login = () => {
       setError("Google login failed");
     },
   });
+    const zohoLogin = () => {
+    const authUrl =
+      `${ZOHO_ACCOUNTS_URL}/oauth/v2/auth?` +
+      `response_type=code&` +
+      `client_id=${ZOHO_CLIENT_ID}&` +
+      `scope=${ZOHO_SCOPE}&` +
+      `redirect_uri=${encodeURIComponent(ZOHO_REDIRECT_URI)}`;
+
+    window.location.href = authUrl; // Zoho login page par redirect[web:667][web:696]
+  };
+
 
 
   return (
@@ -145,12 +165,17 @@ const Login = () => {
               Continue with Google
             </button>
 
-            <button className="auth-btn zoho" type="button">
+            <button
+              className="auth-btn zoho"
+              type="button"
+              onClick={zohoLogin}
+            >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="#1976D2" aria-hidden="true">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-              </svg>
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
               Continue with Zoho
             </button>
+
           </div>
 
           <div className="auth-footer">
