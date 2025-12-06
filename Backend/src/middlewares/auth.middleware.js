@@ -1,34 +1,31 @@
-import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-const authMiddleware = asyncHandler(async (req, res, next) => {
+import { User } from "../models/user.model.js";
+
+// ek hi named export rakho: authMiddleware
+export const authMiddleware = async (req, res, next) => {
   try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+    const header = req.headers.authorization || "";
+    const token = header.startsWith("Bearer ")
+      ? header.split(" ")[1]
+      : null;
+
     if (!token) {
-      throw new ApiError(401, "Access denied. No token provided.");
+      return res.status(401).json({ message: "Not authenticated" });
     }
-    console.log(token);
-    const decoded_AccessToken = jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET
+
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    const user = await User.findById(decoded._id).select(
+      "-password -refreshToken"
     );
-    if (!decoded_AccessToken) {
-      throw new ApiError(401, "Access denied. Token Expired or Invalid");
-    }
-    const userId = decoded_AccessToken._id;
-    const user = await User.findById(userId);
+
     if (!user) {
-      throw new ApiError(401, "User not found.");
+      return res.status(401).json({ message: "User not found" });
     }
+
     req.user = user;
     next();
-  } catch (error) {
-    console.log(error);
-
-    throw new ApiError(401, error?.message || "Invalid access token");
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
-});
-export { authMiddleware };
+};

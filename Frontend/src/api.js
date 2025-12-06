@@ -1,81 +1,139 @@
-const API_BASE = 'http://localhost:4000/api/v1';
+const BASE_URL = "http://localhost:4000";
 
-const getHeaders = () => ({
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${localStorage.getItem('accessToken') || ''}`
-});
+const ACCESS_TOKEN_KEY = "accessToken";
+const USER_KEY = "bw_user";
 
+const request = async (path, options = {}) => {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+    ...options,
+  });
+
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok) {
+    throw new Error(data.message || "Request failed");
+  }
+  return data;
+};
+
+// ---------- helpers ----------
+const saveAccessToken = (token) => {
+  localStorage.setItem(ACCESS_TOKEN_KEY, token);
+};
+
+const getAccessToken = () => {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+};
+
+const saveUser = (user) => {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+};
+
+const getSavedUser = () => {
+  const raw = localStorage.getItem(USER_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+};
+
+// ---------- API object ----------
 export const api = {
-  // Auth
-  register: (userData) => fetch(`${API_BASE}/users/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData)
-  }).then(async r => {
-    const data = await r.json();
-    if (!r.ok) {
-      throw new Error(data.message || 'Registration failed');
-    }
-    if (data.data?.accessToken) {
-      localStorage.setItem('accessToken', data.data.accessToken);
-      localStorage.setItem('user', JSON.stringify(data.data.user));
-    }
-    return { success: true, ...data };
-  }),
+  // NORMAL LOGIN
+  login: async (email, password) => {
+    const data = await request("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+    });
 
-  login: (email, password) => fetch(`${API_BASE}/users/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  }).then(r => r.json()).then(d => {
-    if (d.data?.accessToken) {
-      localStorage.setItem('accessToken', d.data.accessToken);
-      localStorage.setItem('user', JSON.stringify(d.data.user));
+    if (data.accessToken) {
+      saveAccessToken(data.accessToken);
+      saveUser(data.user);
+      return { success: true, user: data.user };
     }
-    return d;
-  }),
-
-  logout: () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
+    return { success: false, message: data.message || "Login failed" };
   },
 
-  // Videos
-  getVideo: (videoId) => fetch(`${API_BASE}/videos/${videoId}`, {
-    headers: getHeaders()
-  }).then(r => r.json()),
+  // SIGNUP
+  register: async ({ fullName, email, password, confirmpassword }) => {
+    const data = await request("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        fullName,
+        email,
+        password,
+        confirmPassword: confirmpassword,
+      }),
+    });
 
-  getAllVideos: (page = 1, limit = 10) => fetch(`${API_BASE}/videos?page=${page}&limit=${limit}`, {
-    headers: getHeaders()
-  }).then(r => r.json()),
+    if (data.accessToken) {
+      saveAccessToken(data.accessToken);
+      saveUser(data.user);
+      return { success: true, user: data.user };
+    }
+    return { success: false, message: data.message || "Signup failed" };
+  },
 
-  uploadVideo: (formData) => fetch(`${API_BASE}/videos/upload`, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` },
-    body: formData
-  }).then(r => r.json()),
+  // GOOGLE LOGIN
+  googleLogin: async ({ email, fullName, avatar, googleId }) => {
+    const data = await request("/api/auth/google", {
+      method: "POST",
+      body: JSON.stringify({ email, fullName, avatar, googleId }),
+    });
 
-  // Comments
-  getComments: (videoId, sort = 'top') => fetch(`${API_BASE}/videos/${videoId}/comments?sort=${sort}`, {
-    headers: getHeaders()
-  }).then(r => r.json()),
+    if (data.accessToken) {
+      saveAccessToken(data.accessToken);
+      saveUser(data.user);
+      return { success: true, user: data.user };
+    }
+    return { success: false, message: data.message || "Google login failed" };
+  },
 
-  addComment: (videoId, text) => fetch(`${API_BASE}/videos/${videoId}/comments`, {
-    method: 'POST',
-    headers: getHeaders(),
-    body: JSON.stringify({ text })
-  }).then(r => r.json()),
+  // PROFILE (protected)
+  getProfile: async () => {
+    const token = getAccessToken();
+    const data = await request("/api/v1/users/profile", {
+      method: "GET",
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+    return data;
+  },
 
-  likeComment: (commentId) => fetch(`${API_BASE}/comments/${commentId}/like`, {
-    method: 'POST',
-    headers: getHeaders()
-  }).then(r => r.json()),
+  // LOGOUT
+  logout: async () => {
+    const token = getAccessToken();
+    await request("/api/auth/logout", {
+      method: "POST",
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+  },
 
-  // Interactions
-  likeVideo: (videoId) => fetch(`${API_BASE}/videos/${videoId}/like`, {
-    method: 'POST',
-    headers: getHeaders()
-  }).then(r => r.json()),
+  // NAVBAR HELPERS
+  isAuthenticated: () => {
+    return !!localStorage.getItem(ACCESS_TOKEN_KEY);
+  },
+
+// <<<<<<< HEAD
+  getUser: () => {
+    return getSavedUser();
+  },
+  getAllVideos: async () => {
+  const data = await request("/api/v1/videos", { method: "GET" });
+  return data; // yahi array hoga
+},
 
   saveVideo: (videoId) => fetch(`${API_BASE}/videos/${videoId}/watchlater`, {
     method: 'POST',
